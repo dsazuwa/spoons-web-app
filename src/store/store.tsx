@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { createWrapper } from 'next-redux-wrapper';
 
-import { authApi } from './services/authApi';
-import { customerApi } from './services/customerApi';
-import { menuApi } from './services/menuApi';
-import { userApi } from './services/userApi';
+import authApi from './services/authApi';
+import customerApi from './services/customerApi';
+import menuApi from './services/menuApi';
+import userApi from './services/userApi';
 import userReducer from './slices/userSlice';
 
 export const store = configureStore({

@@ -21,7 +21,7 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<IUser>) => {
       const newState = state;
       newState.user = action.payload;
-      newState.home = newState.user.role === 'client' ? '/' : '/admin';
+      newState.home = newState.user.roles[0] === 'customer' ? '/' : '/admin';
     },
   },
 });

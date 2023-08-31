@@ -6,19 +6,19 @@ import { IVerifyData, IVerifyResponse } from '@store/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const customerApi = createApi({
+const customerApi = createApi({
   reducerPath: 'customerApi',
   refetchOnFocus: true,
   tagTypes: ['Customer'],
 
   extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
+    if (action.type === HYDRATE) return action.payload[reducerPath];
   },
 
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/customers/`,
+    credentials: 'include',
+
     prepareHeaders: (headers) => {
       const token = document.cookie
         .split('; ')
@@ -36,7 +36,7 @@ export const customerApi = createApi({
       query(data) {
         return {
           url: `/me/verify/${data.code}`,
-          method: 'PUT',
+          method: 'PATCH',
         };
       },
       async onQueryStarted(arg, api) {
@@ -62,3 +62,5 @@ export const customerApi = createApi({
 
 export const { useVerifyUserMutation, useResendVerificationMutation } =
   customerApi;
+
+export default customerApi;

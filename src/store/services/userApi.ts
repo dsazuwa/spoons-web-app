@@ -7,28 +7,27 @@ import { IUser } from '@store/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const userApi = createApi({
+const userApi = createApi({
   reducerPath: 'userApi',
   refetchOnFocus: true,
   tagTypes: ['User'],
 
   extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
+    if (action.type === HYDRATE) return action.payload[reducerPath];
   },
 
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/users/`,
+    credentials: 'include',
+
     prepareHeaders: (headers) => {
       const token = document.cookie
         .split('; ')
         .find((row) => row.startsWith('access-token'))
         ?.split('=')[1];
 
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
+      if (token) headers.set('Authorization', `Bearer ${token}`);
+
       return headers;
     },
   }),
@@ -36,6 +35,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUser: builder.query<IUser, undefined>({
       query() {
+        console.log('called');
         return {
           url: 'me',
         };
@@ -57,3 +57,5 @@ export const userApi = createApi({
 });
 
 export const { useGetUserQuery } = userApi;
+
+export default userApi;

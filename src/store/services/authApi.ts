@@ -10,17 +10,16 @@ import {
   IRecoverResponse,
   IRegisterInput,
   IRegisterResponse,
+  IRequestRecoverData,
   IVerifyRecoverData,
 } from '@store/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const authApi = createApi({
+const authApi = createApi({
   reducerPath: 'authApi',
   extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
+    if (action.type === HYDRATE) return action.payload[reducerPath];
   },
 
   baseQuery: fetchBaseQuery({
@@ -84,7 +83,7 @@ export const authApi = createApi({
 
     requestPasswordRecovery: builder.mutation<
       IGenericResponse,
-      { email: string }
+      IRequestRecoverData
     >({
       query(data) {
         return {
@@ -133,3 +132,5 @@ export const {
   useVerifyRecoveryCodeMutation,
   useRecoverPasswordMutation,
 } = authApi;
+
+export default authApi;

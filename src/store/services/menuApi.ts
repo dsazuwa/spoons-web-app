@@ -5,15 +5,13 @@ import { IGroupedMenuResponse, IMenuResponse } from '@store/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-export const menuApi = createApi({
+const menuApi = createApi({
   reducerPath: 'menuApi',
   refetchOnFocus: true,
   tagTypes: ['Menu'],
 
   extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === HYDRATE) {
-      return action.payload[reducerPath];
-    }
+    if (action.type === HYDRATE) return action.payload[reducerPath];
   },
 
   baseQuery: fetchBaseQuery({
@@ -40,3 +38,5 @@ export const menuApi = createApi({
 });
 
 export const { useGetMenuQuery, useGetGroupedMenuQuery } = menuApi;
+
+export default menuApi;
