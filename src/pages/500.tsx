@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { NextLinkComposed } from '@components/Link';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
-function PageNotFound() {
+function InternalServerError() {
   const router = useRouter();
   const refreshPage = () => router.reload();
 
@@ -16,13 +16,13 @@ function PageNotFound() {
         variant='h4'
         sx={{ mb: 4, fontWeight: 700, textAlign: 'center' }}
       >
-        404 Page not found
+        500 Internal Server Error
       </Typography>
 
       <Typography sx={{ mb: 3, textAlign: 'center' }}>
-        We&apos;re sorry, the page you requested could not be found.
+        Oops, something went wrong.
         <br />
-        Please return to the homepage
+        Please try again.
       </Typography>
 
       <Box display='flex' justifyContent='center' alignItems='center'>
@@ -44,6 +44,6 @@ function PageNotFound() {
   );
 }
 
-PageNotFound.getLayout = getSpoonsLayout;
+InternalServerError.getLayout = getSpoonsLayout;
 
-export default PageNotFound;
+export default InternalServerError;
