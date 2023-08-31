@@ -75,7 +75,7 @@ export interface IGroupedMenuResponse {
   message: string;
 }
 
-/** *************** USER.API TYPES **************** */
+/** *************** CUSTOMER.API TYPES **************** */
 export interface IVerifyResponse {
   user: IUser;
   message: string;
