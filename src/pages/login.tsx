@@ -10,7 +10,7 @@ import { Controller } from 'react-hook-form';
 
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
-import useLogin from '@hooks/useLogin';
+import { useLogin } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
 function Login() {

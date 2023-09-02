@@ -1,12 +1,12 @@
 import { AlertColor } from '@mui/material/Alert';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRegisterUserMutation } from '@store/services/authApi';
+import { useRegisterUserMutation } from '@features/user/api';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({

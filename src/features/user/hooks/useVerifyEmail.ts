@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import {
   useResendVerificationMutation,
   useVerifyUserMutation,
-} from '@store/services/customerApi';
+} from '@features/user/api';
 
 const useVerifyEmail = () => {
   const router = useRouter();
@@ -88,8 +88,8 @@ const useVerifyEmail = () => {
     resendVerification,
     submit,
     snackbar,
-    handleClose
-  }
+    handleClose,
+  };
 };
 
 export default useVerifyEmail;

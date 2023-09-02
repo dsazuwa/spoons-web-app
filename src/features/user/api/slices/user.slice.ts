@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '@store/types';
+
+import { IUser } from '@features/user/api/types';
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 
@@ -26,6 +27,6 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export const userReducer = userSlice.reducer;
 
 export const { logout, setUser } = userSlice.actions;

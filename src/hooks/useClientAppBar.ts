@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import useAuthentication from './useAuthentication';
-import useLogout from './useLogout';
+import { useAuthentication, useLogout } from '@features/user';
 
 const useClientAppBar = () => {
   const [auth, setAuth] = useState(false);

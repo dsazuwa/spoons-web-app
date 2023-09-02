@@ -13,7 +13,7 @@ import { Controller } from 'react-hook-form';
 
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
-import useRegister from '@hooks/useRegister';
+import { useRegister } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
 function Register() {

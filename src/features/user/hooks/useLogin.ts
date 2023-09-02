@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
-import { useLoginUserMutation } from '@store/services/authApi';
+import { useLoginUserMutation } from '@features/user/api';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({

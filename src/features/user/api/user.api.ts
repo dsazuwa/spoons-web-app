@@ -2,12 +2,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { deleteCookie } from 'cookies-next';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { logout, setUser } from '@store/slices/userSlice';
-import { IUser } from '@store/types';
+import { logout, setUser } from './slices/user.slice';
+import { IUser } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const userApi = createApi({
+export const userApi = createApi({
   reducerPath: 'userApi',
   refetchOnFocus: true,
   tagTypes: ['User'],
@@ -57,5 +57,3 @@ const userApi = createApi({
 });
 
 export const { useGetUserQuery } = userApi;
-
-export default userApi;

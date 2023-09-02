@@ -1,8 +1,7 @@
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-import Verify from '@components/Verify';
-import useVerifyEmail from '@hooks/useVerifyEmail';
+import { Verify, useVerifyEmail } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
 function VerifyEmail() {

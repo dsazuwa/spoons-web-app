@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { setUser } from '@store/slices/userSlice';
-import { IVerifyData, IVerifyResponse } from '@store/types';
+import { setUser } from './slices/user.slice';
+import { IVerifyData, IVerifyResponse } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const customerApi = createApi({
+export const customerApi = createApi({
   reducerPath: 'customerApi',
   refetchOnFocus: true,
   tagTypes: ['Customer'],
@@ -62,5 +62,3 @@ const customerApi = createApi({
 
 export const { useVerifyUserMutation, useResendVerificationMutation } =
   customerApi;
-
-export default customerApi;

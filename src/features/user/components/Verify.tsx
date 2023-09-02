@@ -11,7 +11,7 @@ interface VerifyProps {
 
 function Verify({ resend, submit }: VerifyProps) {
   const codeLength = 5;
-  
+
   type FieldType = `${1 | 2 | 3 | 4 | 5}`;
   type FormType = { [K in FieldType]: string };
 
@@ -49,15 +49,13 @@ function Verify({ resend, submit }: VerifyProps) {
   ) => {
     if (value.length === 0) return;
 
-    const { name } = e.target;
-
     if (Object.values(getValues()).join('').length === codeLength) {
       e.target.blur();
       handleSubmit(onSubmitHandler)();
       return;
     }
 
-    const num = parseInt(name, 10);
+    const num = parseInt(e.target.name, 10);
 
     if (num === codeLength) return;
 

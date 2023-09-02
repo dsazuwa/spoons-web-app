@@ -2,28 +2,27 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { createWrapper } from 'next-redux-wrapper';
 
-import authApi from './services/authApi';
-import customerApi from './services/customerApi';
-import menuApi from './services/menuApi';
-import userApi from './services/userApi';
-import userReducer from './slices/userSlice';
+import { menuApi } from '@features/menu';
+import { authApi, customerApi, userApi, userReducer } from '@features/user';
 
 export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
 
   reducer: {
+    [menuApi.reducerPath]: menuApi.reducer,
+
     [authApi.reducerPath]: authApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
-    [menuApi.reducerPath]: menuApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     userState: userReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
+      menuApi.middleware,
+
       authApi.middleware,
       customerApi.middleware,
-      menuApi.middleware,
       userApi.middleware,
     ]),
 });

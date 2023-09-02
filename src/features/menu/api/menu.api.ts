@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { IGroupedMenuResponse, IMenuResponse } from '@store/types';
+import { IGroupedMenuResponse, IMenuResponse } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-const menuApi = createApi({
+export const menuApi = createApi({
   reducerPath: 'menuApi',
   refetchOnFocus: true,
   tagTypes: ['Menu'],
@@ -38,5 +38,3 @@ const menuApi = createApi({
 });
 
 export const { useGetMenuQuery, useGetGroupedMenuQuery } = menuApi;
-
-export default menuApi;

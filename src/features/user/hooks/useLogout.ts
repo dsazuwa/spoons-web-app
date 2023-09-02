@@ -3,8 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { useLogoutUserMutation } from '@store/services/authApi';
-import { logout as clearStore } from '@store/slices/userSlice';
+import {
+  logout as clearStore,
+  useLogoutUserMutation,
+} from '@features/user/api';
 
 const useLogout = (shouldReturnHome: boolean) => {
   const dispatch = useDispatch();
