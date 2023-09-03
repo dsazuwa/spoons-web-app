@@ -1,4 +1,4 @@
-import { deleteCookie, getCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import { useSelector } from 'react-redux';
 
 import { useGetUserQuery } from '@features/user/api';
@@ -6,7 +6,7 @@ import { RootState } from '@store/store';
 
 const useAuthentication = () => {
   const cachedUser = useSelector((state: RootState) => state.userState.user);
-  const accessToken = getCookie('access-token');
+  const accessToken = getCookie('auth-flag');
   const isSkipped =
     accessToken === undefined || (!!accessToken && cachedUser !== undefined);
 
@@ -17,8 +17,6 @@ const useAuthentication = () => {
       refetchOnMountOrArgChange: true,
     },
   );
-
-  if (isError) deleteCookie('access-token');
 
   const isAuthenticated =
     accessToken !== undefined &&

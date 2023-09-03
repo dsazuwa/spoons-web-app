@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { deleteCookie } from 'cookies-next';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { logout, setUser } from './slices/user.slice';
+import { setUser } from './slices/user.slice';
 import { IUser } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -19,23 +18,11 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/users/`,
     credentials: 'include',
-
-    prepareHeaders: (headers) => {
-      const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('access-token'))
-        ?.split('=')[1];
-
-      if (token) headers.set('Authorization', `Bearer ${token}`);
-
-      return headers;
-    },
   }),
 
   endpoints: (builder) => ({
     getUser: builder.query<IUser, undefined>({
       query() {
-        console.log('called');
         return {
           url: 'me',
         };
@@ -47,9 +34,6 @@ export const userApi = createApi({
           dispatch(setUser(data));
         } catch (e) {
           console.log(e);
-
-          deleteCookie('access-token');
-          dispatch(logout());
         }
       },
     }),

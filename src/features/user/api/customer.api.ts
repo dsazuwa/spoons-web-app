@@ -18,17 +18,6 @@ export const customerApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BASE_URL}/customers/`,
     credentials: 'include',
-
-    prepareHeaders: (headers) => {
-      const token = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('access-token'))
-        ?.split('=')[1];
-
-      if (token) headers.set('Authorization', `Bearer ${token}`);
-
-      return headers;
-    },
   }),
 
   endpoints: (builder) => ({
