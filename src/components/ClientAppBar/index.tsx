@@ -19,14 +19,15 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
-import useClientAppBar from '@hooks/useClientAppBar';
+import { useAuthentication, useLogout } from '@features/user';
 import AppBarButton from './AppBarButton';
 import DrawerListItem from './DrawerListItem';
 
 /* eslint-disable react/jsx-props-no-spreading */
 
 function ClientAppBar() {
-  const { auth, authReady, handleLogout } = useClientAppBar();
+  const { authReady, isAuthenticated } = useAuthentication();
+  const { handleLogout } = useLogout(false);
 
   const pages = [
     { name: 'Home', href: '/', icon: <Home /> },
@@ -113,14 +114,14 @@ function ClientAppBar() {
 
                   {authReady && (
                     <List>
-                      {auth &&
+                      {isAuthenticated &&
                         authPages.map(({ page, handleClick }) => (
                           <DrawerListItem
                             key={page.name}
                             {...{ page, handleClick }}
                           />
                         ))}
-                      {!auth &&
+                      {!isAuthenticated &&
                         unauthPages.map((page) => (
                           <DrawerListItem
                             key={page.name}
@@ -152,7 +153,7 @@ function ClientAppBar() {
 
             {authReady && (
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {auth &&
+                {isAuthenticated &&
                   authPages.map(({ page, handleClick }) => (
                     <AppBarButton
                       key={page.name}
@@ -161,7 +162,7 @@ function ClientAppBar() {
                     />
                   ))}
 
-                {!auth &&
+                {!isAuthenticated &&
                   unauthPages.map((page) => (
                     <AppBarButton
                       key={page.name}
