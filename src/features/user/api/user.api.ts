@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import baseQueryWithReauth from './base.query';
+import baseQueryWithReauth from '@store/base.query';
 import { setUser } from './slices/user.slice';
 import { IUser } from './types';
 
@@ -22,6 +22,7 @@ export const userApi = createApi({
       query() {
         return {
           url: `${baseUrl}/me`,
+          credentials: 'include',
         };
       },
       transformResponse: (result: { user: IUser }) => result.user,

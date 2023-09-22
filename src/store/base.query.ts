@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
-import { logout } from './slices/user.slice';
+import { logout } from '@features/user/api/slices/user.slice';
 
 const mutex = new Mutex();
 
