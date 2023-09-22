@@ -39,7 +39,7 @@ const formSchema = object({
     path: ['agreeToTerms'],
   });
 
-type FormSchema = TypeOf<typeof formSchema>;
+type RegisterFormSchema = TypeOf<typeof formSchema>;
 
 const useRegister = () => {
   const router = useRouter();
@@ -64,14 +64,14 @@ const useRegister = () => {
       const message = getErrorMessage(error);
       setSnackbar({ open: true, message, severity: 'error' });
     }
-  }, [isLoading, isSuccess, error, router]);
+  }, [isLoading, isSuccess, error, router, setSnackbar]);
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors, isSubmitSuccessful },
-  } = useForm<FormSchema>({
+  } = useForm<RegisterFormSchema>({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -87,7 +87,7 @@ const useRegister = () => {
     if (isSubmitSuccessful) reset();
   }, [isSubmitSuccessful, reset]);
 
-  const onSubmitHandler: SubmitHandler<FormSchema> = (formData) =>
+  const onSubmitHandler: SubmitHandler<RegisterFormSchema> = (formData) =>
     registerUser(formData);
 
   return {
