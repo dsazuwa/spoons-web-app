@@ -1,7 +1,8 @@
 import SnackbarAlert from '@components/SnackbarAlert';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
-import { Verify, useVerifyEmail } from '@features/user';
+import { Verify } from '@features/user';
+import useVerifyEmail from './hooks/useVerifyEmail';
 
 function VerifyEmail() {
   const { resendVerification, submit, snackbar, handleClose } =

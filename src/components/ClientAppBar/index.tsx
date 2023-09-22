@@ -20,7 +20,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
 import useAuthentication from '@hooks/useAuthentication';
-import { useLogout } from '@features/user';
+import useLogout from '@hooks/useLogout';
 import AppBarButton from './AppBarButton';
 import DrawerListItem from './DrawerListItem';
 

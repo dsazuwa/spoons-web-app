@@ -10,8 +10,7 @@ import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
 import SnackbarAlert from '@components/SnackbarAlert';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-
-import { useLogin } from '@features/user';
+import useLogin from './hooks/useLogin';
 
 function Login() {
   const {

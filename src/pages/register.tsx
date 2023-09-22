@@ -12,8 +12,8 @@ import { Controller } from 'react-hook-form';
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
 import SnackbarAlert from '@components/SnackbarAlert';
-import { useRegister } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
+import useRegister from './hooks/useRegister';
 
 function Register() {
   const {

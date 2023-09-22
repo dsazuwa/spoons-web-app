@@ -1,7 +1,7 @@
 import SnackbarAlert from '@components/SnackbarAlert';
 import { PasswordRecoveryFlow } from '@features/user';
-import useRecover from '@hooks/useRecover';
 import getSpoonsLayout from '@layout/SpoonsLayout';
+import useRecover from './hooks/useRecover';
 
 function ForgotPassword() {
   const {
