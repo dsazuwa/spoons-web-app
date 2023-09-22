@@ -107,7 +107,7 @@ export const authApi = createApi({
       query(data) {
         return {
           url: `recover/${data.code}`,
-          method: 'PUT',
+          method: 'PATCH',
           body: { email: data.email, password: data.password },
         };
       },
