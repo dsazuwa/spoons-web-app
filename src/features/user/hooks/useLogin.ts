@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
 import { useLoginUserMutation } from '@features/user/api';
+import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({
@@ -18,16 +18,7 @@ type FormSchema = TypeOf<typeof formSchema>;
 
 const useLogin = () => {
   const router = useRouter();
-
-  const [snackbar, setSnackbar] = useState({ open: false, message: '' });
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === 'clickaway') return;
-    setSnackbar({ ...snackbar, open: false });
-  };
+  const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
 
   const [loginUser, { data, isLoading, isSuccess, error }] =
     useLoginUserMutation();
@@ -40,7 +31,7 @@ const useLogin = () => {
 
     if (error) {
       const message = getErrorMessage(error);
-      setSnackbar({ open: true, message });
+      setSnackbar({ ...snackbar, open: true, message });
     }
   }, [data, isLoading, isSuccess, error, router]);
 

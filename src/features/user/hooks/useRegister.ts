@@ -1,12 +1,11 @@
-import { AlertColor } from '@mui/material/Alert';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
 import { useRegisterUserMutation } from '@features/user/api';
+import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({
@@ -44,20 +43,7 @@ type FormSchema = TypeOf<typeof formSchema>;
 
 const useRegister = () => {
   const router = useRouter();
-
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'error' as AlertColor,
-  });
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === 'clickaway') return;
-    setSnackbar({ ...snackbar, open: false });
-  };
+  const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
 
   const [registerUser, { isLoading, isSuccess, error }] =
     useRegisterUserMutation();

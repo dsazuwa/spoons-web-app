@@ -1,30 +1,17 @@
-import { AlertColor } from '@mui/material/Alert';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   useResendVerificationMutation,
   useVerifyUserMutation,
 } from '@features/user/api';
+import useSnackbarAlert from '@hooks/useSnackbarAlert';
 
 const useVerifyEmail = () => {
   const router = useRouter();
-
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: '',
-    severity: 'error' as AlertColor,
-  });
-
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string,
-  ) => {
-    if (reason === 'clickaway') return;
-    setSnackbar({ ...snackbar, open: false });
-  };
+  const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
 
   const [verifyUser, { isSuccess: isVerifySuccess, error: verifyError }] =
     useVerifyUserMutation();

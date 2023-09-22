@@ -111,7 +111,7 @@ function Login() {
       <SnackbarAlert
         open={snackbar.open}
         onClose={handleClose}
-        severity='error'
+        severity={snackbar.severity}
         message={snackbar.message}
         duration={6000}
       />
