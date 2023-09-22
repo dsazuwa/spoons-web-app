@@ -14,18 +14,17 @@ import {
   IVerifyRecoverData,
 } from './types';
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
-
 export const authApi = createApi({
   reducerPath: 'authApi',
+
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/auth/`,
+    credentials: 'include',
+  }),
+
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) return action.payload[reducerPath];
   },
-
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${BASE_URL}/auth/`,
-    credentials: 'include',
-  }),
 
   endpoints: (builder) => ({
     loginUser: builder.mutation<ILoginResponse, ILoginInput>({
