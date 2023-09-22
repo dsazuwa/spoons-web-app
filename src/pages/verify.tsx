@@ -1,8 +1,7 @@
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import SnackbarAlert from '@components/SnackbarAlert';
+import getSpoonsLayout from '@layout/SpoonsLayout';
 
 import { Verify, useVerifyEmail } from '@features/user';
-import getSpoonsLayout from '@layout/SpoonsLayout';
 
 function VerifyEmail() {
   const { resendVerification, submit, snackbar, handleClose } =
@@ -12,16 +11,13 @@ function VerifyEmail() {
     <>
       <Verify resend={resendVerification} submit={submit} />
 
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <SnackbarAlert
         open={snackbar.open}
-        autoHideDuration={3000}
         onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={snackbar.severity}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+        severity={snackbar.severity}
+        message={snackbar.message}
+        duration={3000}
+      />
     </>
   );
 }

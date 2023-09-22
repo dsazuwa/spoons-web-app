@@ -1,17 +1,17 @@
-import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Controller } from 'react-hook-form';
 
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
-import { useLogin } from '@features/user';
+import SnackbarAlert from '@components/SnackbarAlert';
 import getSpoonsLayout from '@layout/SpoonsLayout';
+
+import { useLogin } from '@features/user';
 
 function Login() {
   const {
@@ -108,16 +108,13 @@ function Login() {
         </Typography>
       </Box>
 
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <SnackbarAlert
         open={snackbar.open}
-        autoHideDuration={6000}
         onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity='error'>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+        severity='error'
+        message={snackbar.message}
+        duration={6000}
+      />
     </>
   );
 }

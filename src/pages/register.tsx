@@ -1,11 +1,9 @@
-import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
-import Snackbar from '@mui/material/Snackbar';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
@@ -13,6 +11,7 @@ import { Controller } from 'react-hook-form';
 
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
+import SnackbarAlert from '@components/SnackbarAlert';
 import { useRegister } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 
@@ -132,16 +131,13 @@ function Register() {
         </Typography>
       </Box>
 
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <SnackbarAlert
         open={snackbar.open}
-        autoHideDuration={6000}
         onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity={snackbar.severity}>
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+        severity={snackbar.severity}
+        message={snackbar.message}
+        duration={6000}
+      />
     </>
   );
 }
