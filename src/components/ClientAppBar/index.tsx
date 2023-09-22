@@ -19,7 +19,8 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
-import { useAuthentication, useLogout } from '@features/user';
+import useAuthentication from '@hooks/useAuthentication';
+import { useLogout } from '@features/user';
 import AppBarButton from './AppBarButton';
 import DrawerListItem from './DrawerListItem';
 
