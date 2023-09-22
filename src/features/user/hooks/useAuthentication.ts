@@ -2,7 +2,7 @@ import { getCookie } from 'cookies-next';
 import { useSelector } from 'react-redux';
 
 import { useGetUserQuery } from '@features/user/api';
-import { RootState } from '@store/store';
+import { RootState } from '@store';
 
 const useAuthentication = () => {
   const cachedUser = useSelector((state: RootState) => state.userState.user);

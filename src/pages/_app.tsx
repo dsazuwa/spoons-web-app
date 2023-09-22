@@ -16,7 +16,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
-import { wrapper } from '@store/store';
+import { wrapper } from '@store';
 import createEmotionCache from '@utils/createEmotionCache';
 import theme from '@utils/theme';
 
