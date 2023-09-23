@@ -10,7 +10,7 @@ function InternalServerError() {
   const router = useRouter();
   const refreshPage = () => router.reload();
 
-  return (
+  return getSpoonsLayout(
     <>
       <Typography
         variant='h4'
@@ -40,10 +40,12 @@ function InternalServerError() {
 
         <Button onClick={() => refreshPage()}>Try Again</Button>
       </Box>
-    </>
+    </>,
+    router,
+    'public',
+    true,
+    true,
   );
 }
-
-InternalServerError.getLayout = getSpoonsLayout;
 
 export default InternalServerError;

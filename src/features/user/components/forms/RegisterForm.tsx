@@ -18,15 +18,6 @@ import {
 
 import FormField from '@components/FormField';
 
-type RegisterFormType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirm: string;
-  agreeToTerms: boolean;
-};
-
 interface RegisterFormProps {
   control: Control<RegisterFormType>;
   errors: FieldErrors<RegisterFormType>;

@@ -17,12 +17,6 @@ import {
 import FormField from '@components/FormField';
 import { NextLinkComposed } from '@components/Link';
 
-type LoginFormType = {
-  email: string;
-  password: string;
-  remember: boolean;
-};
-
 interface LoginFormProps {
   control: Control<LoginFormType>;
   errors: FieldErrors<LoginFormType>;

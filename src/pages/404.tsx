@@ -10,7 +10,7 @@ function PageNotFound() {
   const router = useRouter();
   const refreshPage = () => router.reload();
 
-  return (
+  return getSpoonsLayout(
     <>
       <Typography
         variant='h4'
@@ -40,10 +40,12 @@ function PageNotFound() {
 
         <Button onClick={() => refreshPage()}>Try Again</Button>
       </Box>
-    </>
+    </>,
+    router,
+    'public',
+    true,
+    true,
   );
 }
-
-PageNotFound.getLayout = getSpoonsLayout;
 
 export default PageNotFound;

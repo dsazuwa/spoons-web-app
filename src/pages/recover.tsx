@@ -1,12 +1,14 @@
-import SnackbarAlert from '@components/SnackbarAlert';
-import { PasswordRecoveryFlow } from '@features/user';
+import { RecoverPageContent } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
 import useRecover from './hooks/useRecover';
 
-function ForgotPassword() {
+function Recover() {
   const {
+    router,
     step,
     snackbar,
+    authReady,
+    isAuthenticated,
     handleClose,
     handleRequestRecovery,
     handleResendRecovery,
@@ -14,27 +16,21 @@ function ForgotPassword() {
     handleRecoverSubmit,
   } = useRecover();
 
-  return (
-    <>
-      <PasswordRecoveryFlow
-        step={step}
-        handleRequestRecovery={handleRequestRecovery}
-        handleResendRecovery={handleResendRecovery}
-        handleVerifySubmit={handleVerifySubmit}
-        handleRecoverSubmit={handleRecoverSubmit}
-      />
-
-      <SnackbarAlert
-        open={snackbar.open}
-        onClose={handleClose}
-        severity={snackbar.severity}
-        message={snackbar.message}
-        duration={1000}
-      />
-    </>
+  return getSpoonsLayout(
+    <RecoverPageContent
+      step={step}
+      snackbar={snackbar}
+      handleRequestRecovery={handleRequestRecovery}
+      handleResendRecovery={handleResendRecovery}
+      handleVerifySubmit={handleVerifySubmit}
+      handleRecoverSubmit={handleRecoverSubmit}
+      handleClose={handleClose}
+    />,
+    router,
+    'unauthenticated',
+    authReady,
+    isAuthenticated,
   );
 }
 
-ForgotPassword.getLayout = getSpoonsLayout;
-
-export default ForgotPassword;
+export default Recover;

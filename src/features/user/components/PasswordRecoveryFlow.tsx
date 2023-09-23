@@ -1,6 +1,6 @@
-import Verify from '../Verify';
-import ChangePassword from './ChangePasswordForm';
-import ForgotPasswordForm from './ForgotPasswordForm';
+import VerifyEmail from './common/VerifyEmail';
+import ChangePassword from './forms/ChangePasswordForm';
+import ForgotPasswordForm from './forms/ForgotPasswordForm';
 
 interface RecoveryFlowProps {
   step: number;
@@ -19,7 +19,9 @@ function PasswordRecoveryFlow({
 }: RecoveryFlowProps) {
   if (step === 1) return <ForgotPasswordForm submit={handleRequestRecovery} />;
   if (step === 2)
-    return <Verify resend={handleResendRecovery} submit={handleVerifySubmit} />;
+    return (
+      <VerifyEmail resend={handleResendRecovery} submit={handleVerifySubmit} />
+    );
   return <ChangePassword submit={handleRecoverSubmit} />;
 }
 

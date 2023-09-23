@@ -1,9 +1,15 @@
 export * from './api';
 
-import AuthLink from './components/AuthLink';
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
-import Verify from './components/Verify';
-import PasswordRecoveryFlow from './components/recover/PasswordRecoveryFlow';
+import PasswordRecoveryFlow from './components/PasswordRecoveryFlow';
+import LoginPageContent from './components/page-content/LoginPageContent';
+import RecoverPageContent from './components/page-content/RecoverPageContent';
+import RegisterPageContent from './components/page-content/RegisterPageContent';
+import VerifyEmailPageContent from './components/page-content/VerifyEmailPageContent';
 
-export { AuthLink, LoginForm, PasswordRecoveryFlow, RegisterForm, Verify };
+export {
+  LoginPageContent,
+  PasswordRecoveryFlow,
+  RecoverPageContent,
+  RegisterPageContent,
+  VerifyEmailPageContent,
+};

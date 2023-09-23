@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
 import { useLoginUserMutation } from '@features/user/api';
+import useAuthentication from '@hooks/useAuthentication';
 import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
@@ -19,6 +20,7 @@ type FormSchema = TypeOf<typeof formSchema>;
 const useLogin = () => {
   const router = useRouter();
   const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
+  const { authReady, isAuthenticated } = useAuthentication();
 
   const [loginUser, { data, isLoading, isSuccess, error }] =
     useLoginUserMutation();
@@ -33,7 +35,7 @@ const useLogin = () => {
       const message = getErrorMessage(error);
       setSnackbar({ ...snackbar, open: true, message });
     }
-  }, [data, isLoading, isSuccess, error, router]);
+  }, [data, isLoading, isSuccess, error, router, snackbar, setSnackbar]);
 
   const {
     control,
@@ -57,11 +59,14 @@ const useLogin = () => {
     loginUser(formData);
 
   return {
+    router,
+    authReady,
+    isAuthenticated,
     control,
     errors,
+    snackbar,
     handleSubmit,
     onSubmitHandler,
-    snackbar,
     handleClose,
   };
 };

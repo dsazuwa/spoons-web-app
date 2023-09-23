@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
   useRecoverPasswordMutation,
   useRequestPasswordRecoveryMutation,
   useVerifyRecoveryCodeMutation,
 } from '@features/user';
+import useAuthentication from '@hooks/useAuthentication';
 import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
@@ -19,18 +19,19 @@ const useRecover = () => {
   const [step, setStep] = useState(1);
 
   const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
+  const { authReady, isAuthenticated } = useAuthentication();
 
-  const handleError = (
-    error: FetchBaseQueryError | SerializedError | undefined,
-  ) => {
-    const message = getErrorMessage(error);
-    setSnackbar({ open: true, message, severity: 'error' });
-  };
+  const handleError = useCallback(
+    (error: FetchBaseQueryError | SerializedError | undefined) => {
+      const message = getErrorMessage(error);
+      setSnackbar({ open: true, message, severity: 'error' });
+    },
+    [setSnackbar],
+  );
 
   const [
     requestRecovery,
     {
-      // isLoading: isRequestLoading,
       isSuccess: isRequestSuccess,
       isError: isRequestError,
       error: requestError,
@@ -39,18 +40,12 @@ const useRecover = () => {
 
   const [
     verifyCode,
-    {
-      // isLoading: isVerifyLoading,
-      isSuccess: isVerifySuccess,
-      isError: isVerifyError,
-      error: verifyError,
-    },
+    { isSuccess: isVerifySuccess, isError: isVerifyError, error: verifyError },
   ] = useVerifyRecoveryCodeMutation();
 
   const [
     recoverPassword,
     {
-      // isLoading: isRecoverLoading,
       isSuccess: isRecoverSuccess,
       isError: isRecoverError,
       error: recoverError,
@@ -71,6 +66,8 @@ const useRecover = () => {
 
     if (isRequestError) handleError(requestError);
   }, [
+    handleError,
+    setSnackbar,
     isRequestSuccess,
     isVerifySuccess,
     isRecoverSuccess,
@@ -101,6 +98,8 @@ const useRecover = () => {
 
     if (isVerifyError) handleError(verifyError);
   }, [
+    handleError,
+    setSnackbar,
     isRequestSuccess,
     isVerifySuccess,
     isRecoverSuccess,
@@ -129,6 +128,8 @@ const useRecover = () => {
 
     if (isRecoverError) handleError(recoverError);
   }, [
+    handleError,
+    setSnackbar,
     isRequestSuccess,
     isVerifySuccess,
     isRecoverSuccess,
@@ -142,8 +143,11 @@ const useRecover = () => {
   };
 
   return {
+    router,
     step,
     snackbar,
+    authReady,
+    isAuthenticated,
     handleClose,
     handleRequestRecovery,
     handleResendRecovery,

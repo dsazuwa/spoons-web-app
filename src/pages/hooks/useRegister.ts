@@ -5,15 +5,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
 import { useRegisterUserMutation } from '@features/user/api';
+import useAuthentication from '@hooks/useAuthentication';
 import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({
   firstName: string(),
   lastName: string(),
-
   email: string().email({ message: 'Invalid email address' }),
-
   password: string()
     .trim()
     .min(8, { message: 'Password must be 8 or more characters long' })
@@ -25,9 +24,7 @@ const formSchema = object({
     .regex(/[A-Z]/, {
       message: 'Password must contain at least 1 uppercase letter',
     }),
-
   confirm: string().trim(),
-
   agreeToTerms: boolean(),
 })
   .refine((data) => data.password === data.confirm, {
@@ -44,6 +41,7 @@ type RegisterFormSchema = TypeOf<typeof formSchema>;
 const useRegister = () => {
   const router = useRouter();
   const { snackbar, setSnackbar, handleClose } = useSnackbarAlert();
+  const { authReady, isAuthenticated } = useAuthentication();
 
   const [registerUser, { isLoading, isSuccess, error }] =
     useRegisterUserMutation();
@@ -55,15 +53,18 @@ const useRegister = () => {
         message: 'Registration Successful!',
         severity: 'success',
       });
+
       setTimeout(() => {
         router.push('/verify');
       }, 500);
     }
 
-    if (error) {
-      const message = getErrorMessage(error);
-      setSnackbar({ open: true, message, severity: 'error' });
-    }
+    if (error)
+      setSnackbar({
+        open: true,
+        message: getErrorMessage(error),
+        severity: 'error',
+      });
   }, [isLoading, isSuccess, error, router, setSnackbar]);
 
   const {
@@ -91,11 +92,14 @@ const useRegister = () => {
     registerUser(formData);
 
   return {
+    router,
+    authReady,
+    isAuthenticated,
     control,
     errors,
+    snackbar,
     handleSubmit,
     onSubmitHandler,
-    snackbar,
     handleClose,
   };
 };

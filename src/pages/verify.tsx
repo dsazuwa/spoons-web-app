@@ -1,28 +1,32 @@
-import SnackbarAlert from '@components/SnackbarAlert';
+import { VerifyEmailPageContent } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-
-import { Verify } from '@features/user';
 import useVerifyEmail from './hooks/useVerifyEmail';
 
 function VerifyEmail() {
-  const { resendVerification, submit, snackbar, handleClose } =
-    useVerifyEmail();
+  const {
+    router,
+    user,
+    authReady,
+    isAuthenticated,
+    resendVerification,
+    submit,
+    snackbar,
+    handleClose,
+  } = useVerifyEmail();
 
-  return (
-    <>
-      <Verify resend={resendVerification} submit={submit} />
-
-      <SnackbarAlert
-        open={snackbar.open}
-        onClose={handleClose}
-        severity={snackbar.severity}
-        message={snackbar.message}
-        duration={3000}
-      />
-    </>
+  return getSpoonsLayout(
+    <VerifyEmailPageContent
+      resendVerification={resendVerification}
+      submit={submit}
+      snackbar={snackbar}
+      handleClose={handleClose}
+    />,
+    router,
+    'private',
+    authReady,
+    isAuthenticated,
+    user?.status === 'pending',
   );
 }
-
-VerifyEmail.getLayout = getSpoonsLayout;
 
 export default VerifyEmail;
