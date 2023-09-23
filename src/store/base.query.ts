@@ -25,11 +25,6 @@ const baseQueryWithReauth: BaseQueryFn<
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
 
-  const requestConfig =
-    typeof args === 'string'
-      ? args
-      : ({ ...args, credentials: 'include' } as FetchArgs);
-
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
@@ -44,13 +39,13 @@ const baseQueryWithReauth: BaseQueryFn<
         );
 
         if (refreshResult.error) api.dispatch(logout());
-        else result = await baseQuery(requestConfig, api, extraOptions); // retry initial query
+        else result = await baseQuery(args, api, extraOptions); // retry initial query
       } finally {
         release();
       }
     } else {
       await mutex.waitForUnlock();
-      result = await baseQuery(requestConfig, api, extraOptions);
+      result = await baseQuery(args, api, extraOptions);
     }
   }
 
