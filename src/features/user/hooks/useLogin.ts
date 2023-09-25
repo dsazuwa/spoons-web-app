@@ -11,7 +11,7 @@ import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({
   email: string().email({ message: 'Invalid email address' }),
-  password: string(),
+  password: string().trim().nonempty('Password required'),
   remember: boolean(),
 });
 

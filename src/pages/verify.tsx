@@ -1,6 +1,5 @@
-import { VerifyEmailPageContent } from '@features/user';
+import { VerifyEmailPageContent, useVerifyEmail } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-import useVerifyEmail from './hooks/useVerifyEmail';
 
 function VerifyEmail() {
   const {

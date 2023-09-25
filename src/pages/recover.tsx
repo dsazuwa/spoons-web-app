@@ -1,6 +1,5 @@
-import { RecoverPageContent } from '@features/user';
+import { RecoverPageContent, useRecover } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-import useRecover from './hooks/useRecover';
 
 function Recover() {
   const {

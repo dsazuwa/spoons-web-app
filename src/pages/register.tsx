@@ -1,6 +1,5 @@
-import { RegisterPageContent } from '@features/user';
+import { RegisterPageContent, useRegister } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-import useRegister from './hooks/useRegister';
 
 function Register() {
   const {

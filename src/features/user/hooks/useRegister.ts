@@ -10,8 +10,8 @@ import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({
-  firstName: string(),
-  lastName: string(),
+  firstName: string().trim().nonempty('First name required'),
+  lastName: string().trim().nonempty('Last name required'),
   email: string().email({ message: 'Invalid email address' }),
   password: string()
     .trim()

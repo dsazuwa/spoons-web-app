@@ -1,6 +1,5 @@
-import { LoginPageContent } from '@features/user';
+import { LoginPageContent, useLogin } from '@features/user';
 import getSpoonsLayout from '@layout/SpoonsLayout';
-import useLogin from './hooks/useLogin';
 
 function Login() {
   const {
