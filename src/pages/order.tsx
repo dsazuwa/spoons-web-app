@@ -1,7 +1,7 @@
-import getClientLayout from '@layout/ClientLayout';
+import getCustomerLayout from '@layout/CustomerLayout';
 
 function Order() {
-  return getClientLayout(
+  return getCustomerLayout(
     <div>Order</div>,
     { pageAccess: 'public', router: undefined },
     true,

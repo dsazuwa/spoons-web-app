@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 
-import getClientLayout from '@layout/ClientLayout';
+import getCustomerLayout from '@layout/CustomerLayout';
 import useAuthentication from '@hooks/useAuthentication';
 
 function Account() {
   const router = useRouter();
   const { authReady, isAuthenticated } = useAuthentication();
 
-  return getClientLayout(
+  return getCustomerLayout(
     <div>Account</div>,
     { pageAccess: 'private', router },
     authReady,

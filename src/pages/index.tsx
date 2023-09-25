@@ -1,8 +1,8 @@
 import HomePageContent from '@components/page-content/HomePageContent';
-import getClientLayout from '@layout/ClientLayout';
+import getCustomerLayout from '@layout/CustomerLayout';
 
 const Home = () => {
-  return getClientLayout(
+  return getCustomerLayout(
     <HomePageContent />,
     { pageAccess: 'public', router: undefined },
     true,

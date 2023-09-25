@@ -1,7 +1,7 @@
-import getClientLayout from '@layout/ClientLayout';
+import getCustomerLayout from '@layout/CustomerLayout';
 
 function Menupage() {
-  return getClientLayout(
+  return getCustomerLayout(
     <div>Menu</div>,
     { pageAccess: 'public', router: undefined },
     true,

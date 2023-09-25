@@ -1,7 +1,7 @@
-import getClientLayout from '@layout/ClientLayout';
+import getCustomerLayout from '@layout/CustomerLayout';
 
 function About() {
-  return getClientLayout(
+  return getCustomerLayout(
     <div>About</div>,
     { pageAccess: 'public', router: undefined },
     true,

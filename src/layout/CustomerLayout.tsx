@@ -6,7 +6,7 @@ import Footer from '@components/Footer';
 import FullScreenLoader from '@components/FullScreenLoader';
 import { PageAcceessType } from '@types';
 
-function getClientLayout(
+function getCustomerLayout(
   page: React.ReactElement,
   pageConfig:
     | { pageAccess: 'public'; router: undefined }
@@ -38,4 +38,4 @@ function getClientLayout(
   );
 }
 
-export default getClientLayout;
+export default getCustomerLayout;
