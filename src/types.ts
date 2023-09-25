@@ -1,5 +1,7 @@
 import { AlertColor } from '@mui/material';
 
+export type PageAcceessType = 'public' | 'private' | 'unauthenticated';
+
 export type SnackbarType = {
   open: boolean;
   message: string;

@@ -1,9 +1,12 @@
 import getClientLayout from '@layout/ClientLayout';
 
-function Menu() {
-  return <div>Menu</div>;
+function Menupage() {
+  return getClientLayout(
+    <div>Menu</div>,
+    { pageAccess: 'public', router: undefined },
+    true,
+    true,
+  );
 }
 
-Menu.getLayout = getClientLayout;
-
-export default Menu;
+export default Menupage;

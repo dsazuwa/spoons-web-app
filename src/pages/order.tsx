@@ -1,9 +1,12 @@
 import getClientLayout from '@layout/ClientLayout';
 
 function Order() {
-  return <div>Order</div>;
+  return getClientLayout(
+    <div>Order</div>,
+    { pageAccess: 'public', router: undefined },
+    true,
+    true,
+  );
 }
-
-Order.getLayout = getClientLayout;
 
 export default Order;

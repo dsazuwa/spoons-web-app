@@ -1,9 +1,12 @@
 import getClientLayout from '@layout/ClientLayout';
 
 function About() {
-  return <div>About</div>;
+  return getClientLayout(
+    <div>About</div>,
+    { pageAccess: 'public', router: undefined },
+    true,
+    true,
+  );
 }
-
-About.getLayout = getClientLayout;
 
 export default About;

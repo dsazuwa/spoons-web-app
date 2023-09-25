@@ -4,11 +4,12 @@ import { NextRouter } from 'next/router';
 
 import FullScreenLoader from '@components/FullScreenLoader';
 import LogoButton from '@components/LogoButton';
+import { PageAcceessType } from '@types';
 
 function getSpoonsLayout(
   page: React.ReactElement,
   router: NextRouter,
-  pageAccess: 'public' | 'private' | 'unauthenticated',
+  pageAccess: PageAcceessType,
   authReady: boolean,
   isAuthenticated: boolean,
   isAccessAllowed: boolean = true,
