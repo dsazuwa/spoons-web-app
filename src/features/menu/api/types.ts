@@ -42,3 +42,7 @@ type MenuType<T> = {
   kids: T;
   sides: T;
 };
+
+type GroupedMenuResponseType = {
+  menu: MenuType<PublicCategoryItemType>;
+};

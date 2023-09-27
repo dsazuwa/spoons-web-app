@@ -19,7 +19,7 @@ export const menuApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getMenu: builder.query<{ menu: MenuType<PublicCategoryItemType> }, void>({
+    getMenu: builder.query<GroupedMenuResponseType, void>({
       query() {
         return {
           url: `/grouped`,

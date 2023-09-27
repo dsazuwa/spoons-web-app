@@ -1,13 +1,12 @@
 import Stack from '@mui/material/Stack';
 
-import { IGroupedMenuResponse } from '../api/types';
 import SandwichCategorySkeleton from './skelentons/SandwichCategorySkeleton';
 import SandwichCategoryView from './views/SandwichCategoryView';
 
 interface SandwichCategoryProps {
   isLoading: boolean;
   isFetching: boolean;
-  data: IGroupedMenuResponse | undefined;
+  data: GroupedMenuResponseType | undefined;
 }
 
 function SandwichCategory({

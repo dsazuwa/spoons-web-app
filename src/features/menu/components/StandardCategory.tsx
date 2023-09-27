@@ -1,13 +1,12 @@
 import Stack from '@mui/material/Stack';
 
-import { IGroupedMenuResponse } from '../api/types';
 import StandardCategorySkeleton from './skelentons/StandardCategorySkeleton';
 import StandardCategoryView from './views/StandardCategoryView';
 
 interface StandardCategoryProps {
   isLoading: boolean;
   isFetching: boolean;
-  data: IGroupedMenuResponse | undefined;
+  data: GroupedMenuResponseType | undefined;
   name: string;
 }
 
