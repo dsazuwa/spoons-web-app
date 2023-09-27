@@ -1,8 +1,9 @@
+import { MenuPageContent } from '@features/menu';
 import getCustomerLayout from '@layout/CustomerLayout';
 
 function Menupage() {
   return getCustomerLayout(
-    <div>Menu</div>,
+    <MenuPageContent />,
     { pageAccess: 'public', router: undefined },
     true,
     true,

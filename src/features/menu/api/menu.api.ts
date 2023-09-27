@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { IGroupedMenuResponse, IMenuResponse } from './types';
+import { setMenu } from './menu.slice';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -19,22 +19,22 @@ export const menuApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getMenu: builder.query<IMenuResponse, void>({
-      query() {
-        return {
-          url: '',
-        };
-      },
-    }),
-
-    getGroupedMenu: builder.query<IGroupedMenuResponse, void>({
+    getMenu: builder.query<{ menu: MenuType<PublicCategoryItemType> }, void>({
       query() {
         return {
           url: `/grouped`,
         };
       },
+      async onQueryStarted(arg, api) {
+        try {
+          const { data } = await api.queryFulfilled;
+          api.dispatch(setMenu(data.menu));
+        } catch (e) {
+          console.log(e);
+        }
+      },
     }),
   }),
 });
 
-export const { useGetMenuQuery, useGetGroupedMenuQuery } = menuApi;
+export const { useGetMenuQuery } = menuApi;

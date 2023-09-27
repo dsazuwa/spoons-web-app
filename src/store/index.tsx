@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { createWrapper } from 'next-redux-wrapper';
 
-import { menuApi } from '@features/menu';
+import { menuApi, menuReducer } from '@features/menu';
 import { authApi, customerApi, userApi, userReducer } from '@features/user';
 
 export const store = configureStore({
@@ -10,6 +10,7 @@ export const store = configureStore({
 
   reducer: {
     [menuApi.reducerPath]: menuApi.reducer,
+    menuState: menuReducer,
 
     [authApi.reducerPath]: authApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
