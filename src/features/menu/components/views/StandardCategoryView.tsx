@@ -1,11 +1,10 @@
-import { IGroupedMenuResponse } from '../../api/types';
 import CategoryHeader from '../CategoryHeader';
 import CategoryNotes from '../CategoryNotes';
 import ItemGrid from '../ItemGrid';
 import TagBar from '../TagBar';
 
 interface StandardCategoryViewProps {
-  data: IGroupedMenuResponse;
+  data: GroupedMenuResponseType;
   name: string;
 }
 
@@ -16,7 +15,7 @@ function StandardCategoryView({ data, name }: StandardCategoryViewProps) {
 
   return (
     <>
-      <CategoryHeader title={category} />
+      <CategoryHeader id={name} title={category} />
 
       <CategoryNotes notes={notes} />
 

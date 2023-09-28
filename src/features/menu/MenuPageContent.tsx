@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store';
 import palette from '@utils/palette';
 import { useGetMenuQuery } from './api/menu.api';
+import CategoryLinkBar from './components/CategoryLinkBar';
 import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
 
@@ -23,6 +24,7 @@ function MenuPageContent() {
   });
 
   const data = isCached ? { menu: cachedMenu } : retrievedData;
+  // const data = undefined;
 
   // type size = 'sm' | 'md' | 'lg';
 
@@ -36,12 +38,15 @@ function MenuPageContent() {
           letterSpacing: 3,
           fontWeight: 800,
           textAlign: 'center',
+          marginBottom: '20px',
         }}
       >
         Menu
       </Typography>
 
-      <Stack spacing={5}>
+      <CategoryLinkBar />
+
+      <Stack spacing={5} marginTop={2}>
         <StandardCategory
           isFetching={isFetching}
           isLoading={isLoading}

@@ -1,11 +1,10 @@
-import { IGroupedMenuResponse } from '../../api/types';
 import CategoryHeader from '../CategoryHeader';
 import CategoryNotes from '../CategoryNotes';
 import CategorySection from '../CategorySection';
 import TagBar from '../TagBar';
 
 interface SandwichCategoryViewProps {
-  data: IGroupedMenuResponse;
+  data: GroupedMenuResponseType;
 }
 
 function SandwichCategoryView({ data }: SandwichCategoryViewProps) {
@@ -13,7 +12,7 @@ function SandwichCategoryView({ data }: SandwichCategoryViewProps) {
 
   return (
     <>
-      <CategoryHeader title='Cheffy Sandwiches' />
+      <CategoryHeader id='sandwiches' title='Cheffy Sandwiches' />
 
       <CategoryNotes notes={foodie.notes} />
 
