@@ -1,58 +1,18 @@
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '@store';
 import palette from '@utils/palette';
-import { useGetMenuQuery } from './api/menu.api';
 import CategoryLinkAppBar from './components/CategoryLinkAppBar';
 import CategoryLinkBar from './components/CategoryLinkBar';
 import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
+import useGetMenu from './hooks/useGetMenu';
+import useScrollHandler from './hooks/useScrollHandler';
 
 function MenuPageContent() {
-  const [isScrolledPast, setScrolledPast] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const elementTarget = document.getElementById('tag-bar');
-
-      if (elementTarget) {
-        const appBarHeight = 64;
-        const linkAppBarHeight = 22.5;
-        const linkAppBarPadding = 10;
-        const offset = appBarHeight + linkAppBarHeight + linkAppBarPadding;
-
-        const isScrolledPast =
-          window.scrollY >
-          elementTarget.offsetTop + elementTarget.offsetHeight - offset;
-        setScrolledPast(isScrolledPast);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const cachedMenu = useSelector((state: RootState) => state.menuState.menu);
-  const isCached = cachedMenu !== undefined;
-
-  const {
-    isFetching,
-    isLoading,
-    data: retrievedData,
-  } = useGetMenuQuery(undefined, {
-    skip: isCached,
-    refetchOnMountOrArgChange: true,
-  });
-
-  const data = isCached ? { menu: cachedMenu } : retrievedData;
-  // const data = undefined;
+  const { isScrolledPast } = useScrollHandler();
+  const { isFetching, isLoading, data } = useGetMenu();
 
   // type size = 'sm' | 'md' | 'lg';
 
