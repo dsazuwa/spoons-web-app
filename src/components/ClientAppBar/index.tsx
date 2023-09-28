@@ -68,7 +68,7 @@ function ClientAppBar() {
 
   return (
     <Box>
-      <AppBar position='static'>
+      <AppBar>
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
             <LogoButton

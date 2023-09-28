@@ -1,16 +1,38 @@
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@store';
 import palette from '@utils/palette';
 import { useGetMenuQuery } from './api/menu.api';
+import CategoryLinkAppBar from './components/CategoryLinkAppBar';
 import CategoryLinkBar from './components/CategoryLinkBar';
 import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
 
 function MenuPageContent() {
+  const [isScrolledPast, setScrolledPast] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const elementTarget = document.getElementById('tag-bar');
+
+      if (elementTarget) {
+        const isScrolledPast =
+          window.scrollY > elementTarget.offsetTop + elementTarget.offsetHeight;
+        setScrolledPast(isScrolledPast);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const cachedMenu = useSelector((state: RootState) => state.menuState.menu);
   const isCached = cachedMenu !== undefined;
 
@@ -29,73 +51,77 @@ function MenuPageContent() {
   // type size = 'sm' | 'md' | 'lg';
 
   return (
-    <Container maxWidth='md' sx={{ padding: '20px' }}>
-      <Typography
-        variant='h3'
-        sx={{
-          color: palette.primary[950],
-          textTransform: 'uppercase',
-          letterSpacing: 3,
-          fontWeight: 800,
-          textAlign: 'center',
-          marginBottom: '20px',
-        }}
-      >
-        Menu
-      </Typography>
+    <>
+      {isScrolledPast && <CategoryLinkAppBar />}
 
-      <CategoryLinkBar />
+      <Container maxWidth='md' sx={{ marginTop: '20px' }}>
+        <Typography
+          variant='h3'
+          sx={{
+            color: palette.primary[950],
+            textTransform: 'uppercase',
+            letterSpacing: 3,
+            fontWeight: 800,
+            textAlign: 'center',
+            marginBottom: '20px',
+          }}
+        >
+          Menu
+        </Typography>
 
-      <Stack spacing={5} marginTop={2}>
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='creations'
-        />
+        <CategoryLinkBar />
 
-        <SandwichCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-        />
+        <Stack spacing={5} marginTop={2}>
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='creations'
+          />
 
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='bowls'
-        />
+          <SandwichCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+          />
 
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='salads'
-        />
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='bowls'
+          />
 
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='combos'
-        />
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='salads'
+          />
 
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='kids'
-        />
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='combos'
+          />
 
-        <StandardCategory
-          isFetching={isFetching}
-          isLoading={isLoading}
-          data={data}
-          name='sides'
-        />
-      </Stack>
-    </Container>
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='kids'
+          />
+
+          <StandardCategory
+            isFetching={isFetching}
+            isLoading={isLoading}
+            data={data}
+            name='sides'
+          />
+        </Stack>
+      </Container>
+    </>
   );
 }
 

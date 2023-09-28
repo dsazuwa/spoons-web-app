@@ -32,6 +32,7 @@ function getCustomerLayout(
   return (
     <Box display='flex' flexDirection='column' minHeight='100vh'>
       <ClientAppBar />
+      <Box marginTop='64px' />
       {page}
       <Footer />
     </Box>
