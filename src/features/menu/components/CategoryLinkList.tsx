@@ -14,7 +14,7 @@ function CategoryLinkList() {
   ];
 
   return (
-    <Stack direction='row' justifyContent='center' flexWrap='wrap' spacing={2}>
+    <Stack direction='row' justifyContent='center' flexWrap='wrap' spacing={3}>
       {categories.map((category) => (
         <CategoryLink
           key={category.to}

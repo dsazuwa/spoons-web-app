@@ -15,7 +15,7 @@ function SandwichCategory({
   data,
 }: SandwichCategoryProps) {
   return (
-    <Stack alignItems='center' spacing={1.5}>
+    <Stack alignItems='center' spacing={1.5} paddingTop='15px'>
       {isLoading || isFetching || data === undefined ? (
         <SandwichCategorySkeleton />
       ) : (

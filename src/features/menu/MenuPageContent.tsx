@@ -20,8 +20,14 @@ function MenuPageContent() {
       const elementTarget = document.getElementById('tag-bar');
 
       if (elementTarget) {
+        const appBarHeight = 64;
+        const linkAppBarHeight = 22.5;
+        const linkAppBarPadding = 10;
+        const offset = appBarHeight + linkAppBarHeight + linkAppBarPadding;
+
         const isScrolledPast =
-          window.scrollY > elementTarget.offsetTop + elementTarget.offsetHeight;
+          window.scrollY >
+          elementTarget.offsetTop + elementTarget.offsetHeight - offset;
         setScrolledPast(isScrolledPast);
       }
     };
@@ -63,7 +69,7 @@ function MenuPageContent() {
             letterSpacing: 3,
             fontWeight: 800,
             textAlign: 'center',
-            marginBottom: '20px',
+            marginBottom: '15px',
           }}
         >
           Menu
