@@ -32,6 +32,15 @@ type PublicCategoryItemType = {
   items: PublicMenuItemType[];
 };
 
+type CategoryType =
+  | 'creations'
+  | 'sandwiches'
+  | 'bowls'
+  | 'salads'
+  | 'combos'
+  | 'kids'
+  | 'sides';
+
 type MenuType<T> = {
   creations: T;
   foodie: T;
