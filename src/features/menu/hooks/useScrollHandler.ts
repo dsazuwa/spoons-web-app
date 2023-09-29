@@ -4,7 +4,7 @@ const useScrollHandler = () => {
   const [isScrolledPast, setScrolledPast] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const scrolledPastListener = () => {
       const elementTarget = document.getElementById('tag-bar');
 
       if (elementTarget) {
@@ -20,10 +20,10 @@ const useScrollHandler = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', scrolledPastListener);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', scrolledPastListener);
     };
   }, []);
 
