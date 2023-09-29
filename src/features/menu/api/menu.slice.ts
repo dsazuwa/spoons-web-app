@@ -4,11 +4,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IMenuState {
   menu: MenuType<PublicCategoryItemType> | undefined;
+  selected: CategoryType;
   categories: { category: CategoryType; title: string }[];
 }
 
 const initialState: IMenuState = {
   menu: undefined,
+  selected: 'creations',
   categories: [
     { category: 'creations', title: "Chef's Creations" },
     { category: 'sandwiches', title: 'Cheffy Sandwiches' },
@@ -31,9 +33,13 @@ export const menuSlice = createSlice({
       const newState = state;
       newState.menu = action.payload;
     },
+    setSelected: (state, action: PayloadAction<CategoryType>) => {
+      const newState = state;
+      newState.selected = action.payload;
+    },
   },
 });
 
 export const menuReducer = menuSlice.reducer;
 
-export const { setMenu } = menuSlice.actions;
+export const { setMenu, setSelected } = menuSlice.actions;
