@@ -11,7 +11,7 @@ function CategoryLinkAppBar() {
       sx={{
         backgroundColor: palette.base.white,
         padding: '10px',
-        marginTop: '64px',
+        marginTop: '56px',
       }}
     >
       <CategoryLinkList />

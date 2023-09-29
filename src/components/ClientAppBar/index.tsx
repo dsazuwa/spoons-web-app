@@ -68,9 +68,13 @@ function ClientAppBar() {
 
   return (
     <Box>
-      <AppBar>
+      <AppBar sx={{ height: '56px' }}>
         <Container maxWidth='xl'>
-          <Toolbar disableGutters>
+          <Toolbar
+            variant='dense'
+            disableGutters
+            sx={{ minHeight: '56px', height: '56px' }}
+          >
             <LogoButton
               home='/'
               sx={{ display: { xs: 'none', md: 'flex' }, mr: 4, mb: 0.5 }}
@@ -93,7 +97,11 @@ function ClientAppBar() {
                 open={leftDrawer}
                 onClose={toggleDrawer(false)}
               >
-                <Toolbar />
+                <Toolbar
+                  variant='dense'
+                  disableGutters
+                  sx={{ minHeight: '56px', height: '56px' }}
+                />
                 <Divider />
                 <Box
                   sx={{ width: 250 }}

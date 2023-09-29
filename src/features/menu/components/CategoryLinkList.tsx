@@ -10,7 +10,12 @@ function CategoryLinkList() {
   );
 
   return (
-    <Stack direction='row' justifyContent='center' flexWrap='wrap' spacing={3}>
+    <Stack
+      direction='row'
+      justifyContent='center'
+      flexWrap='wrap'
+      spacing={{ xs: 1.5, sm: 3 }}
+    >
       {categories.map(({ category, title }) => (
         <CategoryLink key={category} title={title} category={category} />
       ))}

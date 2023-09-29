@@ -22,7 +22,7 @@ function CategoryLink({ title, category }: CategoryLinkProps) {
 
     const scrollTarget = document.getElementById(category);
     if (scrollTarget) {
-      const appBarHeight = 64;
+      const appBarHeight = 56;
       const linkAppBarHeight = 22.5;
       const linkAppBarPadding = 10;
       const offset = appBarHeight + linkAppBarHeight + 2 * linkAppBarPadding;
@@ -39,9 +39,9 @@ function CategoryLink({ title, category }: CategoryLinkProps) {
       href={`/menu/#${category}`}
       onClick={handleClick}
       sx={{
-        fontSize: '15px',
-        color: selected === category ? palette.primary[700] : palette.grey[500],
-        fontWeight: selected === category ? 600 : 400,
+        fontSize: { xs: '8px', sm: '10px', md: '12px' },
+        color: selected === category ? palette.primary[700] : palette.grey[400],
+        fontWeight: selected === category ? 700 : 500,
         textDecoration: 'none',
       }}
     >

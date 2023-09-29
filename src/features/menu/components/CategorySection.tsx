@@ -18,6 +18,7 @@ function CategorySection({ category, items }: CategorySectionProps) {
           textTransform: 'uppercase',
           letterSpacing: 1,
           fontWeight: 700,
+          fontSize: { xs: '15px', sm: '20px', md: '25px' },
         }}
       >
         {category}

@@ -13,8 +13,10 @@ function CategoryHeader({ title }: CategoryHeaderProps) {
       sx={{
         color: palette.primary[900],
         textTransform: 'uppercase',
+        textAlign: 'center',
         letterSpacing: 3,
-        fontWeight: 700,
+        fontWeight: 1000,
+        fontSize: { xs: '20px', sm: '25px', md: '30px' },
       }}
     >
       {title}

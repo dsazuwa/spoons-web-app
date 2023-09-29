@@ -8,7 +8,7 @@ import Tag from './Tag';
 function Item({ item }: { item: PublicMenuItemType }) {
   const { name, description, tags, photoUrl, notes } = item;
 
-  const width = { xs: '350px', sm: '300px', md: '250px' };
+  const width = { xs: '350px', sm: '275px', md: '250px' };
 
   return (
     <Stack alignItems='center' sx={{ width }} spacing={0.5}>

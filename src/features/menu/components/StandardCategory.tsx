@@ -18,7 +18,7 @@ function StandardCategory({
 }: StandardCategoryProps) {
   return (
     <div id={name}>
-      <Stack alignItems='center' spacing={1.5}>
+      <Stack alignItems='center' spacing={{ xs: 1, sm: 1.5 }}>
         {isLoading || isFetching || data === undefined ? (
           <StandardCategorySkeleton />
         ) : (

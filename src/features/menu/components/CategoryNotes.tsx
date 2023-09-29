@@ -9,7 +9,11 @@ function CategoryNotes({ notes }: { notes: string[] | undefined }) {
           <Typography
             key={index}
             variant='caption'
-            sx={{ fontSize: '10px', textAlign: 'center', maxWidth: '700px' }}
+            sx={{
+              textAlign: 'center',
+              maxWidth: { xs: '450px', sm: '550px', md: '700px' },
+              fontSize: { xs: '8px', sm: '10px', md: '12px' },
+            }}
           >
             {note}
           </Typography>

@@ -10,26 +10,30 @@ import StandardCategory from './components/StandardCategory';
 import useGetMenu from './hooks/useGetMenu';
 import useScrollHandler from './hooks/useScrollHandler';
 
+// type size = 'sm' | 'md' | 'lg';
+
 function MenuPageContent() {
   const { isScrolledPast } = useScrollHandler();
   const { isFetching, isLoading, data } = useGetMenu();
-
-  // type size = 'sm' | 'md' | 'lg';
 
   return (
     <>
       {isScrolledPast && <CategoryLinkAppBar />}
 
-      <Container maxWidth='md' sx={{ marginTop: '20px' }}>
+      <Container
+        maxWidth='md'
+        sx={{ marginTop: { xs: '10px', sm: '15px', md: '20px' } }}
+      >
         <Typography
           variant='h3'
           sx={{
             color: palette.primary[950],
+            marginBottom: { xs: '8px', sm: '12px', md: '15px' },
+            textAlign: 'center',
             textTransform: 'uppercase',
             letterSpacing: 3,
             fontWeight: 800,
-            textAlign: 'center',
-            marginBottom: '15px',
+            fontSize: { xs: '30px', sm: '35px', md: '40px' },
           }}
         >
           Menu
@@ -37,7 +41,7 @@ function MenuPageContent() {
 
         <CategoryLinkBar />
 
-        <Stack spacing={5} marginTop={2}>
+        <Stack spacing={5} marginTop={{ xs: '8px', sm: '12px', md: '15px' }}>
           <StandardCategory
             isFetching={isFetching}
             isLoading={isLoading}
