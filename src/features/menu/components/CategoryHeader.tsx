@@ -3,14 +3,12 @@ import Typography from '@mui/material/Typography';
 import palette from '@utils/palette';
 
 interface CategoryHeaderProps {
-  id: string;
   title: string;
 }
 
-function CategoryHeader({ id, title }: CategoryHeaderProps) {
+function CategoryHeader({ title }: CategoryHeaderProps) {
   return (
     <Typography
-      id={id}
       variant='h4'
       sx={{
         color: palette.primary[900],

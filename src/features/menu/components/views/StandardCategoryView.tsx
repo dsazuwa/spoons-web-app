@@ -15,7 +15,7 @@ function StandardCategoryView({ data, name }: StandardCategoryViewProps) {
 
   return (
     <>
-      <CategoryHeader id={name} title={category} />
+      <CategoryHeader title={category} />
 
       <CategoryNotes notes={notes} />
 

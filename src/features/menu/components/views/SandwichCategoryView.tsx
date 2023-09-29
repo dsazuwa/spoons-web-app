@@ -12,7 +12,7 @@ function SandwichCategoryView({ data }: SandwichCategoryViewProps) {
 
   return (
     <>
-      <CategoryHeader id='sandwiches' title='Cheffy Sandwiches' />
+      <CategoryHeader title='Cheffy Sandwiches' />
 
       <CategoryNotes notes={foodie.notes} />
 

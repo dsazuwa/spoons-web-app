@@ -17,13 +17,15 @@ function StandardCategory({
   name,
 }: StandardCategoryProps) {
   return (
-    <Stack alignItems='center' spacing={1.5}>
-      {isLoading || isFetching || data === undefined ? (
-        <StandardCategorySkeleton />
-      ) : (
-        <StandardCategoryView data={data} name={name} />
-      )}
-    </Stack>
+    <div id={name}>
+      <Stack alignItems='center' spacing={1.5}>
+        {isLoading || isFetching || data === undefined ? (
+          <StandardCategorySkeleton />
+        ) : (
+          <StandardCategoryView data={data} name={name} />
+        )}
+      </Stack>
+    </div>
   );
 }
 
