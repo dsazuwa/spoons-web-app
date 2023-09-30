@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Link from '@components/Link';
 import { RootState } from '@store';
@@ -21,11 +21,11 @@ function CategoryLink({ title, category }: CategoryLinkProps) {
     dispatch(setSelected(category));
 
     const scrollTarget = document.getElementById(category);
-    if (scrollTarget) {
-      const appBarHeight = 56;
-      const linkAppBarHeight = 22.5;
-      const linkAppBarPadding = 10;
-      const offset = appBarHeight + linkAppBarHeight + 2 * linkAppBarPadding;
+    const appBar = document.getElementById('client-app-bar');
+    const categoryToggle = document.getElementById('category-toggle');
+
+    if (scrollTarget && appBar && categoryToggle) {
+      const offset = appBar?.offsetHeight + categoryToggle?.offsetHeight;
 
       window.scrollTo({
         top: scrollTarget.getBoundingClientRect().top + window.scrollY - offset,
@@ -41,7 +41,7 @@ function CategoryLink({ title, category }: CategoryLinkProps) {
       sx={{
         fontSize: { xs: '8px', sm: '10px', md: '12px' },
         color: selected === category ? palette.primary[700] : palette.grey[400],
-        fontWeight: selected === category ? 700 : 500,
+        fontWeight: selected === category ? 800 : 500,
         textDecoration: 'none',
       }}
     >

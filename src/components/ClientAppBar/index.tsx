@@ -68,7 +68,7 @@ function ClientAppBar() {
 
   return (
     <Box>
-      <AppBar sx={{ height: '56px' }}>
+      <AppBar id='client-app-bar' sx={{ height: '56px' }}>
         <Container maxWidth='xl'>
           <Toolbar
             variant='dense'
