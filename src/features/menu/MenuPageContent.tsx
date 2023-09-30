@@ -8,12 +8,12 @@ import CategoryLinkBar from './components/CategoryLinkBar';
 import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
 import useGetMenu from './hooks/useGetMenu';
-import useScrollHandler from './hooks/useScrollHandler';
+import useTagBarIntersectionObserver from './hooks/useTagBarIntersectionObserver';
 
 // type size = 'sm' | 'md' | 'lg';
 
 function MenuPageContent() {
-  const { isScrolledPast } = useScrollHandler();
+  const { isScrolledPast } = useTagBarIntersectionObserver();
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
