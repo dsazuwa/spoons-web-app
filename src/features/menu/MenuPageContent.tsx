@@ -3,24 +3,16 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import palette from '@utils/palette';
-import CategoryLinkAppBar from './components/CategoryLinkAppBar';
-import CategoryLinkBar from './components/CategoryLinkBar';
+import CategoryToggle from './components/CategoryToggle';
 import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
 import useGetMenu from './hooks/useGetMenu';
-import useTagBarIntersectionObserver from './hooks/useTagBarIntersectionObserver';
-import useCategoryIntersectionObserver from './hooks/useCategoryIntersectionObserver';
 
 function MenuPageContent() {
-  useCategoryIntersectionObserver();
-
-  const { isScrolledPast } = useTagBarIntersectionObserver();
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
     <>
-      {isScrolledPast && <CategoryLinkAppBar />}
-
       <Container
         maxWidth='md'
         sx={{ marginTop: { xs: '10px', sm: '15px', md: '20px' } }}
@@ -40,7 +32,7 @@ function MenuPageContent() {
           Menu
         </Typography>
 
-        <CategoryLinkBar />
+        <CategoryToggle />
 
         <Stack
           spacing={{ xs: 2, sm: 3, md: 4 }}
