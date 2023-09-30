@@ -11,8 +11,6 @@ import useGetMenu from './hooks/useGetMenu';
 import useTagBarIntersectionObserver from './hooks/useTagBarIntersectionObserver';
 import useCategoryIntersectionObserver from './hooks/useCategoryIntersectionObserver';
 
-// type size = 'sm' | 'md' | 'lg';
-
 function MenuPageContent() {
   useCategoryIntersectionObserver();
 
@@ -32,11 +30,11 @@ function MenuPageContent() {
           sx={{
             color: palette.primary[950],
             marginBottom: { xs: '8px', sm: '12px', md: '15px' },
+            fontSize: { xs: '30px', sm: '35px', md: '40px' },
             textAlign: 'center',
             textTransform: 'uppercase',
             letterSpacing: 3,
             fontWeight: 800,
-            fontSize: { xs: '30px', sm: '35px', md: '40px' },
           }}
         >
           Menu
@@ -44,7 +42,10 @@ function MenuPageContent() {
 
         <CategoryLinkBar />
 
-        <Stack spacing={5} marginTop={{ xs: '8px', sm: '12px', md: '15px' }}>
+        <Stack
+          spacing={{ xs: 2, sm: 3, md: 4 }}
+          marginTop={{ xs: '8px', sm: '12px', md: '15px' }}
+        >
           <StandardCategory
             isFetching={isFetching}
             isLoading={isLoading}

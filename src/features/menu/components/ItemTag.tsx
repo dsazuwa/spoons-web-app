@@ -5,7 +5,7 @@ import React from 'react';
 
 import palette from '@utils/palette';
 
-function Tag({ tags }: { tags: string[] }) {
+function ItemTag({ tags }: { tags: string[] }) {
   return (
     <Stack direction='row' spacing={1}>
       {tags.map((tag, index) => (
@@ -25,4 +25,4 @@ function Tag({ tags }: { tags: string[] }) {
   );
 }
 
-export default Tag;
+export default ItemTag;

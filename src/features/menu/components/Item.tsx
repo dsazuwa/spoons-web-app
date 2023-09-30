@@ -3,20 +3,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import palette from '@utils/palette';
-import Tag from './Tag';
+import ItemTag from './ItemTag';
 
 function Item({ item }: { item: PublicMenuItemType }) {
   const { name, description, tags, photoUrl, notes } = item;
 
-  const width = { xs: '350px', sm: '275px', md: '250px' };
-
   return (
-    <Stack alignItems='center' sx={{ width }} spacing={0.5}>
+    <Stack alignItems='center' spacing={0.5} padding='10px' width='100%'>
       <Box
         component='img'
         src={`/menu-items/${photoUrl}`}
         alt={name}
-        sx={{ width }}
+        width='100%'
       />
 
       <Typography
@@ -24,13 +22,13 @@ function Item({ item }: { item: PublicMenuItemType }) {
         sx={{
           color: palette.primary[900],
           textAlign: 'center',
-          fontSize: '15px',
+          fontSize: { xs: '10px', sm: '12.5px', md: '15px' },
         }}
       >
         {name}
       </Typography>
 
-      {tags && <Tag tags={tags} />}
+      {tags && <ItemTag tags={tags} />}
 
       <Typography
         variant='caption'
@@ -42,7 +40,7 @@ function Item({ item }: { item: PublicMenuItemType }) {
       {notes && (
         <Typography
           variant='caption'
-          sx={{ fontSize: '10px', textAlign: 'center', padding: '10px' }}
+          sx={{ fontSize: '10px', padding: '10px', textAlign: 'center' }}
         >
           {notes}
         </Typography>
