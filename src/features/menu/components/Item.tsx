@@ -1,21 +1,29 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 import palette from '@utils/palette';
-import ItemTag from '../ItemTag';
+import ItemTag from './ItemTag';
+import ImageSkeleton from './skeletons/ImageSkeleton';
 
 function Item({ item }: { item: PublicMenuItemType }) {
   const { name, description, tags, photoUrl, notes } = item;
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <Stack alignItems='center' spacing={0.5} padding='10px' width='100%'>
-      <Box
-        component='img'
-        src={`/menu-items/${photoUrl}`}
-        alt={name}
-        width='100%'
-      />
+      <div>
+        {loaded ? null : <ImageSkeleton />}
+        <Box
+          component='img'
+          src={`/menu-items/${photoUrl}`}
+          alt={name}
+          width='100%'
+          sx={loaded ? {} : { display: 'none' }}
+          onLoad={() => setLoaded(true)}
+        />
+      </div>
 
       <Typography
         variant='h6'
