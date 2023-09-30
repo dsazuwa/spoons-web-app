@@ -9,10 +9,13 @@ import SandwichCategory from './components/SandwichCategory';
 import StandardCategory from './components/StandardCategory';
 import useGetMenu from './hooks/useGetMenu';
 import useTagBarIntersectionObserver from './hooks/useTagBarIntersectionObserver';
+import useCategoryIntersectionObserver from './hooks/useCategoryIntersectionObserver';
 
 // type size = 'sm' | 'md' | 'lg';
 
 function MenuPageContent() {
+  useCategoryIntersectionObserver();
+
   const { isScrolledPast } = useTagBarIntersectionObserver();
   const { isFetching, isLoading, data } = useGetMenu();
 
