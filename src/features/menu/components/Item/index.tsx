@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import palette from '@utils/palette';
-import ItemTag from './ItemTag';
+import ItemTag from '../ItemTag';
 
 function Item({ item }: { item: PublicMenuItemType }) {
   const { name, description, tags, photoUrl, notes } = item;

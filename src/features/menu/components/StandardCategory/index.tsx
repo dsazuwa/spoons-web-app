@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 
-import StandardCategorySkeleton from './skelentons/StandardCategorySkeleton';
-import StandardCategoryView from './views/StandardCategoryView';
+import StandardCategorySkeleton from './StandardCategorySkeleton';
+import StandardCategoryView from './StandardCategoryView';
 
 interface StandardCategoryProps {
   isLoading: boolean;

@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 
-import SandwichCategorySkeleton from './skelentons/SandwichCategorySkeleton';
-import SandwichCategoryView from './views/SandwichCategoryView';
+import SandwichCategorySkeleton from './SandwichCategorySkeleton';
+import SandwichCategoryView from './SandwichCategoryView';
 
 interface SandwichCategoryProps {
   isLoading: boolean;
