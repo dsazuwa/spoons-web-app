@@ -1,8 +1,9 @@
+import { OrderPageContent } from '@features/order';
 import getCustomerLayout from '@layout/CustomerLayout';
 
 function Order() {
   return getCustomerLayout(
-    <div>Order</div>,
+    <OrderPageContent />,
     { pageAccess: 'public', router: undefined },
     true,
     true,

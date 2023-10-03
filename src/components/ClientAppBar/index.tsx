@@ -120,7 +120,12 @@ function ClientAppBar() {
               </Box>
             )}
 
-            <IconButton sx={{ color: palette.base.white, marginRight: '8px' }}>
+            <IconButton
+              sx={{
+                color: palette.base.white,
+                marginX: { sm: '0px', md: '8px' },
+              }}
+            >
               <ShoppingCartIcon />
             </IconButton>
           </Toolbar>

@@ -13,9 +13,11 @@ type MenuItemType = {
 };
 
 type PublicMenuItemType = {
+  itemId: number;
   name: string;
   description: string;
   tags: string[];
+  prices: { size: string; price: string }[];
   photoUrl: string;
   notes: string | undefined;
 };
