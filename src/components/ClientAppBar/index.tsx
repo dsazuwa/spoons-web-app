@@ -1,70 +1,69 @@
-import React, { useState } from 'react';
-
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Home from '@mui/icons-material/Home';
 import Info from '@mui/icons-material/Info';
 import Login from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Menu from '@mui/icons-material/Menu';
 import MenuBook from '@mui/icons-material/MenuBook';
 import PersonAddAlt from '@mui/icons-material/PersonAddAlt';
 import ReceiptLong from '@mui/icons-material/ReceiptLong';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { SvgIconTypeMap } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
 import useAuthentication from '@hooks/useAuthentication';
 import useLogout from '@hooks/useLogout';
+import palette from '@utils/palette';
 import AppBarButton from './AppBarButton';
-import DrawerListItem from './DrawerListItem';
+import Drawer from './Drawer';
+import UserMenu from './UserMenu';
 
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @typescript-eslint/ban-types */
+export type PageType = {
+  name: string;
+  href: string;
+  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+    muiName: string;
+  };
+};
+/* eslint-enable @typescript-eslint/ban-types */
+
+export type AuthPageType = {
+  page: PageType;
+  handleLogout?: () => void;
+};
 
 function ClientAppBar() {
   const { authReady, isAuthenticated } = useAuthentication();
   const { handleLogout } = useLogout(false);
 
-  const pages = [
-    { name: 'Home', href: '/', icon: <Home /> },
-    { name: 'Menu', href: '/menu', icon: <MenuBook /> },
-    { name: 'Order', href: '/order', icon: <ReceiptLong /> },
-    { name: 'About', href: '/about', icon: <Info /> },
+  const pages: PageType[] = [
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'Menu', href: '/menu', icon: MenuBook },
+    { name: 'Order', href: '/order', icon: ReceiptLong },
+    { name: 'About', href: '/about', icon: Info },
   ];
 
-  const authPages = [
+  const authPages: AuthPageType[] = [
     {
-      page: { name: 'Account', href: '/account', icon: <AccountCircle /> },
-      handleClick: undefined,
+      page: { name: 'Account', href: '/account', icon: AccountCircle },
+      handleLogout: undefined,
     },
     {
-      page: { name: 'Log Out', href: '', icon: <LogoutIcon /> },
-      handleClick: handleLogout,
+      page: { name: 'Log Out', href: '', icon: LogoutIcon },
+      handleLogout,
     },
   ];
 
-  const unauthPages = [
-    { name: 'Login', href: '/login', icon: <Login /> },
-    { name: 'Sign Up', href: '/register', icon: <PersonAddAlt /> },
+  const unauthPages: PageType[] = [
+    { name: 'Log In', href: '/login', icon: Login },
+    { name: 'Sign Up', href: '/register', icon: PersonAddAlt },
   ];
-
-  const [leftDrawer, setLeftDrawer] = useState(false);
-
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      )
-        return;
-      setLeftDrawer(open);
-    };
 
   return (
     <Box>
@@ -80,73 +79,18 @@ function ClientAppBar() {
               sx={{ display: { xs: 'none', md: 'flex' }, mr: 4, mb: 0.5 }}
             />
 
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size='large'
-                edge='start'
-                color='inherit'
-                aria-label='menu'
-                sx={{ mr: 2 }}
-                onClick={toggleDrawer(true)}
-              >
-                <Menu />
-              </IconButton>
-
-              <Drawer
-                anchor='left'
-                open={leftDrawer}
-                onClose={toggleDrawer(false)}
-              >
-                <Toolbar
-                  variant='dense'
-                  disableGutters
-                  sx={{ minHeight: '56px', height: '56px' }}
-                />
-                <Divider />
-                <Box
-                  sx={{ width: 250 }}
-                  role='presentation'
-                  onClick={toggleDrawer(false)}
-                  onKeyDown={toggleDrawer(false)}
-                >
-                  <List>
-                    {pages.map((page) => (
-                      <DrawerListItem
-                        key={page.name}
-                        page={page}
-                        handleClick={undefined}
-                      />
-                    ))}
-                  </List>
-
-                  <Divider />
-
-                  {authReady && (
-                    <List>
-                      {isAuthenticated &&
-                        authPages.map(({ page, handleClick }) => (
-                          <DrawerListItem
-                            key={page.name}
-                            {...{ page, handleClick }}
-                          />
-                        ))}
-                      {!isAuthenticated &&
-                        unauthPages.map((page) => (
-                          <DrawerListItem
-                            key={page.name}
-                            page={page}
-                            handleClick={undefined}
-                          />
-                        ))}
-                    </List>
-                  )}
-                </Box>
-              </Drawer>
-            </Box>
+            <Drawer
+              sx={{ display: { xs: 'flex', md: 'none' } }}
+              authReady={authReady}
+              isAuthenticated={isAuthenticated}
+              pages={pages}
+              authPages={authPages}
+              unauthPages={unauthPages}
+            />
 
             <LogoButton
               home='/'
-              sx={{ display: { xs: 'flex', md: 'none' }, mb: 0.1 }}
+              sx={{ display: { xs: 'flex', md: 'none' }, flexGrow: 1, mb: 0.1 }}
             />
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -162,25 +106,23 @@ function ClientAppBar() {
 
             {authReady && (
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                {isAuthenticated &&
-                  authPages.map(({ page, handleClick }) => (
-                    <AppBarButton
-                      key={page.name}
-                      page={page}
-                      handleClick={handleClick}
-                    />
-                  ))}
-
                 {!isAuthenticated &&
                   unauthPages.map((page) => (
                     <AppBarButton
                       key={page.name}
                       page={page}
                       handleClick={undefined}
+                      sx={{ display: 'block' }}
                     />
                   ))}
+
+                {isAuthenticated && <UserMenu authPages={authPages} />}
               </Box>
             )}
+
+            <IconButton sx={{ color: palette.base.white, marginRight: '8px' }}>
+              <ShoppingCartIcon />
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>

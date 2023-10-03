@@ -5,16 +5,14 @@ import '@fontsource/roboto/700.css';
 
 import '@styles/globals.css';
 
+import { CacheProvider, EmotionCache } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 import type { NextPage } from 'next';
 import { AppProps as NextAppProps } from 'next/app';
 import Head from 'next/head';
 import type { ReactElement, ReactNode } from 'react';
-
 import { Provider } from 'react-redux';
-
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 
 import { wrapper } from '@store';
 import createEmotionCache from '@utils/createEmotionCache';

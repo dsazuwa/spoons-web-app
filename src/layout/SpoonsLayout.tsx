@@ -35,7 +35,7 @@ function getSpoonsLayout(
 
   return (
     <Container maxWidth='sm'>
-      <Stack minHeight='100vh' pt={20}>
+      <Stack minHeight='100vh' pt={{ xs: 10, sm: 10, md: 20 }}>
         <LogoButton
           home={home}
           color='primary'
