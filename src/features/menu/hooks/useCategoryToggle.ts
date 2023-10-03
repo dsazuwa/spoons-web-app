@@ -4,15 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store';
 import { setSelected } from '../api/menu.slice';
 
-// rootMargin: 56 (app bar height) + 18 (tag bar height) + 10 (tag bar padding)
-
 const useCategoryToggle = () => {
-  const dispatch = useDispatch();
   const [isScrolledPast, setScrolledPast] = useState(false);
-
-  const categories = useSelector(
-    (state: RootState) => state.menuState.categories,
-  ).map((x) => x.category);
 
   useEffect(() => {
     const categoryToggleObserver = new IntersectionObserver(
@@ -27,20 +20,27 @@ const useCategoryToggle = () => {
     );
   }, []);
 
+  const dispatch = useDispatch();
+  const categories = useSelector(
+    (state: RootState) => state.menuState.categories,
+  ).map((x) => x.category);
+
   useEffect(() => {
     const categoryIntersectionObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting)
-            dispatch(setSelected(entry.target.id as CategoryType));
-        });
+        for (let i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            dispatch(setSelected(entries[i].target.id as CategoryType));
+            break;
+          }
+        }
       },
-      { threshold: 0.5, rootMargin: '-84px' },
+      { threshold: 0.5, rootMargin: '-56px' },
     );
 
     categories.forEach((category) => {
       categoryIntersectionObserver.observe(
-        document.querySelector(`#${category}`) as Element,
+        document.getElementById(category) as Element,
       );
     });
   }, []);

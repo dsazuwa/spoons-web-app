@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
@@ -10,7 +11,8 @@ function MenuPageContent() {
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
-    <Container maxWidth='md' sx={{ marginTop: { xs: '10px', sm: '15px' } }}>
+    <Container id='menu-container' maxWidth='md'>
+      <Box height={{ xs: '10px', sm: '15px' }} />
       <Typography
         variant='h3'
         sx={{
