@@ -2,9 +2,9 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
+import CategoryToggle from '@components/CategoryToggle';
 import useGetMenu from '@features/menu/hooks/useGetMenu';
 import palette from '@utils/palette';
-import CategoryToggle from './components/CategoryToggle';
 import Menu from './components/Menu';
 
 function OrderPageContent() {

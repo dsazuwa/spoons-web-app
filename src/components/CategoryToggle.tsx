@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
-import useCategoryToggle from '../hooks/useCategoryToggle';
+import useCategoryToggle from '@hooks/useCategoryToggle';
 
 function CategoryToggle() {
   const { value, isScrolledPast, categories, handleClick } =

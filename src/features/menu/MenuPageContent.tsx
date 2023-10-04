@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
+import CategoryToggle from '@components/CategoryToggle';
 import palette from '@utils/palette';
 import MenuView from './components/MenuView';
 import MenuSkeleton from './components/skeletons/MenuSkeleton';
@@ -26,6 +27,8 @@ function MenuPageContent() {
       >
         Menu
       </Typography>
+
+      <CategoryToggle />
 
       {isLoading || isFetching || data === undefined ? (
         <MenuSkeleton />

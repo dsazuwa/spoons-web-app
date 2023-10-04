@@ -7,7 +7,7 @@ import ItemSkeleton from './ItemSkeleton';
 
 function MenuSkeleton() {
   return (
-    <Stack alignItems='center' justifyContent='center'>
+    <Stack alignItems='center' justifyContent='center' paddingTop='10px'>
       <Typography
         variant='h4'
         sx={{
