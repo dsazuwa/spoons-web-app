@@ -23,6 +23,7 @@ function Item({ item }: { item: PublicMenuItemType }) {
                 variant='h5'
                 sx={{
                   color: palette.primary[900],
+                  paddingBottom: '2px',
                   fontSize: { xs: '12px', sm: '14px', md: '16px' },
                   fontWeight: 500,
                   overflow: 'hidden',
@@ -49,6 +50,7 @@ function Item({ item }: { item: PublicMenuItemType }) {
               color='text.secondary'
               sx={{
                 fontSize: { xs: '10px', sm: '11.5px', md: '13px' },
+                lineHeight: 1.25,
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
@@ -63,11 +65,11 @@ function Item({ item }: { item: PublicMenuItemType }) {
           {hasBasePrice && (
             <Typography
               sx={{
-                display: 'flex',
-                alignItems: 'center',
                 pl: '10px',
                 pb: '10px',
-                fontSize: { xs: '10px', sm: '11.5px', md: '13px' },
+                fontSize: { xs: '9px', sm: '10.5px', md: '12px' },
+                fontWeight: 500,
+                color: palette.grey[500],
               }}
             >
               {`$${Number(prices[0].price).toFixed(2)}`}

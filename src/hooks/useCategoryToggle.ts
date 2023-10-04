@@ -53,7 +53,8 @@ const useCategoryToggle = () => {
 
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
-        if (rect.top <= 200 && rect.bottom >= 0) setValue(index);
+        if (rect.top <= 200 && rect.bottom >= 0 && index !== value)
+          setValue(index);
       });
     };
 
