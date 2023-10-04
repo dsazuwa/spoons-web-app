@@ -45,6 +45,25 @@ const useCategoryToggle = () => {
     );
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = categories.map(
+        ({ category }) => document.getElementById(category) as Element,
+      );
+
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 200 && rect.bottom >= 0) setValue(index);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return { value, isScrolledPast, categories, handleClick };
 };
 
