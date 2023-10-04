@@ -12,3 +12,13 @@ export const PageHeaderStyles: SxProps = {
   letterSpacing: 3,
   fontWeight: 800,
 };
+
+/**
+ * Make sure to set WebkitLineClamp
+ */
+export const ellipsisTextStyles: SxProps = {
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+};

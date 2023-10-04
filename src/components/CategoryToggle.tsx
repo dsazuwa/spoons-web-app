@@ -14,6 +14,7 @@ function CategoryToggle() {
       <Box
         id='category-toggle'
         sx={{
+          zIndex: '1',
           display: 'flex',
           width: '100%',
           justifyContent: 'center',
@@ -34,7 +35,8 @@ function CategoryToggle() {
               key={`tab-${index}`}
               label={title}
               sx={{
-                fontSize: { xs: '10px', sm: '12.5px', md: '12.5px' },
+                minWidth: 0,
+                fontSize: { xs: '9px', sm: '10px', md: '11px' },
                 padding: { xs: '8px 12px', sm: '10px 14px', md: '12px 16px' },
                 textTransform: 'capitalize',
               }}
