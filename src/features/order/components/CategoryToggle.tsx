@@ -1,42 +1,22 @@
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '@store';
+import useCategoryToggle from '../hooks/useCategoryToggle';
 
 function CategoryToggle() {
-  const [value, setValue] = useState(0);
-  const [isScrolledPast, setScrolledPast] = useState(false);
-
-  const categories = useSelector(
-    (state: RootState) => state.menuState.categories,
-  );
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  useEffect(() => {
-    const categoryToggleObserver = new IntersectionObserver(
-      (entries) => {
-        setScrolledPast(!entries[0].isIntersecting);
-      },
-      { threshold: 0, rootMargin: '-56px' },
-    );
-
-    categoryToggleObserver.observe(
-      document.querySelector('#category-toggle-anchor') as Element,
-    );
-  }, []);
+  const { value, isScrolledPast, categories, handleClick } =
+    useCategoryToggle();
 
   return (
     <>
       <div id='category-toggle-anchor'></div>
       <Box
+        id='category-toggle'
         sx={{
+          display: 'flex',
           width: '100%',
+          justifyContent: 'center',
           bgcolor: 'background.paper',
           position: isScrolledPast ? 'sticky' : 'static',
           top: isScrolledPast ? '55px' : 'auto',
@@ -44,19 +24,21 @@ function CategoryToggle() {
       >
         <Tabs
           value={value}
-          onChange={handleChange}
           variant='scrollable'
           scrollButtons
           allowScrollButtonsMobile
         >
-          {categories.map(({ category, title }) => (
+          {categories.map(({ title }, index) => (
             <Tab
-              key={`${category}-tab`}
+              id={`tab-${index}`}
+              key={`tab-${index}`}
               label={title}
               sx={{
                 fontSize: { xs: '10px', sm: '12.5px', md: '12.5px' },
                 padding: { xs: '8px 12px', sm: '10px 14px', md: '12px 16px' },
+                textTransform: 'capitalize',
               }}
+              onClick={handleClick}
             />
           ))}
         </Tabs>

@@ -11,7 +11,7 @@ function StandardCategory({ data, name }: StandardCategoryProps) {
     data.menu as Record<string, PublicCategoryItemType>
   )[name];
 
-  return <Category name={category} items={items} />;
+  return <Category id={name} name={category} items={items} />;
 }
 
 export default StandardCategory;

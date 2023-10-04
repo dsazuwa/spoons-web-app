@@ -6,7 +6,7 @@ function SandwichCategory({ data }: { data: GroupedMenuResponseType }) {
 
   const items = [...foodie.items, ...classics.items];
 
-  return <Category name='sandwiches' items={items} />;
+  return <Category id='sandwiches' name='sandwiches' items={items} />;
 }
 
 export default SandwichCategory;
