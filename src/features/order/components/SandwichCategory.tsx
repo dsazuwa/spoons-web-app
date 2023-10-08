@@ -1,12 +1,10 @@
 import Category from './Category';
 
 function SandwichCategory({ data }: { data: GroupedMenuResponseType }) {
-  const foodie = data.menu.foodie;
-  const classics = data.menu.classics;
+  const name = 'cheffy sandwiches';
+  const { items } = data.menu[name];
 
-  const items = [...foodie.items, ...classics.items];
-
-  return <Category id='sandwiches' name='sandwiches' items={items} />;
+  return <Category id={name} name={name} items={items} />;
 }
 
 export default SandwichCategory;
