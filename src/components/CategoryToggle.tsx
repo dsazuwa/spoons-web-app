@@ -29,7 +29,7 @@ function CategoryToggle() {
           scrollButtons
           allowScrollButtonsMobile
         >
-          {categories.map(({ title }, index) => (
+          {categories.map((title, index) => (
             <Tab
               id={`tab-${index}`}
               key={`tab-${index}`}

@@ -5,20 +5,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface IMenuState {
   menu: MenuType<PublicCategoryItemType> | undefined;
   selected: CategoryType;
-  categories: { category: CategoryType; title: string }[];
+  categories: string[];
 }
 
 const initialState: IMenuState = {
   menu: undefined,
   selected: 'creations',
   categories: [
-    { category: 'creations', title: "Chef's Creations" },
-    { category: 'sandwiches', title: 'Cheffy Sandwiches' },
-    { category: 'bowls', title: 'Bowls' },
-    { category: 'salads', title: 'Salads' },
-    { category: 'combos', title: '1/2 Sandwich Combos' },
-    { category: 'kids', title: 'Kids' },
-    { category: 'sides', title: 'Deli Sides & Soups' },
+    "chef's creations",
+    'cheffy sandwiches',
+    'bowls',
+    'soulful salads',
+    '1/2 sandwich combos',
+    'kids',
+    'deli sides & soups',
   ],
 };
 

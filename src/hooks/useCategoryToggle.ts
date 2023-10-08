@@ -18,7 +18,7 @@ const useCategoryToggle = () => {
 
     setValue(index);
 
-    const scrollTarget = document.getElementById(categories[index].category);
+    const scrollTarget = document.getElementById(categories[index]);
     const appBar = document.getElementById('client-app-bar');
     const categoryToggle = document.getElementById('category-toggle');
 
@@ -48,7 +48,7 @@ const useCategoryToggle = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = categories.map(
-        ({ category }) => document.getElementById(category) as Element,
+        (category) => document.getElementById(category) as Element,
       );
 
       sections.forEach((section, index) => {

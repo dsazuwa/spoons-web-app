@@ -5,6 +5,7 @@ type MenuItemType = {
   name: string;
   description: string;
   category: string;
+  subCategory: string;
   tags: string[] | null;
   prices: { size: string; price: string }[];
   status: string;
@@ -16,6 +17,7 @@ type PublicMenuItemType = {
   itemId: number;
   name: string;
   description: string;
+  subCategory: string;
   tags: string[];
   prices: { size: string; price: string }[];
   photoUrl: string;
@@ -55,5 +57,5 @@ type MenuType<T> = {
 };
 
 type GroupedMenuResponseType = {
-  menu: MenuType<PublicCategoryItemType>;
+  menu: Record<string, PublicCategoryItemType>;
 };
