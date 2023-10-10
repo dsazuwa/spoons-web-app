@@ -6,17 +6,15 @@ import ItemGrid from './ItemGrid';
 import TagBar from './TagBar';
 
 interface StandardCategoryProps {
-  data: GroupedMenuResponseType;
-  name: string;
+  index: number;
+  menu: CategoryItemType[];
 }
 
-function StandardCategory({ data, name }: StandardCategoryProps) {
-  const { category, notes, items } = (
-    data.menu as Record<string, PublicCategoryItemType>
-  )[name];
+function StandardCategory({ index, menu }: StandardCategoryProps) {
+  const { category, notes, items } = menu[index];
 
   return (
-    <Stack id={name} alignItems='center' spacing={{ xs: 1, sm: 1.5 }}>
+    <Stack id={category} alignItems='center' spacing={{ xs: 1, sm: 1.5 }}>
       <CategoryHeader title={category} />
 
       <CategoryNotes notes={notes} />

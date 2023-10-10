@@ -1,24 +1,13 @@
 import Stack from '@mui/material/Stack';
 
-import SandwichCategory from './SandwichCategory';
-import StandardCategory from './StandardCategory';
+import Category from './Category';
 
-function Menu({ data }: { data: GroupedMenuResponseType }) {
+function Menu({ menu }: { menu: CategoryItemType[] }) {
   return (
     <Stack spacing={3} marginTop='20px'>
-      <StandardCategory data={data} name="chef's creations" />
-
-      <SandwichCategory data={data} />
-
-      <StandardCategory data={data} name='bowls' />
-
-      <StandardCategory data={data} name='soulful salads' />
-
-      <StandardCategory data={data} name='1/2 sandwich combos' />
-
-      <StandardCategory data={data} name='kids' />
-
-      <StandardCategory data={data} name='deli sides & soups' />
+      {menu.map(({ category }, index) => (
+        <Category key={`${category}-section`} index={index} menu={menu} />
+      ))}
     </Stack>
   );
 }

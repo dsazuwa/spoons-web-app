@@ -5,7 +5,7 @@ import ItemGrid from './ItemGrid';
 
 interface CategorySectionProps {
   category: string;
-  items: PublicMenuItemType[];
+  items: MenuItemType[];
 }
 
 function CategorySection({ category, items }: CategorySectionProps) {

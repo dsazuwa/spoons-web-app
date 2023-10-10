@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 
 import CategoryToggle from '@components/CategoryToggle';
 import { PageHeaderStyles } from '@styles/typography.styles';
-import MenuView from './components/MenuView';
+import Menu from './components/Menu';
 import MenuSkeleton from './components/skeletons/MenuSkeleton';
 import useGetMenu from './hooks/useGetMenu';
 
@@ -16,12 +16,13 @@ function MenuPageContent() {
         Menu
       </Typography>
 
-      <CategoryToggle />
-
       {isLoading || isFetching || data === undefined ? (
         <MenuSkeleton />
       ) : (
-        <MenuView data={data} />
+        <>
+          <CategoryToggle categories={data.categories} />
+          <Menu menu={data.menu} />
+        </>
       )}
     </Container>
   );

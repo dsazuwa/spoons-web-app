@@ -3,43 +3,30 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 
 interface IMenuState {
-  menu: MenuType<PublicCategoryItemType> | undefined;
-  selected: CategoryType;
-  categories: string[];
+  menu: GroupedMenuResponseType;
+  orderMenu: GroupedMenuResponseType;
 }
 
 const initialState: IMenuState = {
-  menu: undefined,
-  selected: 'creations',
-  categories: [
-    "chef's creations",
-    'cheffy sandwiches',
-    'bowls',
-    'soulful salads',
-    '1/2 sandwich combos',
-    'kids',
-    'deli sides & soups',
-  ],
+  menu: { menu: [], categories: [] },
+  orderMenu: { menu: [], categories: [] },
 };
 
 export const menuSlice = createSlice({
   name: 'menuSlice',
   initialState,
   reducers: {
-    setMenu: (
-      state,
-      action: PayloadAction<MenuType<PublicCategoryItemType>>,
-    ) => {
+    setMenu: (state, action: PayloadAction<GroupedMenuResponseType>) => {
       const newState = state;
       newState.menu = action.payload;
     },
-    setSelected: (state, action: PayloadAction<CategoryType>) => {
+    setOrderMenu: (state, action: PayloadAction<GroupedMenuResponseType>) => {
       const newState = state;
-      newState.selected = action.payload;
+      newState.orderMenu = action.payload;
     },
   },
 });
 
 export const menuReducer = menuSlice.reducer;
 
-export const { setMenu, setSelected } = menuSlice.actions;
+export const { setMenu, setOrderMenu } = menuSlice.actions;

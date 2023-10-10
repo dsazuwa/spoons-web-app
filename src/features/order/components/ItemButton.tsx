@@ -13,7 +13,7 @@ import palette from '@utils/palette';
 const paddingStyle = { xs: '5px', sm: '7.5px', md: '10px' };
 
 interface ItemButtonProps {
-  item: PublicMenuItemType;
+  item: MenuItemType;
   handleClick: () => void;
 }
 

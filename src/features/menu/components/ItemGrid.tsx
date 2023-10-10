@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 
 import Item from './Item';
 
-function ItemGrid({ items }: { items: PublicMenuItemType[] }) {
+function ItemGrid({ items }: { items: MenuItemType[] }) {
   return (
     <Grid container>
       {items.map((item, index) => (

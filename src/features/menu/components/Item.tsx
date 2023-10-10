@@ -7,7 +7,7 @@ import palette from '@utils/palette';
 import ItemTag from './ItemTag';
 import ImageSkeleton from './skeletons/ImageSkeleton';
 
-function Item({ item }: { item: PublicMenuItemType }) {
+function Item({ item }: { item: MenuItemType }) {
   const { name, description, tags, photoUrl, notes } = item;
   const [loaded, setLoaded] = useState(false);
 

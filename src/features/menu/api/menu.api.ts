@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { setMenu } from './menu.slice';
+import { setMenu, setOrderMenu } from './menu.slice';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -28,7 +28,23 @@ export const menuApi = createApi({
       async onQueryStarted(arg, api) {
         try {
           const { data } = await api.queryFulfilled;
-          api.dispatch(setMenu(data.menu));
+          api.dispatch(setMenu(data));
+        } catch (e) {
+          console.log(e);
+        }
+      },
+    }),
+
+    getOrderMenu: builder.query<GroupedMenuResponseType, void>({
+      query() {
+        return {
+          url: `/order`,
+        };
+      },
+      async onQueryStarted(arg, api) {
+        try {
+          const { data } = await api.queryFulfilled;
+          api.dispatch(setOrderMenu(data));
         } catch (e) {
           console.log(e);
         }
@@ -37,4 +53,4 @@ export const menuApi = createApi({
   }),
 });
 
-export const { useGetMenuQuery } = menuApi;
+export const { useGetMenuQuery, useGetOrderMenuQuery } = menuApi;

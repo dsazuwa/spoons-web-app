@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 
+import { useGetOrderMenuQuery } from '@features/menu';
 import { RootState } from '@store';
-import { useGetMenuQuery } from '../api/menu.api';
 
 const useGetMenu = () => {
-  const cache = useSelector((state: RootState) => state.menuState.menu);
+  const cache = useSelector((state: RootState) => state.menuState.orderMenu);
   const isCached = cache.menu !== undefined && cache.menu.length !== 0;
 
-  const { isFetching, isLoading, data } = useGetMenuQuery(undefined, {
+  const { isFetching, isLoading, data } = useGetOrderMenuQuery(undefined, {
     skip: isCached,
     refetchOnMountOrArgChange: true,
   });

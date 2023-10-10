@@ -5,26 +5,27 @@ import CategoryNotes from './CategoryNotes';
 import CategorySection from './CategorySection';
 import TagBar from './TagBar';
 
-function SandwichCategory({ data }: { data: GroupedMenuResponseType }) {
-  const sandwiches = data.menu['cheffy sandwiches'];
+interface SandwichCategoryProps {
+  index: number;
+  menu: CategoryItemType[];
+}
 
-  const foodies = sandwiches.items.filter(
-    (x) => x.subCategory === 'foodie favorites',
-  );
-  const classics = sandwiches.items.filter(
-    (x) => x.subCategory === 'craveable classics',
-  );
+function SandwichCategory({ index, menu }: SandwichCategoryProps) {
+  const { category, items, notes } = menu[index];
+
+  const foodies = items.filter((x) => x.subCategory === 'foodie favorites');
+  const classic = items.filter((x) => x.subCategory === 'craveable classics');
 
   return (
-    <div id='cheffy sandwiches'>
+    <div id={category}>
       <Stack alignItems='center' spacing={1.5}>
-        <CategoryHeader title='Cheffy Sandwiches' />
+        <CategoryHeader title={category} />
 
-        <CategoryNotes notes={sandwiches.notes} />
+        <CategoryNotes notes={notes} />
 
-        <TagBar category='Cheffy Sandwiches' />
+        <TagBar category={category} />
 
-        <CategorySection category='craveable classics' items={classics} />
+        <CategorySection category='craveable classics' items={classic} />
 
         <CategorySection category='foodie favorites' items={foodies} />
       </Stack>

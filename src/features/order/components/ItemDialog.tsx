@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface ItemDialogProps {
-  item: PublicMenuItemType;
+  item: MenuItemType;
   open: boolean;
   handleClose: () => void;
 }

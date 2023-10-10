@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ItemButton from './ItemButton';
 import ItemDialog from './ItemDialog';
 
-function Item({ item }: { item: PublicMenuItemType }) {
+function Item({ item }: { item: MenuItemType }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
