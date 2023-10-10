@@ -4,9 +4,8 @@ import Tabs from '@mui/material/Tabs';
 
 import useCategoryToggle from '@hooks/useCategoryToggle';
 
-function CategoryToggle() {
-  const { value, isScrolledPast, categories, handleClick } =
-    useCategoryToggle();
+function CategoryToggle({ categories }: { categories: string[] }) {
+  const { value, isScrolledPast, handleClick } = useCategoryToggle(categories);
 
   return (
     <>

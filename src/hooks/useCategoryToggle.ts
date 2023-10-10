@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
-import { RootState } from '@store';
-
-const useCategoryToggle = () => {
+const useCategoryToggle = (categories: string[]) => {
   const [value, setValue] = useState(0);
   const [isScrolledPast, setScrolledPast] = useState(false);
-
-  const categories = useSelector(
-    (state: RootState) => state.menuState.categories,
-  );
 
   const handleClick = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -65,7 +58,7 @@ const useCategoryToggle = () => {
     };
   }, [categories]);
 
-  return { value, isScrolledPast, categories, handleClick };
+  return { value, isScrolledPast, handleClick };
 };
 
 export default useCategoryToggle;
