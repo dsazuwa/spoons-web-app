@@ -40,14 +40,16 @@ const useCategoryToggle = (categories: string[]) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = categories.map(
-        (category) => document.getElementById(category) as Element,
+      const sections = categories.map((category) =>
+        document.getElementById(category),
       );
 
       sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 200 && rect.bottom >= 0 && index !== value)
-          setValue(index);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 200 && rect.bottom >= 0 && index !== value)
+            setValue(index);
+        }
       });
     };
 
