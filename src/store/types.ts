@@ -21,3 +21,26 @@ type GroupedMenuResponseType = {
   menu: CategoryItemType[];
   categories: string[];
 };
+
+interface ModifierOption {
+  optionId: number;
+  name: string;
+  price: number;
+}
+
+interface NestedOption {
+  groupId: number;
+  name: string;
+  price: number;
+}
+
+interface Modifier {
+  group_id: number;
+  isRequired: boolean;
+  allowMultipleSelections: boolean;
+  minSelection: number;
+  maxSelection: number;
+  maxFree: number;
+  name: string;
+  options: (ModifierOption | NestedOption)[] | null;
+}
