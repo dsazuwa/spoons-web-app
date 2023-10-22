@@ -23,7 +23,7 @@ function SandwichCategory({ index, menu }: SandwichCategoryProps) {
 
         <CategoryNotes notes={notes} />
 
-        <TagBar category={category} />
+        <TagBar />
 
         <CategorySection category='craveable classics' items={classic} />
 

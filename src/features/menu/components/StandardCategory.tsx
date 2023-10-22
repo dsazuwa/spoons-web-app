@@ -19,7 +19,7 @@ function StandardCategory({ index, menu }: StandardCategoryProps) {
 
       <CategoryNotes notes={notes} />
 
-      <TagBar category={category} />
+      <TagBar />
 
       <ItemGrid items={items} />
     </Stack>

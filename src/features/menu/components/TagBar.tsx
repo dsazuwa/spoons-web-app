@@ -4,25 +4,14 @@ import Typography from '@mui/material/Typography';
 
 import palette from '@utils/palette';
 
-const getTags = (category: string) => {
-  const commonTags = [
+function TagBar() {
+  const tags = [
     { name: 'V', description: 'Vegan' },
     { name: 'VG', description: 'Vegetarian' },
     { name: 'GF', description: 'Gluten-Free' },
+    { name: 'RGF', description: 'Can be Requested Gluten-Free' },
+    { name: 'N', description: 'Contains Nuts' },
   ];
-
-  const nuts = { name: 'N', description: 'Contains Nuts' };
-
-  const additionalTags =
-    category === 'deli sides & soups'
-      ? [nuts]
-      : [{ name: 'RGF', description: 'Can be Requested Gluten-Free' }, nuts];
-
-  return [...commonTags, ...additionalTags];
-};
-
-function TagBar({ category }: { category: string }) {
-  const tags = getTags(category);
 
   return (
     <Stack
