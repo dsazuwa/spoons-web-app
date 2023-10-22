@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { setMenu, setOrderMenu } from './menu.slice';
+import { setMenu, setOrderMenu } from '../slices/menu.slice';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 

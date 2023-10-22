@@ -1,5 +1,3 @@
-export * from './api';
-
 import PasswordRecoveryFlow from './components/PasswordRecoveryFlow';
 import LoginPageContent from './components/page-content/LoginPageContent';
 import RecoverPageContent from './components/page-content/RecoverPageContent';

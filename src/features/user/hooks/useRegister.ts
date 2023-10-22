@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TypeOf, boolean, object, string } from 'zod';
 
-import { useRegisterUserMutation } from '@features/user/api';
 import useAuthentication from '@hooks/useAuthentication';
 import useSnackbarAlert from '@hooks/useSnackbarAlert';
+import { useRegisterUserMutation } from '@store/api';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const formSchema = object({

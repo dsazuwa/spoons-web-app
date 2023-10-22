@@ -2,8 +2,8 @@ import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useGetUserQuery } from '@features/user/api';
 import { RootState } from '@store';
+import { useGetUserQuery } from '@store/api';
 
 const useAuthentication = () => {
   const [authReady, setAuthReady] = useState(false);

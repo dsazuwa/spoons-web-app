@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@store';
-import { useGetMenuQuery } from '../api/menu.api';
+import { useGetMenuQuery } from '@store/api';
 
 const useGetMenu = () => {
   const cache = useSelector((state: RootState) => state.menuState.menu);

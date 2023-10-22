@@ -2,8 +2,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
 import baseQueryWithReauth from '@store/base.query';
-import { setUser } from './slices/user.slice';
-import { IUser } from './types';
+import { setUser } from '../slices/user.slice';
+import { IUser } from '../types';
 
 const baseUrl = '/users';
 

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser } from '@features/user/api/types';
+import { IUser } from '@store/types';
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 

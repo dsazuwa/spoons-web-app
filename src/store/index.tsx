@@ -2,8 +2,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { createWrapper } from 'next-redux-wrapper';
 
-import { menuApi, menuReducer } from '@features/menu';
-import { authApi, customerApi, userApi, userReducer } from '@features/user';
+import { authApi, customerApi, menuApi, userApi } from './api';
+import { menuReducer } from './slices/menu.slice';
+import { userReducer } from './slices/user.slice';
 
 export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',

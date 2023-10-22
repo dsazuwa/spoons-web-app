@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 
-import { logout, setUser } from './slices/user.slice';
+import { logout, setUser } from '../slices/user.slice';
 import {
   IGenericResponse,
   ILoginInput,
@@ -12,7 +12,7 @@ import {
   IRegisterResponse,
   IRequestRecoverData,
   IVerifyRecoverData,
-} from './types';
+} from '../types';
 
 export const authApi = createApi({
   reducerPath: 'authApi',

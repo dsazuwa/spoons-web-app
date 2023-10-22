@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import useAuthentication from '@hooks/useAuthentication';
+import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import {
   useResendVerificationMutation,
   useVerifyUserMutation,
-} from '@features/user/api';
-import useAuthentication from '@hooks/useAuthentication';
-import useSnackbarAlert from '@hooks/useSnackbarAlert';
+} from '@store/api';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const useVerifyEmail = () => {

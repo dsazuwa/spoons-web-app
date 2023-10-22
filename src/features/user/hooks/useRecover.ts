@@ -3,13 +3,13 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
+import useAuthentication from '@hooks/useAuthentication';
+import useSnackbarAlert from '@hooks/useSnackbarAlert';
 import {
   useRecoverPasswordMutation,
   useRequestPasswordRecoveryMutation,
   useVerifyRecoveryCodeMutation,
-} from '@features/user';
-import useAuthentication from '@hooks/useAuthentication';
-import useSnackbarAlert from '@hooks/useSnackbarAlert';
+} from '@store/api';
 import getErrorMessage from '@utils/getReduxErrorMessage';
 
 const useRecover = () => {
