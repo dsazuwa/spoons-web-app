@@ -1,4 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,7 +18,8 @@ interface ItemDialogProps {
 function ItemDialog({ item, open, handleClose }: ItemDialogProps) {
   const { name, description, photoUrl } = item;
 
-  const smallScreen = useMediaQuery('(max-width:600px)');
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Dialog

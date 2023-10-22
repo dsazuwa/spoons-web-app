@@ -12,7 +12,7 @@ function CategoryHeader({ name }: { name: string }) {
         letterSpacing: { xs: 2, sm: 2.5, md: 3 },
         fontWeight: 1000,
         fontSize: { xs: '15px', sm: '17.5px', md: '20px' },
-        paddingLeft: '15px',
+        paddingLeft: { xs: '10px', sm: '12.5px', md: '15px' },
       }}
     >
       {name}

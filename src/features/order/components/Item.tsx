@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box';
+import ButtonBase from '@mui/material/ButtonBase';
 import { useState } from 'react';
 
-import ItemButton from './ItemButton';
+import ItemCard from './ItemCard';
 import ItemDialog from './ItemDialog';
 
 function Item({ item }: { item: MenuItemType }) {
@@ -17,7 +18,9 @@ function Item({ item }: { item: MenuItemType }) {
 
   return (
     <Box padding={{ xs: '5px', sm: '7.5px', md: '10px' }}>
-      <ItemButton item={item} handleClick={handleClickOpen} />
+      <ButtonBase onClick={handleClickOpen} sx={{ width: '100%' }}>
+        <ItemCard item={item} />
+      </ButtonBase>
 
       <ItemDialog item={item} open={open} handleClose={handleClose} />
     </Box>
