@@ -8,9 +8,11 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import ItemQuantityControl from './ItemQuantityControl';
 
 interface ItemDialogProps {
   item: MenuItemType;
+  modifiers: Modifier[];
   open: boolean;
   handleClose: () => void;
 }
@@ -30,15 +32,26 @@ function ItemDialog({ item, open, handleClose }: ItemDialogProps) {
       onClose={handleClose}
       PaperProps={{ sx: { borderRadius: { xs: '0px', sm: '10px' } } }}
     >
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center' }}>
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          fontWeight: '600',
+          fontSize: { xs: '15px', sm: '20px' },
+        }}
+      >
         <IconButton
           edge='start'
-          color='inherit'
-          onClick={handleClose}
           aria-label='close'
-          sx={{ mr: '10px' }}
+          onClick={handleClose}
+          sx={{ mr: { xs: 1, sm: 2 } }}
         >
-          <CloseIcon />
+          <CloseIcon
+            sx={{
+              color: 'black',
+              fontSize: { xs: '15px', sm: '20px' },
+            }}
+          />
         </IconButton>
         {name}
       </DialogTitle>
@@ -49,9 +62,7 @@ function ItemDialog({ item, open, handleClose }: ItemDialogProps) {
         <Typography
           variant='body1'
           sx={{
-            '&::first-letter': {
-              textTransform: 'capitalize',
-            },
+            '&::first-letter': { textTransform: 'lowercase' },
           }}
         >
           {description}
@@ -64,6 +75,10 @@ function ItemDialog({ item, open, handleClose }: ItemDialogProps) {
           width='100%'
         />
       </DialogContent>
+
+      <Divider />
+
+      <ItemQuantityControl />
     </Dialog>
   );
 }
