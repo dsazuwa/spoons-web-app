@@ -5,7 +5,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 export const modifierApi = createApi({
   reducerPath: 'modifierApi',
-  refetchOnFocus: true,
   tagTypes: ['Modifier'],
 
   extractRehydrationInfo(action, { reducerPath }) {
