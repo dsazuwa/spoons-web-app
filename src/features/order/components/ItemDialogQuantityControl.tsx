@@ -8,7 +8,7 @@ import { ChangeEvent, useState } from 'react';
 
 import palette from '@utils/palette';
 
-function ItemQuantityControl() {
+function ItemDialogQuantityControl() {
   const [quantity, setQuantity] = useState(1);
 
   const allowOneToThreeDigits = (value: string) =>
@@ -30,12 +30,12 @@ function ItemQuantityControl() {
   };
 
   return (
-    <Stack
+    <Stack 
       direction='row'
       alignItems='center'
       justifyContent='center'
       spacing={{ xs: '5px', sm: '10px' }}
-      sx={{ my: '20px' }}
+      sx={{ my: { xs: '10px', sm: '20px' } }}
     >
       <IconButton disabled={quantity === 1} onClick={handleSubtractQuantity}>
         <RemoveCircleOutlineIcon
@@ -54,6 +54,7 @@ function ItemQuantityControl() {
         InputProps={{ sx: { borderRadius: '15px' } }}
         sx={{
           width: { xs: '75px', sm: '100px' },
+
           '& .MuiOutlinedInput-root': {
             background: palette.grey[100],
             '& fieldset': {
@@ -69,7 +70,8 @@ function ItemQuantityControl() {
           },
           '& input': {
             color: palette.grey[800],
-            fontSize: { xs: '15px', sm: '20px' },
+            padding: { xs: '13.5px 11px', sm: '16.5px 14px' },
+            fontSize: { xs: '1rem', sm: '1.5rem' },
             fontWeight: '400',
             textAlign: 'center',
           },
@@ -99,4 +101,4 @@ function ItemQuantityControl() {
   );
 }
 
-export default ItemQuantityControl;
+export default ItemDialogQuantityControl;

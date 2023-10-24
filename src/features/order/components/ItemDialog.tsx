@@ -1,14 +1,13 @@
-import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import ItemQuantityControl from './ItemQuantityControl';
+import { useEffect, useState } from 'react';
+
+import ItemDialogAppBar from './ItemDialogAppBar';
+import ItemDialogHeader from './ItemDialogHeader';
+import ItemDialogQuantityControl from './ItemDialogQuantityControl';
 
 interface ItemDialogProps {
   item: MenuItemType;
@@ -21,64 +20,79 @@ function ItemDialog({ item, open, handleClose }: ItemDialogProps) {
   const { name, description, photoUrl } = item;
 
   const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [isScrolledPast, setScrolledPast] = useState(false);
+
+  // const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  // useEffect(() => {
+  //   const root = document.querySelector('#item-dialog');
+  //   const observedElement = document.querySelector(
+  //     '#item-dialog-header-anchor',
+  //   );
+  //   const rootMargin = isXs ? '-56px' : '-64px';
+
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       setScrolledPast(!entries[0].isIntersecting);
+  //     },
+  //     { threshold: 0, root, rootMargin },
+  //   );
+
+  //   if (root && observedElement) observer.observe(observedElement);
+  // }, []);
+
+  useEffect(() => {
+    const appBar = document.querySelector('#item-dialog-app-bar');
+    const observedElement = document.querySelector(
+      '#item-dialog-header-anchor',
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const appBarRect = (appBar as Element).getBoundingClientRect();
+        const observedRect = entries[0].target.getBoundingClientRect();
+        setScrolledPast(observedRect.top < appBarRect.bottom);
+      },
+      { threshold: 0 },
+    );
+
+    if (appBar && observedElement) observer.observe(observedElement);
+  }, []);
 
   return (
     <Dialog
+      id='item-dialog'
       fullWidth={true}
-      fullScreen={smallScreen}
+      fullScreen={isSm}
       maxWidth='sm'
       open={open}
       onClose={handleClose}
-      PaperProps={{ sx: { borderRadius: { xs: '0px', sm: '10px' } } }}
+      PaperProps={{
+        sx: { borderRadius: { xs: '0px', sm: '10px' } },
+      }}
     >
-      <DialogTitle
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          fontWeight: '600',
-          fontSize: { xs: '15px', sm: '20px' },
-        }}
-      >
-        <IconButton
-          edge='start'
-          aria-label='close'
-          onClick={handleClose}
-          sx={{ mr: { xs: 1, sm: 2 } }}
-        >
-          <CloseIcon
-            sx={{
-              color: 'black',
-              fontSize: { xs: '15px', sm: '20px' },
-            }}
-          />
-        </IconButton>
-        {name}
-      </DialogTitle>
+      <ItemDialogAppBar
+        name={name}
+        isScrolledPast={isScrolledPast}
+        handleClose={handleClose}
+      />
+
+      <ItemDialogHeader name={name} description={description} />
+
+      <Box
+        component='img'
+        src={`/menu-items/${photoUrl}`}
+        alt={name}
+        width='100%'
+        padding='0 16px'
+      />
+
+      <Box display='flex' flexGrow={1} />
 
       <Divider />
 
-      <DialogContent sx={{ padding: '10px 12px' }}>
-        <Typography
-          variant='body1'
-          sx={{
-            '&::first-letter': { textTransform: 'lowercase' },
-          }}
-        >
-          {description}
-        </Typography>
-
-        <Box
-          component='img'
-          src={`/menu-items/${photoUrl}`}
-          alt={name}
-          width='100%'
-        />
-      </DialogContent>
-
-      <Divider />
-
-      <ItemQuantityControl />
+      <ItemDialogQuantityControl />
     </Dialog>
   );
 }
