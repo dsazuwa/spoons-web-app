@@ -1,12 +1,12 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, useState } from 'react';
 
 import palette from '@utils/palette';
+import QuantityIconButton from './QuantityIconButton';
 
 function ItemDialogQuantityControl() {
   const [quantity, setQuantity] = useState(1);
@@ -44,14 +44,11 @@ function ItemDialogQuantityControl() {
         mt: 'auto',
       }}
     >
-      <IconButton disabled={quantity === 1} onClick={handleSubtractQuantity}>
-        <RemoveCircleOutlineIcon
-          sx={{
-            fontSize: { xs: '25px', sm: '35px' },
-            color: quantity === 1 ? palette.grey[500] : palette.grey[700],
-          }}
-        />
-      </IconButton>
+      <QuantityIconButton
+        disabled={quantity === 1}
+        onClick={handleSubtractQuantity}
+        icon={RemoveCircleOutlineIcon}
+      />
 
       <TextField
         id='num-items'
@@ -85,14 +82,11 @@ function ItemDialogQuantityControl() {
         }}
       />
 
-      <IconButton disabled={quantity === 999} onClick={handleAddQuantity}>
-        <AddCircleOutlineOutlinedIcon
-          sx={{
-            fontSize: { xs: '25px', sm: '35px' },
-            color: quantity === 999 ? palette.grey[500] : palette.grey[700],
-          }}
-        />
-      </IconButton>
+      <QuantityIconButton
+        disabled={quantity === 999}
+        onClick={handleAddQuantity}
+        icon={AddCircleOutlineOutlinedIcon}
+      />
 
       <Button
         variant='contained'
