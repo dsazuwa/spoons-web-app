@@ -1,8 +1,7 @@
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import CategoryToggle from '@components/CategoryToggle';
-import { PageHeaderStyles } from '@styles/typography.styles';
+import PageHeader from '@components/PageHeader';
 import Menu from './components/Menu';
 import MenuSkeleton from './components/skeletons/MenuSkeleton';
 import useGetMenu from './hooks/useGetMenu';
@@ -12,9 +11,7 @@ function MenuPageContent() {
 
   return (
     <Container id='menu-container' maxWidth='md'>
-      <Typography variant='h3' sx={PageHeaderStyles}>
-        Menu
-      </Typography>
+      <PageHeader text='Menu' />
 
       {isLoading || isFetching || data === undefined ? (
         <MenuSkeleton />
