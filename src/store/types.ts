@@ -25,17 +25,17 @@ type GroupedMenuResponseType = {
 interface ModifierOption {
   optionId: number;
   name: string;
-  price: number;
+  price: number | null;
 }
 
 interface NestedOption {
   groupId: number;
   name: string;
-  price: number;
+  price: number | null;
 }
 
 interface Modifier {
-  group_id: number;
+  groupId: number;
   isRequired: boolean;
   allowMultipleSelections: boolean;
   minSelection: number;
