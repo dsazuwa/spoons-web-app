@@ -30,12 +30,19 @@ function ItemDialogQuantityControl() {
   };
 
   return (
-    <Stack 
+    <Stack
       direction='row'
       alignItems='center'
       justifyContent='center'
       spacing={{ xs: '5px', sm: '10px' }}
-      sx={{ my: { xs: '10px', sm: '20px' } }}
+      sx={{
+        position: 'sticky',
+        bottom: 0,
+        py: { xs: '10px', sm: '15px' },
+        backgroundColor: palette.base.white,
+        borderTop: `1px solid ${palette.grey[200]}`,
+        mt: 'auto',
+      }}
     >
       <IconButton disabled={quantity === 1} onClick={handleSubtractQuantity}>
         <RemoveCircleOutlineIcon
