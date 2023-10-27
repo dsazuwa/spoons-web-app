@@ -9,6 +9,7 @@ import ItemDialogAppBar from './ItemDialogAppBar';
 import ItemDialogHeader from './ItemDialogHeader';
 import ItemDialogQuantityControl from './ItemDialogQuantityControl';
 import ModifierGroup from './ModifierGroup';
+import Preferences from './Preferences';
 
 interface ItemDialogProps {
   item: MenuItemType;
@@ -97,6 +98,7 @@ function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
                 modifier={modifier}
               />
             ))}
+            <Preferences />
           </Stack>
         )}
       </Box>
