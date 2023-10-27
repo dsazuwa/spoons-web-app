@@ -10,7 +10,7 @@ const Div = styled('div')(({ theme }) => ({
     fontSize: '1.5em',
   },
 
-  ['& .option']: {
+  ['& .preference-option']: {
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -18,13 +18,14 @@ const Div = styled('div')(({ theme }) => ({
     marginTop: '0.5rem',
   },
 
-  ['& .option-text']: {
+  ['& .preference-option-text']: {
     marginRight: 'auto',
     fontSize: '.75rem',
+    fontWeight: 500,
   },
 
   [theme.breakpoints.up('sm')]: {
-    ['& .option-text']: {
+    ['& .preference-option-text']: {
       fontSize: '1rem',
     },
   },
@@ -39,8 +40,8 @@ function Preferences() {
         <div className='status-text optional'>(Optional)</div>
       </S.Header>
 
-      <ButtonBase className='option'>
-        <Typography className='option-text'>
+      <ButtonBase className='preference-option'>
+        <Typography className='preference-option-text'>
           Add Special Instructions
         </Typography>
 
