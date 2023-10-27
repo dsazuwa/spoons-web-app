@@ -15,15 +15,14 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 
   ['& .dialog-name']: {
     fontWeight: 700,
-    lineHeight: 1.25,
-    fontSize: '1.25rem',
+    fontSize: '1.25em',
   },
 
   ['& .dialog-description']: {
-    color: palette.grey[500],
+    color: palette.grey[600],
     marginTop: '10px',
     fontWeight: 600,
-    fontSize: '.75rem',
+    fontSize: '.75em',
   },
 
   [theme.breakpoints.up('sm')]: {
@@ -32,11 +31,11 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
     },
 
     ['& .dialog-name']: {
-      fontSize: '2.25rem',
+      fontSize: '1.75em',
     },
 
     ['& .dialog-description']: {
-      fontSize: '1rem',
+      fontSize: '.875em',
     },
   },
 }));

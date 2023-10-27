@@ -1,13 +1,14 @@
+import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useEffect, useState } from 'react';
 
+import useDialogAppBar from '../hooks/useDialogAppBar';
 import * as S from './ItemDialog.styled';
-import ItemDialogAppBar from './ItemDialogAppBar';
 import ItemDialogQuantityControl from './ItemDialogQuantityControl';
 import Modifiers from './Modifiers';
 import Preferences from './Preferences';
+import DialogAppBar from './layout/DialogAppBar';
 
 interface ItemDialogProps {
   item: MenuItemType;
@@ -19,45 +20,10 @@ interface ItemDialogProps {
 function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
   const { name, description, photoUrl } = item;
 
+  const { scrolledPast } = useDialogAppBar();
+
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const [isScrolledPast, setScrolledPast] = useState(false);
-  // const isXs = useMediaQuery(theme.breakpoints.down('xs'));
-  // useEffect(() => {
-  //   const root = document.querySelector('#item-dialog');
-  //   const observedElement = document.querySelector(
-  //     '#item-dialog-header-anchor',
-  //   );
-  //   const rootMargin = isXs ? '-56px' : '-64px';
-
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       setScrolledPast(!entries[0].isIntersecting);
-  //     },
-  //     { threshold: 0, root, rootMargin },
-  //   );
-
-  //   if (root && observedElement) observer.observe(observedElement);
-  // }, []);
-
-  useEffect(() => {
-    const appBar = document.querySelector('#item-dialog-app-bar');
-    const observedElement = document.querySelector(
-      '#item-dialog-header-anchor',
-    );
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const appBarRect = (appBar as Element).getBoundingClientRect();
-        const observedRect = entries[0].target.getBoundingClientRect();
-        setScrolledPast(observedRect.top < appBarRect.bottom);
-      },
-      { threshold: 0 },
-    );
-
-    if (appBar && observedElement) observer.observe(observedElement);
-  }, []);
 
   return (
     <S.Dialog
@@ -68,14 +34,18 @@ function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
       open={open}
       onClose={handleClose}
     >
-      <ItemDialogAppBar
-        name={name}
-        isScrolledPast={isScrolledPast}
-        handleClose={handleClose}
+      <DialogAppBar
+        text={name}
+        scrolledPast={scrolledPast}
+        handleClick={handleClose}
+        Icon={CloseIcon}
+        iconLabel='close'
       />
 
       <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-stack'>
-        <div className='dialog-name'>{name}</div>
+        <div id='dialog-app-bar-anchor' className='dialog-name'>
+          {name}
+        </div>
 
         {description && <div className='dialog-description'>{description}</div>}
 
