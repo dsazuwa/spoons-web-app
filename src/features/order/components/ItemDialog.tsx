@@ -1,14 +1,12 @@
 import { useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
 import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useEffect, useState } from 'react';
 
+import * as S from './ItemDialog.styled';
 import ItemDialogAppBar from './ItemDialogAppBar';
-import ItemDialogHeader from './ItemDialogHeader';
 import ItemDialogQuantityControl from './ItemDialogQuantityControl';
-import ModifierGroup from './ModifierGroup';
+import Modifiers from './Modifiers';
 import Preferences from './Preferences';
 
 interface ItemDialogProps {
@@ -19,7 +17,7 @@ interface ItemDialogProps {
 }
 
 function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
-  const { itemId, name, description, photoUrl } = item;
+  const { name, description, photoUrl } = item;
 
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
@@ -62,16 +60,13 @@ function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
   }, []);
 
   return (
-    <Dialog
+    <S.Dialog
       id='item-dialog'
       fullWidth={true}
       fullScreen={isSm}
       maxWidth='sm'
       open={open}
       onClose={handleClose}
-      PaperProps={{
-        sx: { borderRadius: { xs: '0', sm: '2%' } },
-      }}
     >
       <ItemDialogAppBar
         name={name}
@@ -79,32 +74,20 @@ function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
         handleClose={handleClose}
       />
 
-      <Box sx={{ overflowY: 'auto' }}>
-        <ItemDialogHeader name={name} description={description} />
+      <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-stack'>
+        <div className='dialog-name'>{name}</div>
 
-        <Box
-          component='img'
-          src={`/menu-items/${photoUrl}`}
-          alt={name}
-          width='100%'
-          px='16px'
-        />
+        {description && <div className='dialog-description'>{description}</div>}
 
-        {modifiers && (
-          <Stack spacing={{ xs: 3, sm: 4 }} sx={{ p: '32px 16px 24px 16px' }}>
-            {modifiers.map((modifier) => (
-              <ModifierGroup
-                key={`${itemId}-modifier-${modifier.groupId}`}
-                modifier={modifier}
-              />
-            ))}
-            <Preferences />
-          </Stack>
-        )}
-      </Box>
+        <img src={`/menu-items/${photoUrl}`} alt={name} />
+
+        {modifiers && <Modifiers modifiers={modifiers} />}
+
+        <Preferences />
+      </Stack>
 
       <ItemDialogQuantityControl />
-    </Dialog>
+    </S.Dialog>
   );
 }
 
