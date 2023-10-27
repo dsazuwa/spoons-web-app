@@ -1,7 +1,7 @@
 import FormControl from '@mui/material/FormControl';
 import { MouseEventHandler, useState } from 'react';
 
-import ModifierGroupHeader from './ModifierGroupHeader';
+import ModifierHeader from './ModifierHeader';
 import { CheckboxOptions, RadioOptions } from './Options';
 
 interface ModifierGroupProps {
@@ -29,7 +29,7 @@ function ModifierGroup({ modifier }: ModifierGroupProps) {
   return (
     options && (
       <div>
-        <ModifierGroupHeader
+        <ModifierHeader
           modifier={modifier}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
