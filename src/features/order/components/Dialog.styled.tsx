@@ -15,7 +15,9 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 
   ['& .dialog-footer']: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'sticky',
     bottom: 0,
     marginTop: 'auto',
