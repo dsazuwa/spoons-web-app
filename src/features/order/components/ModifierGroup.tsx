@@ -1,34 +1,23 @@
 import FormControl from '@mui/material/FormControl';
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 
 import ModifierHeader from './ModifierHeader';
 import { CheckboxOptions, RadioOptions } from './Options';
 
 interface ModifierGroupProps {
   modifier: Modifier;
+  className?: string;
 }
 
-function ModifierGroup({ modifier }: ModifierGroupProps) {
-  const {
-    groupId,
-    name,
-    options,
-    // isRequired,
-    allowMultipleSelections,
-    // minSelection,
-    maxSelection,
-  } = modifier;
+function ModifierGroup({ modifier, className }: ModifierGroupProps) {
+  const { groupId, name, options, allowMultipleSelections, maxSelection } =
+    modifier;
 
   const [selectedOption, setSelectedOption] = useState(-1);
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    // e.preventDefault();
-    console.log(e);
-  };
-
   return (
     options && (
-      <div>
+      <div className={className}>
         <ModifierHeader
           modifier={modifier}
           selectedOption={selectedOption}
@@ -44,7 +33,6 @@ function ModifierGroup({ modifier }: ModifierGroupProps) {
               groupId={groupId}
               name={name}
               options={options}
-              handleClick={handleClick}
               setSelectedOption={setSelectedOption}
             />
           ) : (
@@ -52,7 +40,6 @@ function ModifierGroup({ modifier }: ModifierGroupProps) {
               groupId={groupId}
               name={name}
               options={options}
-              handleClick={handleClick}
               setSelectedOption={setSelectedOption}
             />
           )}

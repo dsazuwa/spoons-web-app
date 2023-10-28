@@ -15,8 +15,8 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
 
     ['svg']: {
       color: 'black',
-      margin: '0 8px',
       fontSize: '.85rem',
+      marginRight: '12px',
     },
 
     ['& .content']: {
@@ -53,7 +53,6 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
       padding: '24px',
 
       ['svg']: {
-        margin: '0 8px',
         fontSize: '1.25rem',
       },
 

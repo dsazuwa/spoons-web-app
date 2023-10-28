@@ -8,7 +8,7 @@ import { ChangeEvent, useState } from 'react';
 import palette from '@utils/palette';
 import QuantityIconButton from './QuantityIconButton';
 
-function ItemDialogQuantityControl() {
+function QuantityControl() {
   const [quantity, setQuantity] = useState(1);
 
   const allowOneToThreeDigits = (value: string) =>
@@ -38,7 +38,7 @@ function ItemDialogQuantityControl() {
       sx={{
         position: 'sticky',
         bottom: 0,
-        py: { xs: '10px', sm: '15px' },
+        py: '16px',
         backgroundColor: palette.base.white,
         borderTop: `1px solid ${palette.grey[200]}`,
         mt: 'auto',
@@ -74,8 +74,8 @@ function ItemDialogQuantityControl() {
           },
           '& input': {
             color: palette.grey[800],
-            padding: { xs: '13.5px 11px', sm: '16.5px 14px' },
-            fontSize: { xs: '1rem', sm: '1.5rem' },
+            padding: { xs: '16px 12px', sm: '20px 12px' },
+            fontSize: { xs: '.75rem', sm: '1rem' },
             fontWeight: '400',
             textAlign: 'center',
           },
@@ -88,18 +88,11 @@ function ItemDialogQuantityControl() {
         icon={AddCircleOutlineOutlinedIcon}
       />
 
-      <Button
-        variant='contained'
-        sx={{
-          borderRadius: '20px',
-          textAlign: 'center',
-          fontSize: { xs: '10px', sm: '15px' },
-        }}
-      >
+      <Button variant='contained' className='dialog-footer-button'>
         Add to cart
       </Button>
     </Stack>
   );
 }
 
-export default ItemDialogQuantityControl;
+export default QuantityControl;

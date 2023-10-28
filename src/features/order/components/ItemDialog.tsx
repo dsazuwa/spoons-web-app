@@ -1,29 +1,31 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useContext } from 'react';
 
-import useDialogAppBar from '../hooks/useDialogAppBar';
-import * as S from './ItemDialog.styled';
-import ItemDialogQuantityControl from './ItemDialogQuantityControl';
-import Modifiers from './Modifiers';
+import DialogContext, {
+  DialogContextType,
+} from '@order/contexts/DialogContext';
+import * as S from './Dialog.styled';
+import DialogAppBar from './DialogAppBar';
+import ModifierGroup from './ModifierGroup';
 import Preferences from './Preferences';
-import DialogAppBar from './layout/DialogAppBar';
+import QuantityControl from './QuantityControl';
 
-interface ItemDialogProps {
+interface Props {
   item: MenuItemType;
   modifiers: Modifier[];
-  open: boolean;
-  handleClose: () => void;
 }
 
-function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
-  const { name, description, photoUrl } = item;
-
-  const { scrolledPast } = useDialogAppBar();
+function ItemDialog({ item, modifiers }: Props) {
+  const { type, handleClose } = useContext(DialogContext) as DialogContextType;
 
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const { name, description, photoUrl } = item;
 
   return (
     <S.Dialog
@@ -31,32 +33,37 @@ function ItemDialog({ item, open, modifiers, handleClose }: ItemDialogProps) {
       fullWidth={true}
       fullScreen={isSm}
       maxWidth='sm'
-      open={open}
+      open={type === 'item'}
       onClose={handleClose}
     >
       <DialogAppBar
         text={name}
-        scrolledPast={scrolledPast}
-        handleClick={handleClose}
         Icon={CloseIcon}
         iconLabel='close'
+        handleClick={handleClose}
       />
 
-      <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-stack'>
+      <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-content'>
         <div id='dialog-app-bar-anchor' className='dialog-name'>
           {name}
         </div>
 
         {description && <div className='dialog-description'>{description}</div>}
 
-        <img src={`/menu-items/${photoUrl}`} alt={name} />
+        <Box component='img' src={`/menu-items/${photoUrl}`} alt={name} />
 
-        {modifiers && <Modifiers modifiers={modifiers} />}
+        {modifiers &&
+          modifiers.map((modifier) => (
+            <ModifierGroup
+              key={`modifier-${modifier.groupId}`}
+              modifier={modifier}
+            />
+          ))}
 
         <Preferences />
       </Stack>
 
-      <ItemDialogQuantityControl />
+      <QuantityControl />
     </S.Dialog>
   );
 }

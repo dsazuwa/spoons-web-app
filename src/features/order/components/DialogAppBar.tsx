@@ -5,10 +5,10 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { SvgIconTypeMap } from '@mui/material';
 
 import * as S from './DialogAppBar.styled';
+import useDialogAppBar from '@order/hooks/useDialogAppBar';
 
 interface Props {
   text: string;
-  scrolledPast: boolean;
   Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
     muiName: string;
   };
@@ -16,8 +16,8 @@ interface Props {
   handleClick: () => void;
 }
 
-function DialogAppBar(props: Props) {
-  const { scrolledPast, text, Icon, iconLabel, handleClick } = props;
+function DialogAppBar({ text, Icon, iconLabel, handleClick }: Props) {
+  const { scrolledPast } = useDialogAppBar();
 
   return (
     <S.Div id='dialog-app-bar' scrolledPast={scrolledPast}>

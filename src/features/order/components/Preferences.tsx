@@ -2,8 +2,10 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { styled } from '@mui/material';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
+import { useContext } from 'react';
 
 import * as S from './ModifierHeader.styled';
+import DialogContext, { DialogContextType } from '../contexts/DialogContext';
 
 const Div = styled('div')(({ theme }) => ({
   '& svg': {
@@ -14,8 +16,7 @@ const Div = styled('div')(({ theme }) => ({
     width: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: '9px 0px',
-    marginTop: '0.5rem',
+    padding: '16px 0px',
   },
 
   ['& .preference-option-text']: {
@@ -32,6 +33,8 @@ const Div = styled('div')(({ theme }) => ({
 }));
 
 function Preferences() {
+  const { setType } = useContext(DialogContext) as DialogContextType;
+
   return (
     <Div>
       <S.Header selected={true}>
@@ -40,7 +43,10 @@ function Preferences() {
         <div className='status-text optional'>(Optional)</div>
       </S.Header>
 
-      <ButtonBase className='preference-option'>
+      <ButtonBase
+        className='preference-option'
+        onClick={() => setType('preferences')}
+      >
         <Typography className='preference-option-text'>
           Add Special Instructions
         </Typography>

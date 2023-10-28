@@ -8,9 +8,26 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
     borderRadius: '0',
   },
 
-  ['& .dialog-stack']: {
+  ['& .dialog-content']: {
     overflowY: 'auto',
     padding: '0 16px 16px 16px',
+  },
+
+  ['& .dialog-footer']: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'sticky',
+    bottom: 0,
+    marginTop: 'auto',
+    padding: '16px',
+    backgroundColor: palette.base.white,
+    borderTop: `1px solid ${palette.grey[200]}`,
+  },
+
+  ['& .dialog-footer-button']: {
+    borderRadius: '24px',
+    textAlign: 'center',
+    fontSize: '10px',
   },
 
   ['& .dialog-name']: {
@@ -25,9 +42,17 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
     fontSize: '.75em',
   },
 
+  ['& .stack-item']: {
+    marginBottom: '16px',
+  },
+
   [theme.breakpoints.up('sm')]: {
     ['& .MuiDialog-paperScrollPaper']: {
       borderRadius: '2%',
+    },
+
+    ['& .dialog-footer-button']: {
+      fontSize: '15px',
     },
 
     ['& .dialog-name']: {
@@ -36,6 +61,10 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
 
     ['& .dialog-description']: {
       fontSize: '.875em',
+    },
+
+    ['& .stack-item']: {
+      marginBottom: '24px',
     },
   },
 }));

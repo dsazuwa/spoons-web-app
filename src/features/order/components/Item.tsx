@@ -2,22 +2,41 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useState } from 'react';
 
+import DialogContext, { DialogType } from '../contexts/DialogContext';
 import useGetModifiers from '../hooks/useGetModifiers';
 import BackdropLoader from './BackdropLoader';
+import Dialog from './Dialog';
 import ItemCard from './ItemCard';
-import ItemDialog from './ItemDialog';
 
 function Item({ item }: { item: MenuItemType }) {
-  const [open, setOpen] = useState(false);
+  const [type, setType] = useState<DialogType>(null);
+  const [optionIdStack, setOptionIdStack] = useState<number[]>([]);
+
   const { trigger, isLoading, isFetching, data } = useGetModifiers();
 
   const handleClickOpen = () => {
     trigger(item.itemId, true);
-    setOpen(true);
+    setType('item');
+    setOptionIdStack([]);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setType(null);
+  };
+
+  const getCurrentOption = () => optionIdStack[optionIdStack.length - 1];
+
+  const openOption = (id: number) => {
+    setType('option');
+    setOptionIdStack([...optionIdStack, id]);
+  };
+
+  const handleBack = () => {
+    const updatedStack = [...optionIdStack];
+    updatedStack.pop();
+    setOptionIdStack(updatedStack);
+
+    if (updatedStack.length === 0) setType('item');
   };
 
   return (
@@ -26,16 +45,23 @@ function Item({ item }: { item: MenuItemType }) {
         <ItemCard item={item} />
       </ButtonBase>
 
-      {isLoading || isFetching || data?.modifiers === undefined ? (
-        <BackdropLoader open={open} handleClose={handleClose} />
-      ) : (
-        <ItemDialog
-          item={item}
-          modifiers={data.modifiers}
-          open={open}
-          handleClose={handleClose}
-        />
-      )}
+      <DialogContext.Provider
+        value={{
+          itemName: item.name,
+          type,
+          setType,
+          getCurrentOption,
+          openOption,
+          handleBack,
+          handleClose,
+        }}
+      >
+        {isLoading || isFetching || data?.modifiers === undefined ? (
+          <BackdropLoader open={type !== null} handleClose={handleClose} />
+        ) : (
+          <Dialog item={item} modifiers={data.modifiers} />
+        )}
+      </DialogContext.Provider>
     </Box>
   );
 }

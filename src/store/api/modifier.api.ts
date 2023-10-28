@@ -17,19 +17,31 @@ export const modifierApi = createApi({
 
   endpoints: (builder) => ({
     getModifier: builder.query<{ modifiers: Modifier[] }, number>({
-      query(data) {
+      query(id) {
         return {
           method: 'GET',
-          url: `/${data}`,
+          url: `/${id}`,
+        };
+      },
+    }),
+
+    getChildModifier: builder.query<
+      { name: string; modifiers: Modifier[] },
+      number
+    >({
+      query(id) {
+        return {
+          method: 'GET',
+          url: `/child/${id}`,
         };
       },
     }),
 
     getItemModifiers: builder.query<{ modifiers: Modifier[] }, number>({
-      query(data) {
+      query(id) {
         return {
           method: 'GET',
-          url: `/item/${data}`,
+          url: `/item/${id}`,
         };
       },
     }),
@@ -38,6 +50,7 @@ export const modifierApi = createApi({
 
 export const {
   useGetModifierQuery,
+  useGetChildModifierQuery,
   useLazyGetModifierQuery,
   useGetItemModifiersQuery,
   useLazyGetItemModifiersQuery,
