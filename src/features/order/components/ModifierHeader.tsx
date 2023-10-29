@@ -11,12 +11,10 @@ interface ModifierpHeaderProps {
 }
 
 function ModifierpHeader({ modifier, selectedOption }: ModifierpHeaderProps) {
-  const { name, isRequired, minSelection, maxSelection } = modifier;
+  const { name, isRequired, maxSelection } = modifier;
 
   const selectionPrompt =
-    minSelection === null || maxSelection === null || minSelection === 1
-      ? 'Select 1'
-      : `Select up to ${maxSelection}`;
+    maxSelection === 1 ? 'Select 1' : `Select up to ${maxSelection}`;
 
   const selected = selectedOption > -1;
 

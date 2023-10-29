@@ -10,8 +10,7 @@ interface ModifierGroupProps {
 }
 
 function ModifierGroup({ modifier, className }: ModifierGroupProps) {
-  const { groupId, name, options, allowMultipleSelections, maxSelection } =
-    modifier;
+  const { groupId, name, options, maxSelection } = modifier;
 
   const [selectedOption, setSelectedOption] = useState(-1);
 
@@ -28,7 +27,7 @@ function ModifierGroup({ modifier, className }: ModifierGroupProps) {
           component='fieldset'
           sx={{ width: '100%', position: 'relative' }}
         >
-          {maxSelection === 1 || allowMultipleSelections === false ? (
+          {maxSelection === 1 ? (
             <RadioOptions
               groupId={groupId}
               name={name}
