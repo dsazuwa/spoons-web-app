@@ -6,6 +6,7 @@ import palette from '@utils/palette';
 const Dialog = styled(MuiDialog)(({ theme }) => ({
   ['& .MuiDialog-paperScrollPaper']: {
     borderRadius: '0',
+    maxWidth: '560px',
   },
 
   ['& .dialog-content']: {

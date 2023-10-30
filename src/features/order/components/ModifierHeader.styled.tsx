@@ -21,7 +21,11 @@ const Header = styled('div')<{ selected: boolean }>(({ theme, selected }) => ({
     marginRight: '4px',
   },
 
-  ['& .name']: { lineHeight: 1, fontWeight: 700, fontSize: '0.8rem' },
+  ['& .name']: {
+    lineHeight: 1,
+    fontWeight: 700,
+    fontSize: '0.8rem',
+  },
 
   ['& .prompt']: {
     color: palette.grey[500],
@@ -57,11 +61,11 @@ const Header = styled('div')<{ selected: boolean }>(({ theme, selected }) => ({
   [theme.breakpoints.up('sm')]: {
     '& svg': { fontSize: '0.9em' },
 
-    ['& .name']: { fontSize: '1em' },
+    ['& .name']: { fontSize: '0.9375em' },
 
-    ['& .prompt']: { fontSize: '0.9em' },
+    ['& .prompt']: { fontSize: '0.8125em' },
 
-    ['& .status-text']: { fontSize: '0.8em' },
+    ['& .status-text']: { fontSize: '0.8125em' },
   },
 }));
 

@@ -16,14 +16,13 @@ function Dialog({ item, modifiers }: Props) {
   const { type, setType, getCurrentOption, handleClose } = useDialogContext();
 
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <S.Dialog
       id='item-dialog'
       fullWidth={true}
-      fullScreen={isSm}
-      maxWidth='sm'
+      fullScreen={isXs}
       open={type !== null}
       onClose={handleClose}
     >

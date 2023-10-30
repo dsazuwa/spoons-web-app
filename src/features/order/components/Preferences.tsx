@@ -20,13 +20,13 @@ const Div = styled('div')(({ theme }) => ({
 
   ['& .preference-option-text']: {
     marginRight: 'auto',
-    fontSize: '.75rem',
     fontWeight: 500,
+    fontSize: '.75rem',
   },
 
   [theme.breakpoints.up('sm')]: {
     ['& .preference-option-text']: {
-      fontSize: '1rem',
+      fontSize: '.875rem',
     },
   },
 }));
