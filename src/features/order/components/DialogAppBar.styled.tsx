@@ -7,7 +7,6 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-
     padding: '16px',
     backgroundColor: 'white',
     borderBottom: scrolledPast ? `1px solid ${palette.grey[200]}` : undefined,
@@ -16,7 +15,11 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
     ['svg']: {
       color: 'black',
       fontSize: '.85rem',
-      marginRight: '12px',
+    },
+
+    ['& .action-button']: {
+      padding: '8px 0',
+      marginRight: '16px',
     },
 
     ['& .content']: {
@@ -50,8 +53,6 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
     },
 
     [theme.breakpoints.up('sm')]: {
-      padding: '24px',
-
       ['svg']: {
         fontSize: '1.25rem',
       },

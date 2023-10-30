@@ -21,11 +21,15 @@ function DialogAppBar({ text, Icon, iconLabel, handleClick }: Props) {
 
   return (
     <S.Div id='dialog-app-bar' scrolledPast={scrolledPast}>
-      <IconButton edge='start' aria-label={iconLabel} onClick={handleClick}>
+      <IconButton
+        className='action-button'
+        aria-label={iconLabel}
+        onClick={handleClick}
+      >
         <Icon />
       </IconButton>
 
-      {scrolledPast && <div className='title .ellipsis-text'>{text}</div>}
+      {scrolledPast && <div className='title ellipsis-text'>{text}</div>}
     </S.Div>
   );
 }
