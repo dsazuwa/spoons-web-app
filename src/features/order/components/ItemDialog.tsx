@@ -3,11 +3,8 @@ import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useContext } from 'react';
 
-import DialogContext, {
-  DialogContextType,
-} from '@order/contexts/DialogContext';
+import { useDialogContext } from '@order/contexts/DialogContext';
 import * as S from './Dialog.styled';
 import DialogAppBar from './DialogAppBar';
 import ModifierGroup from './ModifierGroup';
@@ -20,7 +17,7 @@ interface Props {
 }
 
 function ItemDialog({ item, modifiers }: Props) {
-  const { type, handleClose } = useContext(DialogContext) as DialogContextType;
+  const { type, handleClose } = useDialogContext();
 
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));

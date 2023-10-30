@@ -2,10 +2,9 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { styled } from '@mui/material';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
-import { useContext } from 'react';
 
+import { useDialogContext } from '../contexts/DialogContext';
 import * as S from './ModifierHeader.styled';
-import DialogContext, { DialogContextType } from '../contexts/DialogContext';
 
 const Div = styled('div')(({ theme }) => ({
   '& svg': {
@@ -33,7 +32,7 @@ const Div = styled('div')(({ theme }) => ({
 }));
 
 function Preferences() {
-  const { setType } = useContext(DialogContext) as DialogContextType;
+  const { setType } = useDialogContext();
 
   return (
     <Div>

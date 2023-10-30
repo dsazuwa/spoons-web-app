@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, createContext } from 'react';
+import { Dispatch, SetStateAction, createContext, useContext } from 'react';
 
 export type DialogType = 'item' | 'option' | 'preferences' | null;
 
@@ -12,6 +12,15 @@ export type DialogContextType = {
   handleClose: () => void;
 };
 
-const DialogContext = createContext<DialogContextType | null>(null);
+export const DialogContext = createContext<DialogContextType | undefined>(
+  undefined,
+);
 
-export default DialogContext;
+export const useDialogContext = () => {
+  const context = useContext(DialogContext);
+
+  if (context === undefined)
+    throw Error('useDialogContext must be used with a DialogContext');
+
+  return context;
+};

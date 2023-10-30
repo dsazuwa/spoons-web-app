@@ -1,9 +1,6 @@
 import Button from '@mui/material/Button';
-import { useContext } from 'react';
 
-import DialogContext, {
-  DialogContextType,
-} from '@order/contexts/DialogContext';
+import { useDialogContext } from '@order/contexts/DialogContext';
 import { useGetChildModifierQuery } from '@store/api';
 import BackdropLoader from './BackdropLoader';
 import ModifierGroup from './ModifierGroup';
@@ -15,9 +12,7 @@ interface Props {
 }
 
 function OptionDialog({ itemName, groupId }: Props) {
-  const { handleBack, handleClose } = useContext(
-    DialogContext,
-  ) as DialogContextType;
+  const { handleBack, handleClose } = useDialogContext();
 
   const { data, isLoading, isFetching } = useGetChildModifierQuery(groupId);
 

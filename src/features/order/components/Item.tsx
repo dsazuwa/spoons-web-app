@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import { useState } from 'react';
 
-import DialogContext, { DialogType } from '../contexts/DialogContext';
+import { DialogContext, DialogType } from '../contexts/DialogContext';
 import useGetModifiers from '../hooks/useGetModifiers';
 import BackdropLoader from './BackdropLoader';
 import Dialog from './Dialog';
