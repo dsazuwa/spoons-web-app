@@ -32,7 +32,7 @@ const Div = styled('div')(({ theme }) => ({
 }));
 
 function Preferences() {
-  const { setType } = useDialogContext();
+  const { openPreferences } = useDialogContext();
 
   return (
     <Div>
@@ -42,10 +42,7 @@ function Preferences() {
         <div className='status-text optional'>(Optional)</div>
       </S.Header>
 
-      <ButtonBase
-        className='preference-option'
-        onClick={() => setType('preferences')}
-      >
+      <ButtonBase className='preference-option' onClick={openPreferences}>
         <Typography className='preference-option-text'>
           Add Special Instructions
         </Typography>

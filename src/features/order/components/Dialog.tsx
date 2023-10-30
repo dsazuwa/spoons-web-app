@@ -13,7 +13,8 @@ interface Props {
 }
 
 function Dialog({ item, modifiers }: Props) {
-  const { type, setType, getCurrentOption, handleClose } = useDialogContext();
+  const { type, getCurrentOption, handleBack, handleClose } =
+    useDialogContext();
 
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
@@ -32,13 +33,7 @@ function Dialog({ item, modifiers }: Props) {
         <OptionDialog itemName={item.name} groupId={getCurrentOption()} />
       )}
 
-      {type === 'preferences' && (
-        <PreferencesDialog
-          handleClick={() => {
-            setType('item');
-          }}
-        />
-      )}
+      {type === 'preferences' && <PreferencesDialog handleClick={handleBack} />}
     </S.Dialog>
   );
 }

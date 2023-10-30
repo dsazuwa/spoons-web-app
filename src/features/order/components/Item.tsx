@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
-import { useState } from 'react';
+import { useReducer } from 'react';
 
 import { DialogContext, DialogType } from '../contexts/DialogContext';
 import useGetModifiers from '../hooks/useGetModifiers';
@@ -8,35 +8,103 @@ import BackdropLoader from './BackdropLoader';
 import Dialog from './Dialog';
 import ItemCard from './ItemCard';
 
-function Item({ item }: { item: MenuItemType }) {
-  const [type, setType] = useState<DialogType>(null);
-  const [optionIdStack, setOptionIdStack] = useState<number[]>([]);
+type NavigationState = {
+  type: DialogType;
+  optionIdStack: number[];
+};
 
+enum NavigationActions {
+  OPEN_ITEM = 'OPEN_ITEM',
+  OPEN_OPTION = 'OPEN_OPTION',
+  OPEN_PREFERENCES = 'OPEN_PREFERENCES',
+  BACK = 'BACK',
+  CLOSE = 'CLOSE',
+}
+
+type NavigationAction = {
+  type: NavigationActions;
+  payload?: number;
+};
+
+function navigationReducer(
+  state: NavigationState,
+  action: NavigationAction,
+): NavigationState {
+  const { type, payload } = action;
+
+  switch (type) {
+    case NavigationActions.OPEN_ITEM:
+      return {
+        type: 'item',
+        optionIdStack: [],
+      };
+
+    case NavigationActions.OPEN_OPTION: {
+      if (!payload) throw Error('Payload is missing for OPEN_OPTION action.');
+
+      return {
+        type: 'option',
+        optionIdStack: [...state.optionIdStack, payload],
+      };
+    }
+
+    case NavigationActions.OPEN_PREFERENCES:
+      return {
+        type: 'preferences',
+        optionIdStack: [],
+      };
+
+    case NavigationActions.BACK: {
+      const updatedStack = [...state.optionIdStack];
+      updatedStack.pop();
+
+      return {
+        type: updatedStack.length === 0 ? 'item' : 'option',
+        optionIdStack: updatedStack,
+      };
+    }
+
+    case NavigationActions.CLOSE:
+      return {
+        type: null,
+        optionIdStack: [],
+      };
+
+    default:
+      throw Error(`Unhandled action type: ${type}`);
+  }
+}
+
+function Item({ item }: { item: MenuItemType }) {
   const { trigger, isLoading, isFetching, data } = useGetModifiers();
+
+  const [state, dispatch] = useReducer(navigationReducer, {
+    type: null,
+    optionIdStack: [],
+  });
 
   const handleClickOpen = () => {
     trigger(item.itemId, true);
-    setType('item');
-    setOptionIdStack([]);
+    dispatch({ type: NavigationActions.OPEN_ITEM });
   };
 
   const handleClose = () => {
-    setType(null);
+    dispatch({ type: NavigationActions.CLOSE });
   };
 
-  const getCurrentOption = () => optionIdStack[optionIdStack.length - 1];
+  const getCurrentOption = () =>
+    state.optionIdStack[state.optionIdStack.length - 1];
 
   const openOption = (id: number) => {
-    setType('option');
-    setOptionIdStack([...optionIdStack, id]);
+    dispatch({ type: NavigationActions.OPEN_OPTION, payload: id });
+  };
+
+  const openPreferences = () => {
+    dispatch({ type: NavigationActions.OPEN_PREFERENCES });
   };
 
   const handleBack = () => {
-    const updatedStack = [...optionIdStack];
-    updatedStack.pop();
-    setOptionIdStack(updatedStack);
-
-    if (updatedStack.length === 0) setType('item');
+    dispatch({ type: NavigationActions.BACK });
   };
 
   return (
@@ -48,16 +116,19 @@ function Item({ item }: { item: MenuItemType }) {
       <DialogContext.Provider
         value={{
           itemName: item.name,
-          type,
-          setType,
+          type: state.type,
           getCurrentOption,
           openOption,
+          openPreferences,
           handleBack,
           handleClose,
         }}
       >
         {isLoading || isFetching || data?.modifiers === undefined ? (
-          <BackdropLoader open={type !== null} handleClose={handleClose} />
+          <BackdropLoader
+            open={state.type !== null}
+            handleClose={handleClose}
+          />
         ) : (
           <Dialog item={item} modifiers={data.modifiers} />
         )}
