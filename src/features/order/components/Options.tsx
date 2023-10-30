@@ -1,9 +1,11 @@
+import { Checkbox } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
+import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-import DialogContext, { DialogContextType } from '../contexts/DialogContext';
-import OptionsList from './OptionsList';
+import { useDialogContext } from '../contexts/DialogContext';
+import Option from './Option';
 
 interface OptionsProps {
   groupId: number;
@@ -18,26 +20,10 @@ function RadioOptions({
   options,
   setSelectedOption,
 }: OptionsProps) {
-  const { openOption } = useContext(DialogContext) as DialogContextType;
-
+  const { openOption } = useDialogContext();
   const [value, setValue] = useState(-1);
 
   const isNested = (i: number) => 'groupId' in options[i];
-
-  // useEffect(
-  //   () => {
-  //     for (let i = 0; i < options.length; i++) {
-  //       if (!isNested(i)) {
-  //         setValue(i);
-  //         setSelectedOption(i);
-  //       }
-  //       break;
-  //     }
-  //   },
-  //   [
-  //     /* _ */
-  //   ],
-  // );
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const i = Number(event.target.value);
@@ -55,15 +41,35 @@ function RadioOptions({
       value={value}
       onChange={handleRadioChange}
     >
-      <OptionsList isRadio={true} groupId={groupId} options={options} />
+      {options?.map((option, index) => (
+        <Option
+          key={`modifier-${groupId}-option-${index}`}
+          index={index}
+          name={option.name}
+          price={option.price}
+          isNested={isNested(index)}
+          InputComponent={<Radio />}
+        />
+      ))}
     </RadioGroup>
   );
 }
 
 function CheckboxOptions({ groupId, name, options }: OptionsProps) {
+  const isNested = (i: number) => 'groupId' in options[i];
+  
   return (
     <FormGroup aria-label={`${name}-options`}>
-      <OptionsList isRadio={false} groupId={groupId} options={options} />
+      {options?.map((option, index) => (
+        <Option
+          key={`modifier-${groupId}-option-${index}`}
+          index={index}
+          name={option.name}
+          price={option.price}
+          isNested={isNested(index)}
+          InputComponent={<Checkbox />}
+        />
+      ))}
     </FormGroup>
   );
 }
