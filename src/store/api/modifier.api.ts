@@ -50,8 +50,9 @@ export const modifierApi = createApi({
 
 export const {
   useGetModifierQuery,
-  useGetChildModifierQuery,
   useLazyGetModifierQuery,
+  useGetChildModifierQuery,
+  useLazyGetChildModifierQuery,
   useGetItemModifiersQuery,
   useLazyGetItemModifiersQuery,
 } = modifierApi;
