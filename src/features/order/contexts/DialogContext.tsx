@@ -1,15 +1,13 @@
 import { createContext, useContext } from 'react';
 
-export type DialogType = 'item' | 'option' | 'preferences' | null;
+export type DialogType = 'item' | 'preferences' | null;
 
 export type DialogContextType = {
-  itemName: string;
   type: DialogType;
-  getCurrentOption: () => number;
-  openOption: (id: number) => void;
-  openPreferences: () => void;
-  handleBack: () => void;
+  handleOpen: () => void;
   handleClose: () => void;
+  handleOpenPreferences: () => void;
+  handleClosePreferences: () => void;
 };
 
 export const DialogContext = createContext<DialogContextType | undefined>(

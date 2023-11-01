@@ -14,8 +14,16 @@ function OptionDialogAppBar({ itemName, optionName, handleClick }: Props) {
   const { scrolledPast } = useDialogAppBar();
 
   return (
-    <S.Div id='dialog-app-bar' scrolledPast={scrolledPast}>
-      <IconButton edge='start' aria-label='back' onClick={handleClick}>
+    <S.Div
+      id='dialog-app-bar'
+      style={{ padding: '24px' }}
+      scrolledPast={scrolledPast}
+    >
+      <IconButton
+        className='action-button'
+        aria-label='back'
+        onClick={handleClick}
+      >
         <ArrowBackIcon />
       </IconButton>
 

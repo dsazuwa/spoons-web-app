@@ -35,13 +35,13 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
     ['& .item-name']: {
       color: palette.grey[500],
       fontWeight: 500,
-      fontSize: '.75em',
+      fontSize: '.6875em',
     },
 
     ['& .option-name']: {
       color: palette.base.black,
       fontWeight: 600,
-      fontSize: '.825em',
+      fontSize: '.8125em',
     },
 
     ['& .ellipsis-text']: {
@@ -53,13 +53,18 @@ const Div = styled('div')<{ scrolledPast: boolean }>(
     },
 
     [theme.breakpoints.up('sm')]: {
+      padding: '24px',
+
       ['svg']: {
         fontSize: '1.25rem',
       },
 
-      ['& .app-bar-title']: {
-        fontSize: '1.125em',
-        letterSpacing: '0.75px',
+      ['& .item-name']: {
+        fontSize: '.875em',
+      },
+
+      ['& .option-name']: {
+        fontSize: '1em',
       },
     },
   }),

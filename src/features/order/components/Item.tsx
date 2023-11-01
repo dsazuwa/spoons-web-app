@@ -1,138 +1,117 @@
+import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
-import { useReducer } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useEffect } from 'react';
 
-import { DialogContext, DialogType } from '../contexts/DialogContext';
+import useDialog from '../hooks/useDialog';
+import useGetChildModifiers from '../hooks/useGetChildModifiers';
 import useGetModifiers from '../hooks/useGetModifiers';
+import { isItemNode, isOptionNode, useTree } from '../treeState';
 import BackdropLoader from './BackdropLoader';
-import Dialog from './Dialog';
+import * as S from './Dialog.styled';
 import ItemCard from './ItemCard';
+import ItemDialog from './ItemDialog';
+import OptionDialog from './OptionDialog';
+import PreferencesDialog from './PreferencesDialog';
 
-type NavigationState = {
-  type: DialogType;
-  optionIdStack: number[];
-};
-
-enum NavigationActions {
-  OPEN_ITEM = 'OPEN_ITEM',
-  OPEN_OPTION = 'OPEN_OPTION',
-  OPEN_PREFERENCES = 'OPEN_PREFERENCES',
-  BACK = 'BACK',
-  CLOSE = 'CLOSE',
-}
-
-type NavigationAction = {
-  type: NavigationActions;
-  payload?: number;
-};
-
-function navigationReducer(
-  state: NavigationState,
-  action: NavigationAction,
-): NavigationState {
-  const { type, payload } = action;
-
-  switch (type) {
-    case NavigationActions.OPEN_ITEM:
-      return {
-        type: 'item',
-        optionIdStack: [],
-      };
-
-    case NavigationActions.OPEN_OPTION: {
-      if (!payload) throw Error('Payload is missing for OPEN_OPTION action.');
-
-      return {
-        type: 'option',
-        optionIdStack: [...state.optionIdStack, payload],
-      };
-    }
-
-    case NavigationActions.OPEN_PREFERENCES:
-      return {
-        type: 'preferences',
-        optionIdStack: [],
-      };
-
-    case NavigationActions.BACK: {
-      const updatedStack = [...state.optionIdStack];
-      updatedStack.pop();
-
-      return {
-        type: updatedStack.length === 0 ? 'item' : 'option',
-        optionIdStack: updatedStack,
-      };
-    }
-
-    case NavigationActions.CLOSE:
-      return {
-        type: null,
-        optionIdStack: [],
-      };
-
-    default:
-      throw Error(`Unhandled action type: ${type}`);
-  }
-}
+export type DialogType = 'item' | 'preferences' | null;
 
 function Item({ item }: { item: MenuItemType }) {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { trigger, isLoading, isFetching, data } = useGetModifiers();
+  const {
+    trigger: childTrigger,
+    isLoading: isChildLoading,
+    isFetching: isChildFetching,
+    data: child,
+  } = useGetChildModifiers();
 
-  const [state, dispatch] = useReducer(navigationReducer, {
-    type: null,
-    optionIdStack: [],
-  });
+  const {
+    current,
+    addTreeNodes,
+    buildTree,
+    dropTree,
+    selectOption,
+    setCurrentNode,
+    unselectOption,
+  } = useTree();
 
-  const handleClickOpen = () => {
+  const {
+    type,
+    handleOpen,
+    handleOpenPreferences,
+    handleClosePreferences,
+    handleClose: close,
+  } = useDialog();
+
+  const handleClick = () => {
     trigger(item.itemId, true);
-    dispatch({ type: NavigationActions.OPEN_ITEM });
+    handleOpen();
   };
 
   const handleClose = () => {
-    dispatch({ type: NavigationActions.CLOSE });
+    dropTree();
+    close();
   };
 
-  const getCurrentOption = () =>
-    state.optionIdStack[state.optionIdStack.length - 1];
+  useEffect(() => {
+    if (!current && data) buildTree(item, data.modifiers);
 
-  const openOption = (id: number) => {
-    dispatch({ type: NavigationActions.OPEN_OPTION, payload: id });
-  };
+    if (isOptionNode(current) && !current.getIsFulfilled()) {
+      if (!current.getIsNested()) return;
 
-  const openPreferences = () => {
-    dispatch({ type: NavigationActions.OPEN_PREFERENCES });
-  };
+      childTrigger(current.getId());
 
-  const handleBack = () => {
-    dispatch({ type: NavigationActions.BACK });
-  };
+      if (child !== undefined) addTreeNodes(child.modifiers, current.getKey());
+    }
+  }, [current, data, child]);
 
   return (
     <Box padding={{ xs: '5px', sm: '7.5px', md: '10px' }}>
-      <ButtonBase onClick={handleClickOpen} sx={{ width: '100%' }}>
+      <ButtonBase onClick={handleClick} sx={{ width: '100%' }}>
         <ItemCard item={item} />
       </ButtonBase>
 
-      <DialogContext.Provider
-        value={{
-          itemName: item.name,
-          type: state.type,
-          getCurrentOption,
-          openOption,
-          openPreferences,
-          handleBack,
-          handleClose,
-        }}
-      >
-        {isLoading || isFetching || data?.modifiers === undefined ? (
-          <BackdropLoader
-            open={state.type !== null}
-            handleClose={handleClose}
-          />
-        ) : (
-          <Dialog item={item} modifiers={data.modifiers} />
-        )}
-      </DialogContext.Provider>
+      {isLoading || isChildLoading || isFetching || isChildFetching ? (
+        <BackdropLoader open={type !== null} handleClose={handleClose} />
+      ) : (
+        <S.Dialog
+          id='item-dialog'
+          fullWidth={true}
+          fullScreen={isXs}
+          open={type !== null}
+          onClose={handleClose}
+        >
+          {type === 'item' && isItemNode(current) && (
+            <ItemDialog
+              type={type}
+              current={current}
+              selectOption={selectOption}
+              unselectOption={unselectOption}
+              setCurrentNode={setCurrentNode}
+              handleClose={handleClose}
+              handleOpenPreferences={handleOpenPreferences}
+            />
+          )}
+
+          {type === 'item' && isOptionNode(current) && (
+            <OptionDialog
+              itemName={item.name}
+              current={current}
+              selectOption={selectOption}
+              unselectOption={unselectOption}
+              setCurrentNode={setCurrentNode}
+            />
+          )}
+
+          {type === 'preferences' && (
+            <PreferencesDialog handleBack={handleClosePreferences} />
+          )}
+        </S.Dialog>
+      )}
     </Box>
   );
 }

@@ -1,42 +1,58 @@
 import Button from '@mui/material/Button';
 
-import { useDialogContext } from '@order/contexts/DialogContext';
-import { useGetChildModifierQuery } from '@store/api';
-import BackdropLoader from './BackdropLoader';
+import { OptionNode } from '../treeState/OptionNode';
 import ModifierGroup from './ModifierGroup';
 import OptionDialogAppBar from './OptionDialogAppBar';
 
-interface Props {
+interface OptionDialogProps {
   itemName: string;
-  groupId: number;
+  current: OptionNode;
+  selectOption: (key: string) => void;
+  unselectOption: (key: string) => void;
+  setCurrentNode: (key: string) => void;
 }
 
-function OptionDialog({ itemName, groupId }: Props) {
-  const { handleBack, handleClose } = useDialogContext();
+function OptionDialog({
+  itemName,
+  current,
+  selectOption,
+  unselectOption,
+  setCurrentNode,
+}: OptionDialogProps) {
+  const handleBack = () => {
+    const grandparentNode = current.getParent()?.getParent();
 
-  const { data, isLoading, isFetching } = useGetChildModifierQuery(groupId);
+    if (grandparentNode) setCurrentNode(grandparentNode.getKey());
+  };
 
-  return isLoading || isFetching || data === undefined ? (
-    <BackdropLoader open={true} handleClose={handleClose} />
-  ) : (
+  const handleSave = () => {
+    const grandparentNode = current.getParent()?.getParent();
+
+    if (grandparentNode && grandparentNode.getIsValid())
+      setCurrentNode(grandparentNode.getKey());
+  };
+
+  return (
     <>
       <OptionDialogAppBar
         itemName={itemName}
-        optionName={data.name}
+        optionName={current.getName()}
         handleClick={handleBack}
       />
 
       <div className='dialog-content'>
         <div id='dialog-app-bar-anchor' />
 
-        {data &&
-          data.modifiers.map((modifier) => (
-            <ModifierGroup
-              key={`modifier-${modifier.groupId}`}
-              className='stack-item'
-              modifier={modifier}
-            />
-          ))}
+        {current.getChildren().map((child) => (
+          <ModifierGroup
+            key={child.getKey()}
+            className='stack-item'
+            modifier={child}
+            selectOption={selectOption}
+            unselectOption={unselectOption}
+            setCurrentNode={setCurrentNode}
+          />
+        ))}
       </div>
 
       <div className='dialog-footer'>
@@ -44,6 +60,7 @@ function OptionDialog({ itemName, groupId }: Props) {
           variant='contained'
           className='dialog-footer-button'
           sx={{ width: '100%' }}
+          onClick={handleSave}
         >
           Save
         </Button>

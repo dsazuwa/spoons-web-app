@@ -3,7 +3,6 @@ import { styled } from '@mui/material';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 
-import { useDialogContext } from '../contexts/DialogContext';
 import * as S from './ModifierHeader.styled';
 
 const Div = styled('div')(({ theme }) => ({
@@ -31,9 +30,7 @@ const Div = styled('div')(({ theme }) => ({
   },
 }));
 
-function Preferences() {
-  const { openPreferences } = useDialogContext();
-
+function Preferences({ open }: { open: () => void }) {
   return (
     <Div>
       <S.Header selected={true}>
@@ -42,7 +39,7 @@ function Preferences() {
         <div className='status-text optional'>(Optional)</div>
       </S.Header>
 
-      <ButtonBase className='preference-option' onClick={openPreferences}>
+      <ButtonBase className='preference-option' onClick={open}>
         <Typography className='preference-option-text'>
           Add Special Instructions
         </Typography>

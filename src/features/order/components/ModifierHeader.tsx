@@ -1,35 +1,36 @@
 import CheckIcon from '@mui/icons-material/Check';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import { Dispatch, SetStateAction } from 'react';
 
 import * as S from './ModifierHeader.styled';
 
 interface ModifierpHeaderProps {
-  modifier: Modifier;
-  selectedOption: number;
-  setSelectedOption: Dispatch<SetStateAction<number>>;
+  name: string;
+  isRequired: boolean;
+  isSelected: boolean;
+  maxSelection: number;
 }
 
-function ModifierpHeader({ modifier, selectedOption }: ModifierpHeaderProps) {
-  const { name, isRequired, maxSelection } = modifier;
-
-  const selectionPrompt =
+function ModifierpHeader({
+  name,
+  isRequired,
+  maxSelection,
+  isSelected,
+}: ModifierpHeaderProps) {
+  const prompt =
     maxSelection === 1 ? 'Select 1' : `Select up to ${maxSelection}`;
 
-  const selected = selectedOption > -1;
-
   return (
-    <S.Header selected={selected}>
+    <S.Header selected={isSelected}>
       <div className='box'>
         <div className='name'>{name}</div>
-        <div className='prompt'>{selectionPrompt}</div>
+        <div className='prompt'>{prompt}</div>
       </div>
 
       {isRequired && (
         <div className='required-status'>
-          {selected && <CheckIcon />}
+          {isSelected && <CheckIcon />}
 
-          {!selected && <WarningAmberIcon />}
+          {!isSelected && <WarningAmberIcon />}
 
           <div className='status-text required'>Required</div>
         </div>

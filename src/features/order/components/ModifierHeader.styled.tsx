@@ -45,9 +45,8 @@ const Header = styled('div')<{ selected: boolean }>(({ theme, selected }) => ({
   },
 
   ['& .status-text']: {
-    letterSpacing: '.05em',
-    fontWeight: 700,
-    fontSize: '0.6em',
+    fontWeight: 600,
+    fontSize: '0.625em',
   },
 
   ['& .required']: {
@@ -65,7 +64,7 @@ const Header = styled('div')<{ selected: boolean }>(({ theme, selected }) => ({
 
     ['& .prompt']: { fontSize: '0.8125em' },
 
-    ['& .status-text']: { fontSize: '0.8125em' },
+    ['& .status-text']: { fontSize: '0.75em' },
   },
 }));
 

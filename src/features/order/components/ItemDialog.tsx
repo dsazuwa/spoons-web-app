@@ -4,25 +4,35 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { useDialogContext } from '@order/contexts/DialogContext';
+import { ItemNode } from '../treeState/ItemNode';
 import * as S from './Dialog.styled';
 import DialogAppBar from './DialogAppBar';
+import { DialogType } from './Item';
 import ModifierGroup from './ModifierGroup';
 import Preferences from './Preferences';
 import QuantityControl from './QuantityControl';
 
-interface Props {
-  item: MenuItemType;
-  modifiers: Modifier[];
+interface ItemDialogProps {
+  type: DialogType;
+  current: ItemNode;
+  handleClose: () => void;
+  handleOpenPreferences: () => void;
+  selectOption: (key: string) => void;
+  unselectOption: (key: string) => void;
+  setCurrentNode: (key: string) => void;
 }
 
-function ItemDialog({ item, modifiers }: Props) {
-  const { type, handleClose } = useDialogContext();
-
+function ItemDialog({
+  type,
+  current,
+  handleClose,
+  handleOpenPreferences,
+  selectOption,
+  unselectOption,
+  setCurrentNode,
+}: ItemDialogProps) {
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const { name, description, photoUrl } = item;
 
   return (
     <S.Dialog
@@ -34,7 +44,7 @@ function ItemDialog({ item, modifiers }: Props) {
       onClose={handleClose}
     >
       <DialogAppBar
-        text={name}
+        text={current.getName()}
         Icon={CloseIcon}
         iconLabel='close'
         handleClick={handleClose}
@@ -42,22 +52,30 @@ function ItemDialog({ item, modifiers }: Props) {
 
       <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-content'>
         <div id='dialog-app-bar-anchor' className='dialog-name'>
-          {name}
+          {current.getName()}
         </div>
 
-        {description && <div className='dialog-description'>{description}</div>}
+        {current.getDescription() && (
+          <div className='dialog-description'>{current.getDescription()}</div>
+        )}
 
-        <Box component='img' src={`/menu-items/${photoUrl}`} alt={name} />
+        <Box
+          component='img'
+          src={`/menu-items/${current.getPhotoUrl()}`}
+          alt={current.getName()}
+        />
 
-        {modifiers &&
-          modifiers.map((modifier) => (
-            <ModifierGroup
-              key={`modifier-${modifier.groupId}`}
-              modifier={modifier}
-            />
-          ))}
+        {current.getChildren().map((child) => (
+          <ModifierGroup
+            key={child.getKey()}
+            modifier={child}
+            selectOption={selectOption}
+            unselectOption={unselectOption}
+            setCurrentNode={setCurrentNode}
+          />
+        ))}
 
-        <Preferences />
+        <Preferences open={handleOpenPreferences} />
       </Stack>
 
       <QuantityControl />

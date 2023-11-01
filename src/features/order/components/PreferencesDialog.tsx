@@ -3,15 +3,15 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DialogAppBar from './DialogAppBar';
 
 interface Props {
-  handleClick: () => void;
+  handleBack: () => void;
 }
 
-function PreferencesDialog({ handleClick }: Props) {
+function PreferencesDialog({ handleBack }: Props) {
   return (
     <>
       <DialogAppBar
         text='User Preferences'
-        handleClick={handleClick}
+        handleClick={handleBack}
         Icon={ArrowBackIcon}
         iconLabel='back'
       />
