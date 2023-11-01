@@ -7,7 +7,7 @@ import * as S from './Option.styled';
 interface Props {
   index: number;
   name: string;
-  price: number | null;
+  price?: number;
   isNested: boolean;
   InputComponent: JSX.Element;
 }
@@ -24,9 +24,7 @@ function Option({ index, name, price, isNested, InputComponent }: Props) {
           sx={{ width: '100%' }}
         />
 
-        {price !== null && (
-          <div className='price'>{`+$${price.toFixed(2)}`}</div>
-        )}
+        {price && <div className='price'>{`+$${price.toFixed(2)}`}</div>}
 
         {isNested && <KeyboardArrowRightIcon />}
       </div>
