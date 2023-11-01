@@ -44,6 +44,7 @@ export const treeSlice = createSlice({
 
       newState.root = root;
       newState.current = root;
+      newState.map[root.key] = root;
 
       treeService.createModifierNodes(newState.map, modifiers, root.key);
     },
