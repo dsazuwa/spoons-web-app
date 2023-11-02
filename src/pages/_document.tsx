@@ -11,7 +11,7 @@ import Document, {
 import * as React from 'react';
 
 import createEmotionCache from '@utils/createEmotionCache';
-import theme, { openSans } from '@utils/theme';
+import theme, { montserrat } from '@utils/theme';
 import { AppProps } from './_app';
 
 /** source:
@@ -24,7 +24,7 @@ interface MyDocumentProps extends DocumentProps {
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang='en' className={openSans.className}>
+    <Html lang='en' className={montserrat.className}>
       <Head>
         {/* PWA primary color */}
         <meta name='theme-color' content={theme.palette.primary.main} />

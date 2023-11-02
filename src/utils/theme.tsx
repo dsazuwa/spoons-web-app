@@ -1,10 +1,10 @@
 import { createTheme } from '@mui/material';
-import { Open_Sans } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 
 import palette from './palette';
 
-export const openSans = Open_Sans({
-  weight: ['300', '400', '500', '600', '700', '800'],
+export const montserrat = Montserrat({
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
@@ -27,7 +27,7 @@ const theme = createTheme({
   },
 
   typography: {
-    fontFamily: openSans.style.fontFamily,
+    fontFamily: montserrat.style.fontFamily,
   },
 });
 
