@@ -62,7 +62,7 @@ function ItemDialog({
         <Preferences open={handleOpenPreferences} />
       </Stack>
 
-      <QuantityControl />
+      <QuantityControl price={0} />
     </>
   );
 }

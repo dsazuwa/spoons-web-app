@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import useQuantityControl from '../hooks/useQuantityControl';
 import * as S from './QuantityControl.styled';
 
-function QuantityControl() {
+function QuantityControl({ price }: { price: number }) {
   const { quantity, setQuantity, incrementQuantity, decrementQuantity } =
     useQuantityControl();
 
@@ -27,7 +27,7 @@ function QuantityControl() {
       </S.IconButton>
 
       <Button variant='contained' className='dialog-footer-button'>
-        Add to cart
+        Add to cart - ${price.toFixed(2)}
       </Button>
     </div>
   );
