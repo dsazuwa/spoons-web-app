@@ -83,6 +83,8 @@ export class TreeState {
 
         if (modifiers) this.createModifierNodes(modifiers, node.getKey());
 
+        console.log(this.map);
+
         return;
       }
 
@@ -141,7 +143,7 @@ export class TreeState {
         const node = this.getNode(optionKey);
 
         if (!isOptionNode(node) || node.getIsFulfilled()) return;
-
+        console.log(modifiers, node);
         node.setIsFulfilled(true);
 
         this.createModifierNodes(modifiers, optionKey);

@@ -1,19 +1,14 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { ItemNode } from '../treeState/ItemNode';
-import * as S from './Dialog.styled';
 import DialogAppBar from './DialogAppBar';
-import { DialogType } from './Item';
 import ModifierGroup from './ModifierGroup';
 import Preferences from './Preferences';
 import QuantityControl from './QuantityControl';
 
 interface ItemDialogProps {
-  type: DialogType;
   current: ItemNode;
   handleClose: () => void;
   handleOpenPreferences: () => void;
@@ -23,7 +18,6 @@ interface ItemDialogProps {
 }
 
 function ItemDialog({
-  type,
   current,
   handleClose,
   handleOpenPreferences,
@@ -31,18 +25,8 @@ function ItemDialog({
   unselectOption,
   setCurrentNode,
 }: ItemDialogProps) {
-  const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
-    <S.Dialog
-      id='item-dialog'
-      fullWidth={true}
-      fullScreen={isSm}
-      maxWidth='sm'
-      open={type === 'item'}
-      onClose={handleClose}
-    >
+    <>
       <DialogAppBar
         text={current.getName()}
         Icon={CloseIcon}
@@ -79,7 +63,7 @@ function ItemDialog({
       </Stack>
 
       <QuantityControl />
-    </S.Dialog>
+    </>
   );
 }
 
