@@ -10,7 +10,7 @@ const Header = styled('div')<{ selected: boolean }>(({ theme, selected }) => ({
   ['& svg']: {
     marginRight: '.25em',
     fontSize: '0.65em',
-    stroke: 'currentColor',
+    // stroke: 'currentColor',
     color: selected ? palette.success[700] : palette.warning[700],
   },
 

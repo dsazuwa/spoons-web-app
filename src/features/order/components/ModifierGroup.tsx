@@ -5,7 +5,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { ChangeEvent } from 'react';
 
-import { ModifierNode } from '../treeState/ModifierNode';
+import { ModifierNode } from '../treeState';
 import ModifierHeader from './ModifierHeader';
 import Option from './Option';
 
@@ -58,8 +58,8 @@ function ModifierGroup({
       >
         {modifier.getMaxSelection() === 1 ? (
           <RadioGroup
-            aria-labelledby={`${name}-options`}
-            name={`${name}-options-radio-group`}
+            aria-labelledby={`${modifier.getName()}-options`}
+            name={`${modifier.getName()}-options-radio-group`}
             onChange={handleSingleSelect}
           >
             {modifier
@@ -68,16 +68,14 @@ function ModifierGroup({
                 <Option
                   key={option.getKey()}
                   index={index}
-                  name={option.getName()}
-                  price={option.getPrice()}
-                  isNested={option.getIsNested()}
+                  option={option}
                   InputComponent={<Radio />}
                 />
               ))}
           </RadioGroup>
         ) : (
           <FormGroup
-            aria-label={`${name}-options`}
+            aria-label={`${modifier.getName()}-options`}
             onChange={handleMultiSelect}
           >
             {modifier
@@ -86,9 +84,7 @@ function ModifierGroup({
                 <Option
                   key={option.getKey()}
                   index={index}
-                  name={option.getName()}
-                  price={option.getPrice()}
-                  isNested={option.getIsNested()}
+                  option={option}
                   InputComponent={<Checkbox />}
                 />
               ))}
