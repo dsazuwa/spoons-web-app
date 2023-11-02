@@ -28,7 +28,7 @@ function OptionDialog({
   const handleSave = () => {
     const grandparentNode = current.getParent()?.getParent();
 
-    if (grandparentNode && grandparentNode.getIsValid())
+    if (grandparentNode && current.getIsValid())
       setCurrentNode(grandparentNode.getKey());
   };
 
