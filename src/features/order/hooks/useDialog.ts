@@ -51,7 +51,7 @@ const useDialog = (item: MenuItemType) => {
   };
 
   useEffect(() => {
-    if (!current && modifierData?.modifiers)
+    if (!current && modifierData)
       buildTree(item, modifierData?.modifiers);
   }, [item, current, modifierData, buildTree]);
 
