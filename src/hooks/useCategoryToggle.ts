@@ -16,7 +16,9 @@ const useCategoryToggle = (categories: string[]) => {
     const categoryToggle = document.getElementById('category-toggle');
 
     if (scrollTarget && appBar && categoryToggle) {
-      const offset = appBar?.offsetHeight + categoryToggle?.offsetHeight;
+      const offset = appBar?.offsetHeight + categoryToggle?.offsetHeight + 20;
+
+      console.log(appBar?.offsetHeight, categoryToggle?.offsetHeight);
 
       window.scrollTo({
         top: scrollTarget.getBoundingClientRect().top + window.scrollY - offset,
