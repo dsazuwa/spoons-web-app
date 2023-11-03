@@ -3,7 +3,7 @@ import { styled } from '@mui/material';
 import palette from '@utils/palette';
 
 const Option = styled('div')(({ theme }) => ({
-  ['& .box']: {
+  ['& .label-box']: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -20,6 +20,21 @@ const Option = styled('div')(({ theme }) => ({
   ['& .price']: {
     fontSize: '.75rem',
     color: palette.grey[500],
+  },
+
+  ['& .MuiFormControlLabel-root']: {
+    width: '100%',
+    marginRight: 0,
+    marginLeft: 0,
+  },
+
+  ['& .MuiFormControlLabel-label']: {
+    width: '100%',
+  },
+
+  ['& .MuiButtonBase-root']: {
+    paddingRight: 8,
+    paddingLeft: 0,
   },
 
   [theme.breakpoints.up('sm')]: {

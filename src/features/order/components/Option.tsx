@@ -19,23 +19,26 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
 
   return (
     <S.Option>
-      <div className='box'>
-        <FormControlLabel
-          control={InputComponent}
-          value={index}
-          checked={option.getIsSelected()}
-          onClick={handleClick}
-          labelPlacement='end'
-          label={<div className='name'>{option.getName()}</div>}
-          sx={{ width: '100%' }}
-        />
+      <FormControlLabel
+        control={InputComponent}
+        value={index}
+        checked={option.getIsSelected()}
+        onClick={handleClick}
+        labelPlacement='end'
+        label={
+          <div className='label-box'>
+            <div className='name'>{option.getName()}</div>
 
-        {option.getPrice() > 0 && (
-          <div className='price'>{`+$${option.getPrice()?.toFixed(2)}`}</div>
-        )}
+            {option.getPrice() > 0 && (
+              <div className='price'>{`+$${option
+                .getPrice()
+                ?.toFixed(2)}`}</div>
+            )}
 
-        {option.getIsNested() && <KeyboardArrowRightIcon />}
-      </div>
+            {option.getIsNested() && <KeyboardArrowRightIcon />}
+          </div>
+        }
+      />
 
       <Divider />
     </S.Option>
