@@ -58,11 +58,17 @@ function OptionDialog({
       <div className='dialog-footer'>
         <Button
           variant='contained'
-          className='dialog-footer-button'
-          sx={{ width: '100%' }}
+          className='dialog-footer-button options-dialog-button'
           onClick={handleSave}
         >
-          Save
+          {current.getSelectionPrice() === 0 ? (
+            'Save'
+          ) : (
+            <div className='save-options-button'>
+              <div>Save Options</div>
+              <div>+{current.getSelectionPrice().toFixed(2)}</div>
+            </div>
+          )}
         </Button>
       </div>
     </>

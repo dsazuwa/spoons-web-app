@@ -20,7 +20,7 @@ export class OptionNode {
 
   private name: string;
 
-  private price?: number;
+  private price: number;
 
   private parent?: ModifierNode;
 
@@ -38,7 +38,7 @@ export class OptionNode {
     this.key = key;
     this.id = id;
     this.name = name;
-    this.price = price;
+    this.price = price || 0;
     this.isNested = isNested;
 
     this.children = [];
@@ -71,6 +71,10 @@ export class OptionNode {
   public getIsValid = () => this.isValid;
 
   public getIsFulfilled = () => this.isFulfilled;
+
+  public getSelectionPrice = () =>
+    this.price +
+    this.children.reduce((price, x) => price + x.getSelectionPrice(), 0);
 
   public setIsFulfilled = (isFulfilled: boolean) =>
     (this.isFulfilled = isFulfilled);

@@ -27,7 +27,7 @@ function QuantityControl({ price }: { price: number }) {
       </S.IconButton>
 
       <Button variant='contained' className='dialog-footer-button'>
-        Add to cart - ${price.toFixed(2)}
+        Add to cart - ${(price * quantity).toFixed(2)}
       </Button>
     </div>
   );

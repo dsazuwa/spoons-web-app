@@ -73,6 +73,12 @@ export class ModifierNode {
 
   public getChildren = () => this.children;
 
+  public getSelectionPrice = () =>
+    this.children.reduce(
+      (price, x) => price + (x.getIsSelected() ? x.getPrice() || 0 : 0),
+      0,
+    );
+
   public addChild = (option: OptionNode) => {
     this.children.push(option);
     this.validate();

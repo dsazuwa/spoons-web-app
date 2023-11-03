@@ -49,6 +49,17 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
     marginBottom: '16px',
   },
 
+  ['& .options-dialog-button']: {
+    width: '100%',
+  },
+
+  ['& .save-options-button']: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   [theme.breakpoints.up('sm')]: {
     ['& .MuiDialog-paperScrollPaper']: {
       borderRadius: '2%',

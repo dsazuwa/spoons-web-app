@@ -9,19 +9,22 @@ export class ItemNode {
 
   private description?: string;
 
+  private price: number;
+
   private photoUrl: string;
 
   private isValid: boolean;
 
   private children: ModifierNode[];
 
-  constructor({ itemId, name, description, photoUrl }: MenuItemType) {
+  constructor({ itemId, name, description, price, photoUrl }: MenuItemType) {
     this.itemId = itemId;
     this.key = `i${itemId}`;
 
     this.name = name;
     this.description = description;
     this.photoUrl = photoUrl;
+    this.price = price || 0;
 
     this.children = [];
     this.isValid = false;
@@ -35,11 +38,16 @@ export class ItemNode {
 
   public getDescription = () => this.description;
 
+  public getPrice = () => this.price;
+
   public getPhotoUrl = () => this.photoUrl;
 
   public getIsValid = () => this.isValid;
 
   public getChildren = (): ModifierNode[] => this.children;
+
+  public getSelectionPrice = () =>
+    this.children.reduce((price, x) => price + x.getSelectionPrice(), 0);
 
   public addChild = (modifier: ModifierNode) => {
     this.children.push(modifier);

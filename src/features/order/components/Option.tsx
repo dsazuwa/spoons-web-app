@@ -30,7 +30,7 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
           sx={{ width: '100%' }}
         />
 
-        {option.getPrice() && (
+        {option.getPrice() > 0 && (
           <div className='price'>{`+$${option.getPrice()?.toFixed(2)}`}</div>
         )}
 

@@ -62,7 +62,9 @@ function ItemDialog({
         <Preferences open={handleOpenPreferences} />
       </Stack>
 
-      <QuantityControl price={0} />
+      <QuantityControl
+        price={current.getPrice() + current.getSelectionPrice()}
+      />
     </>
   );
 }

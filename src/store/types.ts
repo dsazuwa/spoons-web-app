@@ -6,7 +6,7 @@ type MenuItemType = {
   description: string | undefined;
   subCategory: string;
   tags: string[];
-  price?: string;
+  price?: number;
   photoUrl: string;
   notes: string | undefined;
 };
