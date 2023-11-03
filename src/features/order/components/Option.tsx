@@ -27,7 +27,13 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
         labelPlacement='end'
         label={
           <div className='label-box'>
-            <div className='name'>{option.getName()}</div>
+            <div className='name-box'>
+              <div className='name'>{option.getName()}</div>
+
+              {option.getIsSelected() && !option.getIsValid() && (
+                <div className='selections'>More Selections Required</div>
+              )}
+            </div>
 
             {option.getPrice() > 0 && (
               <div className='price'>{`+$${option
