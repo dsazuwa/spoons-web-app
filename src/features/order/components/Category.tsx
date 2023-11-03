@@ -1,9 +1,10 @@
 import { styled } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import palette from '@utils/palette';
-import ItemGrid from './ItemGrid';
+import Item from './Item';
 
 const CategoryHeader = styled(Typography)(({ theme }) => ({
   color: palette.primary[900],
@@ -41,7 +42,14 @@ function Category({ index, menu }: CategoryProps) {
       paddingTop={{ xs: '5px', sm: '10px', md: '10px' }}
     >
       <CategoryHeader>{category}</CategoryHeader>
-      <ItemGrid items={items} />
+
+      <Grid container>
+        {items.map((item, index) => (
+          <Grid item key={index} xs={12} sm={6}>
+            <Item key={index} item={item} />
+          </Grid>
+        ))}
+      </Grid>
     </Stack>
   );
 }
