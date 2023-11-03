@@ -5,6 +5,7 @@ import PageHeader from '@components/PageHeader';
 import theme from '@utils/theme';
 import Menu from './components/Menu';
 import useGetMenu from './hooks/useGetMenu';
+import FullScreenLoader from '@components/FullScreenLoader';
 
 function OrderPageContent() {
   const { isFetching, isLoading, data } = useGetMenu();
@@ -14,7 +15,7 @@ function OrderPageContent() {
       <PageHeader text='Order' />
 
       {isLoading || isFetching || data === undefined ? (
-        <></>
+        <FullScreenLoader />
       ) : (
         <>
           <CategoryToggle
