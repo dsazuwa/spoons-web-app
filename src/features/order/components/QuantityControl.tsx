@@ -10,7 +10,7 @@ function QuantityControl({ price }: { price: number }) {
     useQuantityControl();
 
   return (
-    <div className='dialog-footer'>
+    <div className='dialog-footer item-dialog-footer'>
       <S.IconButton disabled={quantity === 1} onClick={decrementQuantity}>
         <RemoveCircleOutlineIcon />
       </S.IconButton>
