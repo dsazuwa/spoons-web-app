@@ -9,9 +9,14 @@ interface Props {
   index: number;
   option: OptionNode;
   InputComponent: JSX.Element;
+  handleChange?: (index: number) => void;
 }
 
-function Option({ index, option, InputComponent }: Props) {
+function Option({ index, option, InputComponent, handleChange }: Props) {
+  const handleClick = () => {
+    if (handleChange) handleChange(index);
+  };
+
   return (
     <S.Option>
       <div className='box'>
@@ -19,6 +24,7 @@ function Option({ index, option, InputComponent }: Props) {
           control={InputComponent}
           value={index}
           checked={option.getIsSelected()}
+          onClick={handleClick}
           labelPlacement='end'
           label={<div className='name'>{option.getName()}</div>}
           sx={{ width: '100%' }}

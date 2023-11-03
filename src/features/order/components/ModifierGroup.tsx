@@ -24,8 +24,8 @@ function ModifierGroup({
   unselectOption,
   setCurrentNode,
 }: ModifierGroupProps) {
-  const handleSingleSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const option = modifier.getChildren()[Number.parseInt(e.target.value, 10)];
+  const handleSingleSelect = (index: number) => {
+    const option = modifier.getChildren()[index];
 
     selectOption(option.getKey());
 
@@ -60,7 +60,6 @@ function ModifierGroup({
           <RadioGroup
             aria-labelledby={`${modifier.getName()}-options`}
             name={`${modifier.getName()}-options-radio-group`}
-            onChange={handleSingleSelect}
           >
             {modifier
               .getChildren()
@@ -70,6 +69,7 @@ function ModifierGroup({
                   index={index}
                   option={option}
                   InputComponent={<Radio />}
+                  handleChange={handleSingleSelect}
                 />
               ))}
           </RadioGroup>
