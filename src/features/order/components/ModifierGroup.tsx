@@ -40,7 +40,15 @@ function ModifierGroup({
       return;
     }
 
-    selectOption(option.getKey());
+    const parent = option.getParent();
+    if (!parent) return;
+
+    const maxSelection = parent.getMaxSelection();
+    const selectedCount = parent
+      .getChildren()
+      .filter((o) => o.getIsSelected()).length;
+
+    if (selectedCount < maxSelection) selectOption(option.getKey());
   };
 
   return (
