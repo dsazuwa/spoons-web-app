@@ -25,6 +25,16 @@ function ItemDialog({
   unselectOption,
   setCurrentNode,
 }: ItemDialogProps) {
+  const addToCartHandler = () => {
+    if (current.getIsValid()) {
+    } else {
+      const elements = document.getElementsByClassName('unfulfilled-modifier');
+
+      if (elements.length > 0)
+        elements[0].scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <DialogAppBar
@@ -64,6 +74,7 @@ function ItemDialog({
 
       <QuantityControl
         price={current.getPrice() + current.getSelectionPrice()}
+        cartHandler={addToCartHandler}
       />
     </>
   );

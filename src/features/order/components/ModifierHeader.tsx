@@ -20,19 +20,21 @@ function ModifierpHeader({
     maxSelection === 1 ? 'Select 1' : `Select up to ${maxSelection}`;
 
   return (
-    <S.Header selected={isSelected}>
+    <S.Header>
       <div className='box'>
         <div className='name'>{name}</div>
         <div className='prompt'>{prompt}</div>
       </div>
 
       {isRequired && (
-        <div className='required-status'>
-          {isSelected && <CheckIcon />}
+        <div
+          className={`required-status ${
+            isSelected ? 'fulfilled-modifier' : 'unfulfilled-modifier'
+          }`}
+        >
+          {isSelected ? <CheckIcon /> : <WarningAmberIcon />}
 
-          {!isSelected && <WarningAmberIcon />}
-
-          <div className='status-text required'>Required</div>
+          <div className='status-text'>Required</div>
         </div>
       )}
 

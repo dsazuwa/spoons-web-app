@@ -5,7 +5,12 @@ import Button from '@mui/material/Button';
 import useQuantityControl from '../hooks/useQuantityControl';
 import * as S from './QuantityControl.styled';
 
-function QuantityControl({ price }: { price: number }) {
+interface QuantityControlProps {
+  price: number;
+  cartHandler: () => void;
+}
+
+function QuantityControl({ price, cartHandler }: QuantityControlProps) {
   const { quantity, setQuantity, incrementQuantity, decrementQuantity } =
     useQuantityControl();
 
@@ -26,7 +31,11 @@ function QuantityControl({ price }: { price: number }) {
         <AddCircleOutlineOutlinedIcon />
       </S.IconButton>
 
-      <Button variant='contained' className='dialog-footer-button'>
+      <Button
+        variant='contained'
+        className='dialog-footer-button'
+        onClick={cartHandler}
+      >
         Add to cart - ${(price * quantity).toFixed(2)}
       </Button>
     </div>
