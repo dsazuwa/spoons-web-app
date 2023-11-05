@@ -1,24 +1,43 @@
-import * as S from './CartPanel.styled';
+import { styled } from '@mui/material';
+
+import CartContent from './CartContent';
+import palette from '@utils/palette';
+
+const DivPlaceholder = styled('div')(({ theme }) => ({
+  width: '340px',
+  boxSizing: 'border-box',
+  display: 'none',
+
+  [theme.breakpoints.up('lg')]: {
+    display: 'inline',
+  },
+}));
+
+const Div = styled('div')(({ theme }) => ({
+  width: '340px',
+  boxSizing: 'border-box',
+  display: 'none',
+
+  position: 'fixed',
+  right: 0,
+  height: 'calc(100vh - 56px)',
+
+  overflowY: 'scroll',
+  borderLeft: `1px solid ${palette.grey[200]}`,
+
+  [theme.breakpoints.up('lg')]: {
+    display: 'inline',
+  },
+}));
 
 function CartPanel() {
   return (
     <>
-      <S.DivPlaceholder />
+      <DivPlaceholder />
 
-      <S.Div>
-        <div className='inset-box'>
-          <div className='mb-16'>
-            <div className='caption'>Your cart from</div>
-
-            <div className='restaurant-name'>Mendocino Farms</div>
-          </div>
-
-          <S.CheckoutButton variant='contained'>
-            <div>Checkout</div>
-            <div>$0</div>
-          </S.CheckoutButton>
-        </div>
-      </S.Div>
+      <Div>
+        <CartContent />
+      </Div>
     </>
   );
 }

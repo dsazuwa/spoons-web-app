@@ -3,31 +3,8 @@ import Button from '@mui/material/Button';
 
 import palette from '@utils/palette';
 
-const DivPlaceholder = styled('div')(({ theme }) => ({
-  width: '340px',
-  boxSizing: 'border-box',
-  display: 'none',
-
-  [theme.breakpoints.up('lg')]: {
-    display: 'inline',
-  },
-}));
-
-const Div = styled('div')(({ theme }) => ({
-  width: '340px',
-  boxSizing: 'border-box',
-  display: 'none',
-
-  position: 'fixed',
-  right: 0,
-  height: 'calc(100vh - 56px)',
-
-  overflowY: 'scroll',
-  borderLeft: `1px solid ${palette.grey[200]}`,
-
-  '& .inset-box': {
-    padding: '16px',
-  },
+const Div = styled('div')(() => ({
+  padding: '16px',
 
   '& .mb-16': {
     marginBottom: '16px',
@@ -46,10 +23,6 @@ const Div = styled('div')(({ theme }) => ({
     letterSpacing: '-0.04ch',
     lineHeight: '24px',
   },
-
-  [theme.breakpoints.up('lg')]: {
-    display: 'inline',
-  },
 }));
 
 const CheckoutButton = styled(Button)(() => ({
@@ -60,4 +33,4 @@ const CheckoutButton = styled(Button)(() => ({
   justifyContent: 'space-between',
 }));
 
-export { Div, DivPlaceholder, CheckoutButton };
+export { Div, CheckoutButton };
