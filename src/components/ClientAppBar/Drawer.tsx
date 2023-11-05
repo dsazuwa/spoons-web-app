@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import Toolbar from '@mui/material/Toolbar';
 import { useState } from 'react';
 
-import { AuthPageType, PageType } from '.';
+import { AuthPageType, PageType } from '@hooks/useClientAppBar';
 import DrawerListItem from './DrawerListItem';
 
 interface DrawerProps {

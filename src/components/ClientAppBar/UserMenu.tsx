@@ -3,8 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import { useState } from 'react';
 
+import { AuthPageType } from '@hooks/useClientAppBar';
 import palette from '@utils/palette';
-import { AuthPageType } from '.';
 import UserMenuItem from './UserMenuItem';
 
 interface UserMenuProps {

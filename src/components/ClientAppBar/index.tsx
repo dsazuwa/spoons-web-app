@@ -1,69 +1,20 @@
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Home from '@mui/icons-material/Home';
-import Info from '@mui/icons-material/Info';
-import Login from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import MenuBook from '@mui/icons-material/MenuBook';
-import PersonAddAlt from '@mui/icons-material/PersonAddAlt';
-import ReceiptLong from '@mui/icons-material/ReceiptLong';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { SvgIconTypeMap } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
-import useAuthentication from '@hooks/useAuthentication';
-import useLogout from '@hooks/useLogout';
+import useClientAppBar from '@hooks/useClientAppBar';
 import palette from '@utils/palette';
 import AppBarButton from './AppBarButton';
 import Drawer from './Drawer';
 import UserMenu from './UserMenu';
 
-/* eslint-disable @typescript-eslint/ban-types */
-export type PageType = {
-  name: string;
-  href: string;
-  icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-    muiName: string;
-  };
-};
-/* eslint-enable @typescript-eslint/ban-types */
-
-export type AuthPageType = {
-  page: PageType;
-  handleLogout?: () => void;
-};
-
 function ClientAppBar() {
-  const { authReady, isAuthenticated } = useAuthentication();
-  const { handleLogout } = useLogout(false);
-
-  const pages: PageType[] = [
-    { name: 'Home', href: '/', icon: Home },
-    { name: 'Menu', href: '/menu', icon: MenuBook },
-    { name: 'Order', href: '/order', icon: ReceiptLong },
-    { name: 'About', href: '/about', icon: Info },
-  ];
-
-  const authPages: AuthPageType[] = [
-    {
-      page: { name: 'Account', href: '/account', icon: AccountCircle },
-      handleLogout: undefined,
-    },
-    {
-      page: { name: 'Log Out', href: '', icon: LogoutIcon },
-      handleLogout,
-    },
-  ];
-
-  const unauthPages: PageType[] = [
-    { name: 'Log In', href: '/login', icon: Login },
-    { name: 'Sign Up', href: '/register', icon: PersonAddAlt },
-  ];
+  const { authReady, isAuthenticated, pages, authPages, unauthPages } =
+    useClientAppBar();
 
   return (
     <Box>

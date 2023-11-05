@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { SxProps } from '@mui/system';
 import { NextLinkComposed } from '@components/Link';
 
-import { PageType } from '.';
+import { PageType } from '@hooks/useClientAppBar';
 
 interface AppBarButtonProp {
   page: PageType;

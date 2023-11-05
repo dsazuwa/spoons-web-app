@@ -3,7 +3,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import NextLink from 'next/link';
 
-import { PageType } from '.';
+import { PageType } from '@hooks/useClientAppBar';
 
 interface UserMenuItemProps {
   page: PageType;

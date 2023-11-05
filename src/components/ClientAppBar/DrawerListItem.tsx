@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import { NextLinkComposed } from '@components/Link';
-import { PageType } from '.';
+import { PageType } from '@hooks/useClientAppBar';
 
 interface DrawerListItemProps {
   page: PageType;
