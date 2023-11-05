@@ -1,6 +1,5 @@
-import React from 'react';
-
 import * as S from './CartContent.styled';
+import CartItem from './CartItem';
 
 function CartContent() {
   return (
@@ -15,6 +14,8 @@ function CartContent() {
         <div>Checkout</div>
         <div>$0</div>
       </S.CheckoutButton>
+
+      <CartItem />
     </S.Div>
   );
 }
