@@ -15,11 +15,8 @@ const Tabs = styled(MuiTabs)({
   left: 'auto',
 
   '&.fixed': {
-    padding: '0 16px 0 16px',
-    position: 'fixed',
+    position: 'sticky',
     top: '55px',
-    left: '50%',
-    transform: 'translateX(-50%)',
   },
 });
 
