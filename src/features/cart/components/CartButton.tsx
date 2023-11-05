@@ -4,7 +4,7 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
-import CartContent from '@features/order/components/CartContent';
+import CartContent from '@features/cart/components/CartContent';
 import * as S from './CardButton.styled';
 
 function CartButton() {

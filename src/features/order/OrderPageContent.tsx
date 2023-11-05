@@ -1,4 +1,4 @@
-import CartPanel from './components/CartPanel';
+import { CartPanel } from '@features/cart';
 import Menu from './components/Menu';
 
 function OrderPageContent() {

@@ -4,9 +4,9 @@ import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
+import { CartButton } from '@features/cart';
 import useClientAppBar from '@hooks/useClientAppBar';
 import AppBarButton from './AppBarButton';
-import CartButton from '../../features/order/components/CartButton';
 import Drawer from './Drawer';
 import UserMenu from './UserMenu';
 
