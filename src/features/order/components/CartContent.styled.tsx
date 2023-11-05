@@ -25,12 +25,16 @@ const Div = styled('div')(() => ({
   },
 }));
 
-const CheckoutButton = styled(Button)(() => ({
+const CheckoutButton = styled(Button)(({ theme }) => ({
   borderRadius: '24px',
   width: '100%',
   height: '40px',
-  fontSize: '.825em',
+  fontSize: '14px',
   justifyContent: 'space-between',
+
+  [theme.breakpoints.up('md')]: {
+    fontSize: '16px',
+  },
 }));
 
 export { Div, CheckoutButton };

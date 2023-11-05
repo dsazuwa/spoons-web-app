@@ -1,14 +1,12 @@
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from '@components/LogoButton';
 import useClientAppBar from '@hooks/useClientAppBar';
-import palette from '@utils/palette';
 import AppBarButton from './AppBarButton';
+import CartButton from '../../features/order/components/CartButton';
 import Drawer from './Drawer';
 import UserMenu from './UserMenu';
 
@@ -71,14 +69,7 @@ function ClientAppBar() {
               </Box>
             )}
 
-            <IconButton
-              sx={{
-                color: palette.base.white,
-                marginX: { sm: '0px', md: '8px' },
-              }}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
+            <CartButton />
           </Toolbar>
         </Container>
       </AppBar>
