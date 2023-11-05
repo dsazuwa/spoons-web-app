@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 import palette from '@utils/palette';
 
-const Div = styled('div')(() => ({
+const Div = styled('div')(({ theme }) => ({
   padding: '16px',
 
   '& .mb-16': {
@@ -22,6 +22,10 @@ const Div = styled('div')(() => ({
     fontWeight: 700,
     letterSpacing: '-0.04ch',
     lineHeight: '24px',
+  },
+
+  [theme.breakpoints.down('md')]: {
+    padding: '16px 0',
   },
 }));
 
