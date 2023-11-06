@@ -27,7 +27,7 @@ function Menu() {
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
-    <Container id='menu-container'>
+    <Container id='menu-container' sx={{ px: '8px' }}>
       <PageHeader text='Order' />
 
       {isLoading || isFetching || data === undefined ? (
