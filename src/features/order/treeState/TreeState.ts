@@ -1,7 +1,12 @@
 import { ItemNode } from './ItemNode';
 import { ModifierNode } from './ModifierNode';
 import { OptionNode } from './OptionNode';
-import { isModifierNode, isOptionNested, isOptionNode } from './typeguard';
+import {
+  isItemNode,
+  isModifierNode,
+  isOptionNested,
+  isOptionNode,
+} from './typeguard';
 
 export enum TreeActionType {
   BUILD_TREE = 'BUILD_TREE',
@@ -10,6 +15,9 @@ export enum TreeActionType {
   UNSELECT_OPTION = 'UNSELECT_OPTION',
   SET_CURRENT_NODE = 'SET_CURRENT_NODE',
   ADD_TREE_NODES = 'ADD_TREE_NODES',
+  SET_QUANTITY = 'SET_QUANTITY',
+  INCREMENT_QUANTITY = 'INCREMENT_QUANTITY',
+  DECREMENT_QUANTITY = 'DECREMENT_QUANTITY',
 }
 
 export type TreeAction =
@@ -18,7 +26,10 @@ export type TreeAction =
   | SelectOption
   | UnselectOption
   | SetCurrentNode
-  | AddTreeNodes;
+  | AddTreeNodes
+  | SetQuantity
+  | IncrementQuantity
+  | DecrementQuantity;
 
 export type BuildTree = {
   type: TreeActionType.BUILD_TREE;
@@ -51,6 +62,22 @@ export type AddTreeNodes = {
   optionKey: string;
 };
 
+export type SetQuantity = {
+  type: TreeActionType.SET_QUANTITY;
+  key: string;
+  amount: number;
+};
+
+export type IncrementQuantity = {
+  type: TreeActionType.INCREMENT_QUANTITY;
+  key: string;
+};
+
+export type DecrementQuantity = {
+  type: TreeActionType.DECREMENT_QUANTITY;
+  key: string;
+};
+
 export type Map = {
   [nodeId: string]: ItemNode | ModifierNode | OptionNode;
 };
@@ -70,7 +97,7 @@ export class TreeState {
 
   public getCurrent = () => this.current;
 
-  public getNode = (id: string) => this.map[id];
+  public getNode = (key: string) => this.map[key];
 
   public handleAction = (action: TreeAction) => {
     switch (action.type) {
@@ -145,6 +172,42 @@ export class TreeState {
         node.setIsFulfilled(true);
 
         this.createModifierNodes(modifiers, optionKey);
+
+        return;
+      }
+
+      case TreeActionType.SET_QUANTITY: {
+        const { key, amount } = action;
+
+        const node = this.getNode(key);
+
+        if (!isItemNode(node)) return;
+
+        node.setQuantity(amount);
+
+        return;
+      }
+
+      case TreeActionType.INCREMENT_QUANTITY: {
+        const { key } = action;
+
+        const node = this.getNode(key);
+
+        if (!isItemNode(node)) return;
+
+        node.incrementQuantity();
+
+        return;
+      }
+
+      case TreeActionType.DECREMENT_QUANTITY: {
+        const { key } = action;
+
+        const node = this.getNode(key);
+
+        if (!isItemNode(node)) return;
+
+        node.decrementQuantity();
 
         return;
       }

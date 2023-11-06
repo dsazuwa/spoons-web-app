@@ -22,12 +22,15 @@ const useDialog = (item: MenuItemType) => {
 
   const {
     current,
-    addTreeNodes,
     buildTree,
     dropTree,
     selectOption,
-    setCurrentNode,
     unselectOption,
+    setCurrentNode,
+    addTreeNodes,
+    setQuantity,
+    incrementQuantity,
+    decrementQuantity,
   } = useTree();
 
   const [type, setType] = useState<DialogType>(null);
@@ -51,8 +54,7 @@ const useDialog = (item: MenuItemType) => {
   };
 
   useEffect(() => {
-    if (!current && modifierData)
-      buildTree(item, modifierData?.modifiers);
+    if (!current && modifierData) buildTree(item, modifierData?.modifiers);
   }, [item, current, modifierData, buildTree]);
 
   useEffect(() => {
@@ -86,6 +88,9 @@ const useDialog = (item: MenuItemType) => {
     selectOption,
     setCurrentNode,
     unselectOption,
+    setQuantity,
+    incrementQuantity,
+    decrementQuantity,
   };
 };
 

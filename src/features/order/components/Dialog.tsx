@@ -21,6 +21,10 @@ interface Props {
   handleClose: () => void;
   handleOpenPreferences: () => void;
   handleClosePreferences: () => void;
+
+  setQuantity: (key: string, amount: number) => void;
+  incrementQuantity: (key: string) => void;
+  decrementQuantity: (key: string) => void;
 }
 
 function Dialog({
@@ -35,6 +39,10 @@ function Dialog({
   handleClose,
   handleOpenPreferences,
   handleClosePreferences,
+
+  setQuantity,
+  incrementQuantity,
+  decrementQuantity,
 }: Props) {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
@@ -55,6 +63,9 @@ function Dialog({
           setCurrentNode={setCurrentNode}
           handleClose={handleClose}
           handleOpenPreferences={handleOpenPreferences}
+          setQuantity={setQuantity}
+          incrementQuantity={incrementQuantity}
+          decrementQuantity={decrementQuantity}
         />
       )}
 

@@ -21,6 +21,9 @@ function Item({ item }: { item: MenuItemType }) {
     selectOption,
     setCurrentNode,
     unselectOption,
+    setQuantity,
+    incrementQuantity,
+    decrementQuantity,
   } = useDialog(item);
 
   return (
@@ -45,6 +48,9 @@ function Item({ item }: { item: MenuItemType }) {
           handleClose={handleClose}
           handleOpenPreferences={handleOpenPreferences}
           handleClosePreferences={handleClosePreferences}
+          setQuantity={setQuantity}
+          incrementQuantity={incrementQuantity}
+          decrementQuantity={decrementQuantity}
         />
       )}
     </Box>

@@ -37,6 +37,18 @@ export const useTree = () => {
     dispatch({ type: TreeActionType.ADD_TREE_NODES, modifiers, optionKey });
   };
 
+  const setQuantity = (key: string, amount: number) => {
+    dispatch({ type: TreeActionType.SET_QUANTITY, key, amount });
+  };
+
+  const incrementQuantity = (key: string) => {
+    dispatch({ type: TreeActionType.INCREMENT_QUANTITY, key });
+  };
+
+  const decrementQuantity = (key: string) => {
+    dispatch({ type: TreeActionType.DECREMENT_QUANTITY, key });
+  };
+
   return {
     current: state.getCurrent(),
     buildTree,
@@ -45,5 +57,8 @@ export const useTree = () => {
     unselectOption,
     setCurrentNode,
     addTreeNodes,
+    setQuantity,
+    incrementQuantity,
+    decrementQuantity,
   };
 };

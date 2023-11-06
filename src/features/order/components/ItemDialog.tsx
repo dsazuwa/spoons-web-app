@@ -15,6 +15,9 @@ interface ItemDialogProps {
   selectOption: (key: string) => void;
   unselectOption: (key: string) => void;
   setCurrentNode: (key: string) => void;
+  setQuantity: (key: string, amount: number) => void;
+  incrementQuantity: (key: string) => void;
+  decrementQuantity: (key: string) => void;
 }
 
 function ItemDialog({
@@ -24,6 +27,9 @@ function ItemDialog({
   selectOption,
   unselectOption,
   setCurrentNode,
+  setQuantity,
+  incrementQuantity,
+  decrementQuantity,
 }: ItemDialogProps) {
   return (
     <>
@@ -62,7 +68,13 @@ function ItemDialog({
         <Preferences open={handleOpenPreferences} />
       </Stack>
 
-      <QuantityControl current={current} handleClose={handleClose} />
+      <QuantityControl
+        current={current}
+        handleClose={handleClose}
+        setQuantity={setQuantity}
+        incrementQuantity={incrementQuantity}
+        decrementQuantity={decrementQuantity}
+      />
     </>
   );
 }
