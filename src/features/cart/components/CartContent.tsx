@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@store';
+import formatPrice from '@utils/formatPrice';
 import * as S from './CartContent.styled';
 import CartItem from './CartItem';
 
@@ -18,7 +19,7 @@ function CartContent() {
 
       <S.CheckoutButton variant='contained'>
         <div>Checkout</div>
-        <div>${total.toFixed(2)}</div>
+        <div>{formatPrice(total)}</div>
       </S.CheckoutButton>
 
       {cart.map(({ item, quantity }, index) => (

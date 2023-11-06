@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 
 import { addCartItem } from '@store/slices';
+import formatPrice from '@utils/formatPrice';
 import { useDispatch } from 'react-redux';
 import { ItemNode } from '../treeState';
 import * as S from './QuantityControl.styled';
@@ -76,7 +77,7 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
         className='dialog-footer-button'
         onClick={addToCartHandler}
       >
-        Add to cart - ${(current.getSelectionPrice() * quantity).toFixed(2)}
+        Add to cart - {formatPrice(current.getSelectionPrice() * quantity)}
       </Button>
     </div>
   );

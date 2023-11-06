@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 
+import formatPrice from '@utils/formatPrice';
 import { OptionNode } from '../treeState/OptionNode';
 import ModifierGroup from './ModifierGroup';
 import OptionDialogAppBar from './OptionDialogAppBar';
@@ -66,7 +67,7 @@ function OptionDialog({
           ) : (
             <div className='save-options-button'>
               <div>Save Options</div>
-              <div>+{current.getSelectionPrice().toFixed(2)}</div>
+              <div>+{formatPrice(current.getSelectionPrice())}</div>
             </div>
           )}
         </Button>

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 
 import { TCartItem, decrementCartItem, incrementCartItem } from '@store/slices';
+import formatPrice from '@utils/formatPrice';
 import * as S from './CartItem.styled';
 
 interface CartItemProps {
@@ -42,7 +43,7 @@ function CartItem({ index, item, quantity }: CartItemProps) {
       <Grid item xs={6} sm={6} md={7} lg={4}>
         <div className='item-name'>{name}</div>
         <div className='item-options'>{options}</div>
-        <div className='item-price'>${(price * quantity).toFixed(2)}</div>
+        <div className='item-price'>{formatPrice(price * quantity)}</div>
       </Grid>
 
       <Grid item>
