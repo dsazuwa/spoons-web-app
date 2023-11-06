@@ -1,18 +1,58 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
+import { useState } from 'react';
 
-import useQuantityControl from '../hooks/useQuantityControl';
+import { addCartItem } from '@store/slices';
+import { useDispatch } from 'react-redux';
+import { ItemNode } from '../treeState';
 import * as S from './QuantityControl.styled';
 
 interface QuantityControlProps {
-  price: number;
-  cartHandler: () => void;
+  current: ItemNode;
+  handleClose: () => void;
 }
 
-function QuantityControl({ price, cartHandler }: QuantityControlProps) {
-  const { quantity, setQuantity, incrementQuantity, decrementQuantity } =
-    useQuantityControl();
+function QuantityControl({ current, handleClose }: QuantityControlProps) {
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
+
+  const allowOneToThreeDigits = (value: string) =>
+    value.replace(/\D/g, '').slice(0, 3);
+
+  const handleChange = (value: string) => {
+    const val = allowOneToThreeDigits(value);
+    setQuantity(Number.parseInt(val || '1', 10));
+  };
+
+  const incrementQuantity = () => {
+    setQuantity((prevQuantity) => Math.min(prevQuantity + 1, 999));
+  };
+
+  const decrementQuantity = () => {
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  };
+
+  const addToCartHandler = () => {
+    if (current.getIsValid()) {
+      const item = {
+        id: current.getId(),
+        name: current.getName(),
+        photoUrl: current.getPhotoUrl(),
+        price: current.getSelectionPrice(),
+        selections: current.getSelection(),
+      };
+
+      dispatch(addCartItem({ item, quantity }));
+
+      handleClose();
+    } else {
+      const elements = document.getElementsByClassName('unfulfilled-modifier');
+
+      if (elements.length > 0)
+        elements[0].scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className='dialog-footer item-dialog-footer'>
@@ -24,7 +64,7 @@ function QuantityControl({ price, cartHandler }: QuantityControlProps) {
         id='num-items'
         variant='outlined'
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
       />
 
       <S.IconButton disabled={quantity === 999} onClick={incrementQuantity}>
@@ -34,9 +74,9 @@ function QuantityControl({ price, cartHandler }: QuantityControlProps) {
       <Button
         variant='contained'
         className='dialog-footer-button'
-        onClick={cartHandler}
+        onClick={addToCartHandler}
       >
-        Add to cart - ${(price * quantity).toFixed(2)}
+        Add to cart - ${(current.getSelectionPrice() * quantity).toFixed(2)}
       </Button>
     </div>
   );
