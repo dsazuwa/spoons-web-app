@@ -37,7 +37,11 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
   '& .dialog-footer-button': {
     borderRadius: '24px',
     textAlign: 'center',
-    fontSize: '10px',
+    fontSize: '12px',
+  },
+
+  '& .add-to-cart': {
+    minWidth: '192px',
   },
 
   '& .dialog-name': {
@@ -73,7 +77,11 @@ const Dialog = styled(MuiDialog)(({ theme }) => ({
     },
 
     '& .dialog-footer-button': {
-      fontSize: '15px',
+      fontSize: '14px',
+    },
+
+    '& .add-to-cart': {
+      minWidth: '220px',
     },
 
     '& .dialog-name': {

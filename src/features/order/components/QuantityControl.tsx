@@ -79,7 +79,7 @@ function QuantityControl({
 
       <Button
         variant='contained'
-        className='dialog-footer-button'
+        className='dialog-footer-button add-to-cart'
         onClick={addToCartHandler}
       >
         Add to cart -{' '}
