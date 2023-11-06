@@ -78,22 +78,22 @@ const QuantityControl = styled('div')(() => ({
   '& .item-quantity': {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     height: '32px',
     minWidth: '32px',
     fontWeight: 600,
     fontSize: '12px',
     lineHeight: '12px',
-    textAlign: 'center',
     color: palette.base.black,
   },
 }));
 
-const ActionButton = styled(IconButton)(() => ({
+const ActionButton = styled(IconButton)(({ disabled }) => ({
   boxShadow: 'transparent 0px 0px 0px 1px inset',
 
   svg: {
     fontSize: '16px',
-    color: palette.grey[600],
+    color: disabled ? palette.grey[300] : palette.grey[600],
   },
 }));
 

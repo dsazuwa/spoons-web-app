@@ -6,6 +6,7 @@ import CartItem from './CartItem';
 
 function CartContent() {
   const cart = useSelector((state: RootState) => state.cartState.cart);
+  const total = useSelector((state: RootState) => state.cartState.total);
 
   return (
     <S.Div>
@@ -17,11 +18,16 @@ function CartContent() {
 
       <S.CheckoutButton variant='contained'>
         <div>Checkout</div>
-        <div>$0</div>
+        <div>${total.toFixed(2)}</div>
       </S.CheckoutButton>
 
       {cart.map(({ item, quantity }, index) => (
-        <CartItem key={`cart-item-${index}`} item={item} quantity={quantity} />
+        <CartItem
+          key={`cart-item-${index}`}
+          index={index}
+          item={item}
+          quantity={quantity}
+        />
       ))}
     </S.Div>
   );

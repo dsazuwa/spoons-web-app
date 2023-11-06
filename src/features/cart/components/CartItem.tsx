@@ -3,12 +3,29 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Grid from '@mui/material/Grid';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
 
-import { TCartItem } from '@store/slices';
+import { TCartItem, decrementCartItem, incrementCartItem } from '@store/slices';
 import * as S from './CartItem.styled';
 
-function CartItem({ item, quantity }: { item: TCartItem; quantity: number }) {
+interface CartItemProps {
+  index: number;
+  item: TCartItem;
+  quantity: number;
+}
+
+function CartItem({ index, item, quantity }: CartItemProps) {
   const { name, options, price, photoUrl } = item;
+
+  const dispatch = useDispatch();
+
+  const incrementQuantity = () => {
+    dispatch(incrementCartItem(index));
+  };
+
+  const decrementQuantity = () => {
+    dispatch(decrementCartItem(index));
+  };
 
   return (
     <S.Grid container>
@@ -25,18 +42,21 @@ function CartItem({ item, quantity }: { item: TCartItem; quantity: number }) {
       <Grid item xs={6} sm={6} md={7} lg={4}>
         <div className='item-name'>{name}</div>
         <div className='item-options'>{options}</div>
-        <div className='item-price'>${price.toFixed(2)}</div>
+        <div className='item-price'>${(price * quantity).toFixed(2)}</div>
       </Grid>
 
       <Grid item>
         <S.QuantityControl>
-          <S.ActionButton>
+          <S.ActionButton onClick={decrementQuantity}>
             {quantity === 1 ? <DeleteIcon /> : <RemoveIcon />}
           </S.ActionButton>
 
           <div className='item-quantity'>{quantity}x</div>
 
-          <S.ActionButton>
+          <S.ActionButton
+            disabled={quantity === 999}
+            onClick={incrementQuantity}
+          >
             <AddIcon />
           </S.ActionButton>
         </S.QuantityControl>
