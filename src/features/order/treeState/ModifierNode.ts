@@ -47,7 +47,7 @@ export class ModifierNode {
     this.maxSelection = maxSelection;
 
     this.children = [];
-    this.isValid = false;
+    this.isValid = false; // change to !isRequired
 
     if (parent) {
       this.parent = parent;
@@ -72,6 +72,9 @@ export class ModifierNode {
   public getParent = () => this.parent;
 
   public getChildren = () => this.children;
+
+  public getSelection = () =>
+    this.children.flatMap((option) => option.getSelection());
 
   public getSelectionPrice = () =>
     this.children.reduce(

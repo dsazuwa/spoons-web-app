@@ -3,7 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { createWrapper } from 'next-redux-wrapper';
 
 import { authApi, customerApi, menuApi, modifierApi, userApi } from './api';
-import { menuReducer, userReducer } from './slices';
+import { cartReducer, menuReducer, userReducer } from './slices';
 
 export const store = configureStore({
   devTools: process.env.NODE_ENV === 'development',
@@ -12,6 +12,7 @@ export const store = configureStore({
     [menuApi.reducerPath]: menuApi.reducer,
     [modifierApi.reducerPath]: modifierApi.reducer,
     menuState: menuReducer,
+    cartState: cartReducer,
 
     [authApi.reducerPath]: authApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,

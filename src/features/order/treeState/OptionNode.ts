@@ -9,10 +9,6 @@ export type TOptionNode = {
   parent?: ModifierNode;
 };
 
-export type TOptionData = TOptionNode & {
-  parentId: string;
-};
-
 export class OptionNode {
   private key: string;
 
@@ -71,6 +67,19 @@ export class OptionNode {
   public getIsValid = () => this.isValid;
 
   public getIsFulfilled = () => this.isFulfilled;
+
+  public getSelection = () => {
+    if (!this.isSelected) return [];
+
+    const selection = [{ [this.key]: this.name }];
+
+    if (this.isNested)
+      selection.push(
+        ...this.children.flatMap((modifier) => modifier.getSelection()),
+      );
+
+    return selection;
+  };
 
   public getSelectionPrice = () =>
     this.price +

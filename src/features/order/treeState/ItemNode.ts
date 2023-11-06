@@ -46,6 +46,9 @@ export class ItemNode {
 
   public getChildren = (): ModifierNode[] => this.children;
 
+  public getSelection = () =>
+    this.children.flatMap((modifier) => modifier.getSelection());
+
   public getSelectionPrice = () =>
     this.children.reduce((price, x) => price + x.getSelectionPrice(), 0);
 

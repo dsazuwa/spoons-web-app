@@ -2,25 +2,24 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Grid from '@mui/material/Grid';
+import Image from 'next/image';
 
+import { TCartItem } from '@store/slices';
 import * as S from './CartItem.styled';
 
-function CartItem() {
-  const item = {
-    name: 'Build Your Own Salad',
-    options:
-      'Hand-Carved Steak, Salad Style, Spinach, Citrus Vinaigrette, Cheddar, Aji Amarillo Sauce, Tangy Mustard BBQ Sauce, Apple, Beets, Black Bean, Roasted Corn & Jicama Succotash, Aji Amarillo Steak',
-    photoUrl: 'BuildSalad.jpg',
-    price: 26.63,
-    quantity: 999,
-  };
-
-  const { name, options, photoUrl, price, quantity } = item;
+function CartItem({ item, quantity }: { item: TCartItem; quantity: number }) {
+  const { name, options, price, photoUrl } = item;
 
   return (
     <S.Grid container>
       <Grid item className='item-image-box'>
-        <img className='item-image' src={`/menu-items/${photoUrl}`} />
+        <Image
+          className='item-image'
+          src={`/menu-items/${photoUrl}`}
+          alt={`${name}`}
+          width={60}
+          height={60}
+        />
       </Grid>
 
       <Grid item xs={6} sm={6} md={7} lg={4}>
