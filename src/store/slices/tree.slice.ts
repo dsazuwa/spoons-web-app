@@ -1,29 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
-  optionService,
-  treeService,
-  isModifierNode,
+  createItemNode,
+  createModifierNode,
+  createOptionNode,
+  getItem,
+  getModifier,
+  getModifierParent,
+  getOption,
+  isItemNode,
   isOptionNode,
+  validateItem,
+  validateModifier,
+  validateOption,
 } from '@features/order/tree';
-
-/* eslint-disable  @typescript-eslint/no-unused-vars */
-
-type TreeState = {
-  map: TreeMap;
-  root: ItemNode | OptionNode | undefined;
-  current: ItemNode | OptionNode | undefined;
-};
-
-type TBuildTree = {
-  item: MenuItemType;
-  modifiers: Modifier[];
-};
-
-type TAddTreeNodes = {
-  optionKey: string;
-  modifiers: Modifier[];
-};
 
 const initialState: TreeState = {
   map: {},
@@ -40,63 +30,160 @@ export const treeSlice = createSlice({
       const { item, modifiers } = action.payload;
       const newState = state;
 
-      const root = treeService.createItemNode(item);
+      const map: TreeMap = {};
+      const root = createItemNode(item);
 
       newState.root = root;
       newState.current = root;
-      newState.map[root.key] = root;
+      map[root.key] = root;
 
-      treeService.createModifierNodes(newState.map, modifiers, root.key);
+      modifiers?.forEach((modifier) => {
+        const modifierNode = createModifierNode(modifier, root);
+        map[modifierNode.key] = modifierNode;
+
+        modifier.options.forEach((option) => {
+          const optionNode = createOptionNode(option, modifierNode);
+
+          map[optionNode.key] = optionNode;
+          validateOption(map, optionNode);
+        });
+
+        validateModifier(map, modifierNode);
+      });
+
+      validateItem(map, root);
+      newState.map = map;
     },
 
     selectOption: (state, action: PayloadAction<string>) => {
       const key = action.payload;
       const newState = state;
 
-      const option = newState.map[key];
+      const option = getOption(newState.map, key);
+      const parent = getModifier(newState.map, option.parent);
 
-      if (!isOptionNode(option))
-        throw new Error('This is an invalid option node');
+      if (parent.maxSelection === 1)
+        parent.children.forEach((key) => {
+          const child = getOption(newState.map, key);
+          child.isSelected = false;
+          validateOption(newState.map, child);
+        });
 
-      optionService.select(option);
+      option.isSelected = true;
+      validateOption(newState.map, option);
 
       if (option.isNested) newState.current = option;
+      else if (newState.current)
+        newState.current = getModifierParent(
+          newState.map,
+          newState.current.key,
+        );
     },
 
     unselectOption: (state, action: PayloadAction<string>) => {
       const key = action.payload;
       const newState = state;
 
-      const option = newState.map[key];
+      const option = getOption(newState.map, key);
 
-      if (!isOptionNode(option))
-        throw new Error('This is an invalid option node');
+      option.isSelected = false;
+      validateOption(newState.map, option);
 
-      optionService.unselect(option);
+      if (newState.current)
+        newState.current = getModifierParent(
+          newState.map,
+          newState.current.key,
+        );
     },
 
     setCurrentNode: (state, action: PayloadAction<string>) => {
       const key = action.payload;
       const newState = state;
 
-      const option = newState.map[key];
-
-      if (isModifierNode(option))
-        throw new Error('isModifierNode cannot be set to currentNode');
+      const option = getModifierParent(newState.map, key); // we arent looking for modifier parent here actually
 
       newState.current = option;
     },
 
     addTreeNodes: (state, action: PayloadAction<TAddTreeNodes>) => {
-      const { optionKey, modifiers } = action.payload;
+      const { parentKey, modifiers } = action.payload;
       const newState = state;
 
-      const node = newState.map[optionKey];
-
+      const node = newState.map[parentKey];
       if (!isOptionNode(node) || node.isFulfilled) return;
 
-      node.isFulfilled = true;
-      treeService.createModifierNodes(newState.map, modifiers, optionKey);
+      const parent = node;
+      const map = newState.map;
+
+      modifiers?.forEach((modifier) => {
+        const modifierNode = createModifierNode(modifier, parent);
+
+        modifier.options.forEach((option) => {
+          const optionNode = createOptionNode(option, modifierNode);
+
+          map[optionNode.key] = optionNode;
+        });
+
+        map[modifierNode.key] = modifierNode;
+      });
+
+      parent.isFulfilled = true;
+      validateOption(map, parent);
+
+      newState.map = { ...newState.map, ...map };
+      newState.current = parent;
+    },
+
+    returnToParent: (state, action: PayloadAction<string>) => {
+      const key = action.payload;
+      const newState = state;
+
+      const option = getOption(newState.map, key);
+
+      const parent = getModifier(newState.map, option.parent);
+      const grandparent = getModifierParent(newState.map, parent.parent);
+
+      if (grandparent) newState.current = grandparent;
+    },
+
+    setQuantity: (state, action: PayloadAction<TSetQuantity>) => {
+      const { key, quantity } = action.payload;
+      const newState = state;
+
+      if (quantity < 0 || quantity > 999) return;
+
+      const node = { ...getItem(newState.map, key) };
+
+      node.quantity = quantity;
+      newState.map[key] = node;
+    },
+
+    incrementQuantity: (state, action: PayloadAction<string>) => {
+      const key = action.payload;
+      const newState = state;
+
+      const node = { ...newState.map[key] };
+
+      if (!isItemNode(node)) throw Error('This is not a valid ItemNode');
+
+      if (node.quantity === 999) return;
+
+      node.quantity += 1;
+      newState.map[key] = node;
+    },
+
+    decrementQuantity: (state, action: PayloadAction<string>) => {
+      const key = action.payload;
+      const newState = state;
+
+      const node = { ...newState.map[key] };
+
+      if (!isItemNode(node)) throw Error('This is not a valid ItemNode');
+
+      if (node.quantity === 1) return;
+
+      node.quantity -= 1;
+      newState.map[key] = node;
     },
   },
 });
@@ -109,4 +196,8 @@ export const {
   unselectOption,
   setCurrentNode,
   addTreeNodes,
+  returnToParent,
+  setQuantity,
+  incrementQuantity,
+  decrementQuantity,
 } = treeSlice.actions;

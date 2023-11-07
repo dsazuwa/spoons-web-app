@@ -1,89 +1,97 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
-
-import { addCartItem } from '@store/slices';
-import formatPrice from '@utils/formatPrice';
 import { useDispatch } from 'react-redux';
-import { ItemNode } from '../treeState';
+import { ChangeEvent } from 'react';
+
+import {
+  addCartItem,
+  decrementQuantity,
+  incrementQuantity,
+  setQuantity,
+} from '@store/slices';
+import formatPrice from '@utils/formatPrice';
 import * as S from './QuantityControl.styled';
 
 interface QuantityControlProps {
   current: ItemNode;
   handleClose: () => void;
-  setQuantity: (key: string, amount: number) => void;
-  incrementQuantity: (key: string) => void;
-  decrementQuantity: (key: string) => void;
 }
 
-function QuantityControl({
-  current,
-  handleClose,
-  setQuantity,
-  incrementQuantity,
-  decrementQuantity,
-}: QuantityControlProps) {
+function QuantityControl({ current, handleClose }: QuantityControlProps) {
+  const { key, itemId, name, photoUrl, price, quantity, isValid } = current;
+
   const dispatch = useDispatch();
 
-  const allowOneToThreeDigits = (value: string) =>
-    value.replace(/\D/g, '').slice(0, 3);
+  const limitDigits = (value: string) => value.replace(/\D/g, '').slice(0, 3);
 
-  const handleChange = (value: string) => {
-    const val = allowOneToThreeDigits(value);
-    setQuantity(current.getKey(), Number.parseInt(val || '1', 10));
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const val = limitDigits(e.target.value);
+    dispatch(
+      setQuantity({
+        key: current.key,
+        quantity: Number.parseInt(val || '1', 10),
+      }),
+    );
   };
 
-  const addToCartHandler = () => {
-    if (current.getIsValid()) {
-      const item = {
-        id: current.getId(),
-        name: current.getName(),
-        photoUrl: current.getPhotoUrl(),
-        price: current.getSelectionPrice(),
-        selections: current.getSelection(),
-      };
+  const handleDecrement = () => {
+    dispatch(decrementQuantity(key));
+  };
 
-      dispatch(addCartItem({ item, quantity: current.getQuantity() }));
+  const handleIncrement = () => {
+    dispatch(incrementQuantity(key));
+  };
 
-      handleClose();
-    } else {
-      const elements = document.getElementsByClassName('unfulfilled-modifier');
+  const handleAddToCart = () => {
+    dispatch(
+      addCartItem({
+        item: { id: itemId, name, photoUrl, price, selections: [] },
+        quantity,
+      }),
+    );
 
-      if (elements.length > 0)
-        elements[0].scrollIntoView({ behavior: 'smooth' });
-    }
+    handleClose();
+  };
+
+  const scrollToUnfulfilled = () => {
+    const firstUnfulfilled = document.querySelector('.unfulfilled-modifier');
+
+    if (firstUnfulfilled)
+      firstUnfulfilled.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleClick = () => {
+    if (isValid) handleAddToCart();
+    else scrollToUnfulfilled();
   };
 
   return (
     <div className='dialog-footer item-dialog-footer'>
-      <S.IconButton
-        disabled={current.getQuantity() === 1}
-        onClick={() => decrementQuantity(current.getKey())}
-      >
+      <S.IconButton disabled={quantity === 1} onClick={handleDecrement}>
         <RemoveCircleOutlineIcon />
       </S.IconButton>
 
       <S.TextField
         id='num-items'
         variant='outlined'
-        value={current.getQuantity()}
-        onChange={(e) => handleChange(e.target.value)}
+        value={quantity}
+        onChange={handleChange}
       />
 
-      <S.IconButton
-        disabled={current.getQuantity() === 999}
-        onClick={() => incrementQuantity(current.getKey())}
-      >
+      <S.IconButton disabled={quantity === 999} onClick={handleIncrement}>
         <AddCircleOutlineOutlinedIcon />
       </S.IconButton>
 
       <Button
         variant='contained'
         className='dialog-footer-button add-to-cart'
-        onClick={addToCartHandler}
+        onClick={handleClick}
       >
-        Add to cart -{' '}
-        {formatPrice(current.getSelectionPrice() * current.getQuantity())}
+        Add to cart - {formatPrice(price * quantity)}
+        {/* change to selectionPrice*/}
       </Button>
     </div>
   );

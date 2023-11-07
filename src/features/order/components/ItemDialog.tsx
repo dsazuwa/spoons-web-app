@@ -2,7 +2,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { ItemNode } from '../treeState/ItemNode';
 import DialogAppBar from './DialogAppBar';
 import ModifierGroup from './ModifierGroup';
 import Preferences from './Preferences';
@@ -12,29 +11,19 @@ interface ItemDialogProps {
   current: ItemNode;
   handleClose: () => void;
   handleOpenPreferences: () => void;
-  selectOption: (key: string) => void;
-  unselectOption: (key: string) => void;
-  setCurrentNode: (key: string) => void;
-  setQuantity: (key: string, amount: number) => void;
-  incrementQuantity: (key: string) => void;
-  decrementQuantity: (key: string) => void;
 }
 
 function ItemDialog({
   current,
   handleClose,
   handleOpenPreferences,
-  selectOption,
-  unselectOption,
-  setCurrentNode,
-  setQuantity,
-  incrementQuantity,
-  decrementQuantity,
 }: ItemDialogProps) {
+  const { name, description, photoUrl, children } = current;
+
   return (
     <>
       <DialogAppBar
-        text={current.getName()}
+        text={name}
         Icon={CloseIcon}
         iconLabel='close'
         handleClick={handleClose}
@@ -42,39 +31,21 @@ function ItemDialog({
 
       <Stack spacing={{ xs: 2, sm: 3 }} className='dialog-content'>
         <div id='dialog-app-bar-anchor' className='dialog-name'>
-          {current.getName()}
+          {name}
         </div>
 
-        {current.getDescription() && (
-          <div className='dialog-description'>{current.getDescription()}</div>
-        )}
+        {description && <div className='dialog-description'>{description}</div>}
 
-        <Box
-          component='img'
-          src={`/menu-items/${current.getPhotoUrl()}`}
-          alt={current.getName()}
-        />
+        <Box component='img' src={`/menu-items/${photoUrl}`} alt={name} />
 
-        {current.getChildren().map((child) => (
-          <ModifierGroup
-            key={child.getKey()}
-            modifier={child}
-            selectOption={selectOption}
-            unselectOption={unselectOption}
-            setCurrentNode={setCurrentNode}
-          />
+        {children.map((key) => (
+          <ModifierGroup key={key} modifier={key} />
         ))}
 
         <Preferences open={handleOpenPreferences} />
       </Stack>
 
-      <QuantityControl
-        current={current}
-        handleClose={handleClose}
-        setQuantity={setQuantity}
-        incrementQuantity={incrementQuantity}
-        decrementQuantity={decrementQuantity}
-      />
+      <QuantityControl current={current} handleClose={handleClose} />
     </>
   );
 }

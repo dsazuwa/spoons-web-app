@@ -1,53 +1,92 @@
 import { useTheme } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ItemNode, OptionNode, isItemNode, isOptionNode } from '../treeState';
+import { RootState } from '@store';
+import { useGetItemModifiersQuery } from '@store/api';
+import { addTreeNodes, buildTree } from '@store/slices';
+import useGetChildModifiers from '../hooks/useGetChildModifiers';
+import { isItemNode, isOptionNode } from '../tree';
+import BackdropLoader from './BackdropLoader';
 import * as S from './Dialog.styled';
+import { DialogType } from './Item';
 import ItemDialog from './ItemDialog';
 import OptionDialog from './OptionDialog';
 import PreferencesDialog from './PreferencesDialog';
 
-export type DialogType = 'item' | 'preferences' | null;
-
-interface Props {
-  type: DialogType;
+interface DialogProps {
   item: MenuItemType;
-
-  current: ItemNode | OptionNode | undefined;
-  selectOption: (key: string) => void;
-  unselectOption: (key: string) => void;
-  setCurrentNode: (key: string) => void;
-
-  handleClose: () => void;
+  type: DialogType;
   handleOpenPreferences: () => void;
   handleClosePreferences: () => void;
-
-  setQuantity: (key: string, amount: number) => void;
-  incrementQuantity: (key: string) => void;
-  decrementQuantity: (key: string) => void;
+  handleClose: () => void;
 }
 
 function Dialog({
-  type,
   item,
-
-  current,
-  selectOption,
-  unselectOption,
-  setCurrentNode,
-
-  handleClose,
+  type,
   handleOpenPreferences,
   handleClosePreferences,
-
-  setQuantity,
-  incrementQuantity,
-  decrementQuantity,
-}: Props) {
+  handleClose,
+}: DialogProps) {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
-  return (
+  const dispatch = useDispatch();
+  const current = useSelector((store: RootState) => store.treeState.current);
+
+  const {
+    isLoading: isModifierLoading,
+    isFetching: isModifierFetching,
+    data: modifierData,
+  } = useGetItemModifiersQuery(item.itemId);
+
+  const {
+    trigger: getChildModifiers,
+    isLoading: isChildLoading,
+    isFetching: isChildFetching,
+    data: childData,
+  } = useGetChildModifiers();
+
+  const [isBuilding, setIsBuilding] = useState(true);
+
+  useEffect(() => {
+    if (isBuilding && modifierData) {
+      dispatch(buildTree({ item, modifiers: modifierData?.modifiers }));
+      setIsBuilding(false);
+    }
+  }, [item, isBuilding, modifierData, dispatch]);
+
+  useEffect(() => {
+    if (isOptionNode(current) && !current.isFulfilled) {
+      if (!current.isNested) return;
+
+      getChildModifiers(current.id);
+    }
+  }, [current?.key]);
+
+  useEffect(() => {
+    if (isOptionNode(current) && !current.isFulfilled) {
+      if (!current.isNested) return;
+
+      if (childData !== undefined)
+        dispatch(
+          addTreeNodes({
+            modifiers: childData.modifiers,
+            parentKey: current.key,
+          }),
+        );
+    }
+  }, [childData, dispatch]);
+
+  return isModifierLoading ||
+    isChildLoading ||
+    isModifierFetching ||
+    isChildFetching ||
+    isBuilding ? (
+    <BackdropLoader open={type !== null} handleClose={handleClose} />
+  ) : (
     <S.Dialog
       id='item-dialog'
       fullWidth={true}
@@ -58,25 +97,13 @@ function Dialog({
       {type === 'item' && isItemNode(current) && (
         <ItemDialog
           current={current}
-          selectOption={selectOption}
-          unselectOption={unselectOption}
-          setCurrentNode={setCurrentNode}
           handleClose={handleClose}
           handleOpenPreferences={handleOpenPreferences}
-          setQuantity={setQuantity}
-          incrementQuantity={incrementQuantity}
-          decrementQuantity={decrementQuantity}
         />
       )}
 
       {type === 'item' && isOptionNode(current) && (
-        <OptionDialog
-          itemName={item.name}
-          current={current}
-          selectOption={selectOption}
-          unselectOption={unselectOption}
-          setCurrentNode={setCurrentNode}
-        />
+        <OptionDialog itemName={item.name} current={current} />
       )}
 
       {type === 'preferences' && (

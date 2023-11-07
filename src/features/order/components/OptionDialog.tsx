@@ -1,58 +1,40 @@
 import Button from '@mui/material/Button';
+import { useDispatch } from 'react-redux';
 
+import { returnToParent } from '@store/slices';
 import formatPrice from '@utils/formatPrice';
-import { OptionNode } from '../treeState/OptionNode';
 import ModifierGroup from './ModifierGroup';
 import OptionDialogAppBar from './OptionDialogAppBar';
 
 interface OptionDialogProps {
   itemName: string;
   current: OptionNode;
-  selectOption: (key: string) => void;
-  unselectOption: (key: string) => void;
-  setCurrentNode: (key: string) => void;
 }
 
-function OptionDialog({
-  itemName,
-  current,
-  selectOption,
-  unselectOption,
-  setCurrentNode,
-}: OptionDialogProps) {
-  const handleBack = () => {
-    const grandparentNode = current.getParent()?.getParent();
+function OptionDialog({ itemName, current }: OptionDialogProps) {
+  const dispatch = useDispatch();
 
-    if (grandparentNode) setCurrentNode(grandparentNode.getKey());
+  const handleBack = () => {
+    dispatch(returnToParent(current.key));
   };
 
   const handleSave = () => {
-    const grandparentNode = current.getParent()?.getParent();
-
-    if (grandparentNode && current.getIsValid())
-      setCurrentNode(grandparentNode.getKey());
+    if (current.isValid) handleBack();
   };
 
   return (
     <>
       <OptionDialogAppBar
         itemName={itemName}
-        optionName={current.getName()}
+        optionName={current.name}
         handleClick={handleBack}
       />
 
       <div className='dialog-content'>
         <div id='dialog-app-bar-anchor' />
 
-        {current.getChildren().map((child) => (
-          <ModifierGroup
-            key={child.getKey()}
-            className='stack-item'
-            modifier={child}
-            selectOption={selectOption}
-            unselectOption={unselectOption}
-            setCurrentNode={setCurrentNode}
-          />
+        {current.children.map((key) => (
+          <ModifierGroup key={key} className='stack-item' modifier={key} />
         ))}
       </div>
 
@@ -62,12 +44,12 @@ function OptionDialog({
           className='dialog-footer-button options-dialog-button'
           onClick={handleSave}
         >
-          {current.getSelectionPrice() === 0 ? (
+          {current.price === 0 ? ( //selectionprice
             'Save'
           ) : (
             <div className='save-options-button'>
               <div>Save Options</div>
-              <div>+{formatPrice(current.getSelectionPrice())}</div>
+              <div>+{formatPrice(current.price)}</div>
             </div>
           )}
         </Button>

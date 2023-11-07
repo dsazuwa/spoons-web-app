@@ -3,7 +3,6 @@ import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import formatPrice from '@utils/formatPrice';
-import { OptionNode } from '../treeState';
 import * as S from './Option.styled';
 
 interface Props {
@@ -21,18 +20,18 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
   const label = (
     <div className='label-box'>
       <div className='name-box'>
-        <div className='name'>{option.getName()}</div>
+        <div className='name'>{option.name}</div>
 
-        {option.getIsSelected() && !option.getIsValid() && (
+        {option.isSelected && !option.isValid && (
           <div className='selections'>More Selections Required</div>
         )}
       </div>
 
-      {option.getPrice() > 0 && (
-        <div className='price'>{`+${formatPrice(option.getPrice())}`}</div>
+      {option.price > 0 && (
+        <div className='price'>{`+${formatPrice(option.price)}`}</div>
       )}
 
-      {option.getIsNested() && <KeyboardArrowRightIcon />}
+      {option.isNested && <KeyboardArrowRightIcon />}
     </div>
   );
 
@@ -41,7 +40,7 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
       <FormControlLabel
         control={InputComponent}
         value={index}
-        checked={option.getIsSelected()}
+        checked={option.isSelected}
         onClick={handleClick}
         labelPlacement='end'
         label={label}

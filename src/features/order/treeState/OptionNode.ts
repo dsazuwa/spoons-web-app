@@ -82,8 +82,10 @@ export class OptionNode {
   };
 
   public getSelectionPrice = () =>
-    this.price +
-    this.children.reduce((price, x) => price + x.getSelectionPrice(), 0);
+    this.children.reduce(
+      (price, child) => price + child.getSelectionPrice(),
+      this.price,
+    );
 
   public setIsFulfilled = (isFulfilled: boolean) =>
     (this.isFulfilled = isFulfilled);

@@ -4,98 +4,95 @@ import FormGroup from '@mui/material/FormGroup';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ModifierNode } from '../treeState';
+import { RootState } from '@store';
+import { selectOption, setCurrentNode, unselectOption } from '@store/slices';
+import { getModifier, getOption } from '../tree';
 import ModifierHeader from './ModifierHeader';
 import Option from './Option';
 
 interface ModifierGroupProps {
-  modifier: ModifierNode;
+  modifier: string;
   className?: string;
-  selectOption: (key: string) => void;
-  unselectOption: (key: string) => void;
-  setCurrentNode: (key: string) => void;
 }
 
-function ModifierGroup({
-  modifier,
-  className,
-  selectOption,
-  unselectOption,
-  setCurrentNode,
-}: ModifierGroupProps) {
+function ModifierGroup({ modifier, className }: ModifierGroupProps) {
+  const dispatch = useDispatch();
+  const { map } = useSelector((state: RootState) => state.treeState);
+
+  const { name, maxSelection, children, isRequired, isValid } = getModifier(
+    map,
+    modifier,
+  );
+
   const handleSingleSelect = (index: number) => {
-    const option = modifier.getChildren()[index];
+    const key = children[index];
+    const option = getOption(map, key);
 
-    selectOption(option.getKey());
-
-    if (option.getIsNested()) setCurrentNode(option.getKey());
+    dispatch(selectOption(key));
+    if (option.isNested) dispatch(setCurrentNode(key));
   };
 
   const handleMultiSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const option = modifier.getChildren()[Number.parseInt(e.target.value, 10)];
+    const key = children[Number.parseInt(e.target.value, 10)];
+    const option = getOption(map, key);
 
-    if (option.getIsSelected()) {
-      unselectOption(option.getKey());
+    if (option.isSelected) {
+      dispatch(unselectOption(option.key));
       return;
     }
 
-    const parent = option.getParent();
-    if (!parent) return;
+    const parent = getModifier(map, option.parent);
 
-    const maxSelection = parent.getMaxSelection();
-    const selectedCount = parent
-      .getChildren()
-      .filter((o) => o.getIsSelected()).length;
+    const selectedCount = parent.children.filter(
+      (key) => getOption(map, key).isSelected,
+    ).length;
 
-    if (selectedCount < maxSelection) selectOption(option.getKey());
+    if (selectedCount < parent.maxSelection) dispatch(selectOption(option.key));
   };
 
   return (
     <div className={className}>
       <ModifierHeader
-        name={modifier.getName()}
-        isRequired={modifier.getIsRequired()}
-        maxSelection={modifier.getMaxSelection()}
-        isSelected={modifier.getIsValid()}
+        name={name}
+        isRequired={isRequired}
+        maxSelection={maxSelection}
+        isSelected={isValid}
       />
 
       <FormControl
         component='fieldset'
         sx={{ width: '100%', position: 'relative' }}
       >
-        {modifier.getMaxSelection() === 1 ? (
+        {maxSelection === 1 ? (
           <RadioGroup
-            aria-labelledby={`${modifier.getName()}-options`}
-            name={`${modifier.getName()}-options-radio-group`}
+            aria-labelledby={`${name}-options`}
+            name={`${name}-options-radio-group`}
           >
-            {modifier
-              .getChildren()
-              ?.map((option, index) => (
-                <Option
-                  key={option.getKey()}
-                  index={index}
-                  option={option}
-                  InputComponent={<Radio />}
-                  handleChange={handleSingleSelect}
-                />
-              ))}
+            {children.map((key, index) => (
+              <Option
+                key={key}
+                index={index}
+                option={getOption(map, key)}
+                InputComponent={<Radio />}
+                handleChange={handleSingleSelect}
+              />
+            ))}
           </RadioGroup>
         ) : (
           <FormGroup
-            aria-label={`${modifier.getName()}-options`}
+            aria-label={`${name}-options`}
             onChange={handleMultiSelect}
           >
-            {modifier
-              .getChildren()
-              ?.map((option, index) => (
-                <Option
-                  key={option.getKey()}
-                  index={index}
-                  option={option}
-                  InputComponent={<Checkbox />}
-                />
-              ))}
+            {children.map((key, index) => (
+              <Option
+                key={key}
+                index={index}
+                option={getOption(map, key)}
+                InputComponent={<Checkbox />}
+              />
+            ))}
           </FormGroup>
         )}
       </FormControl>
