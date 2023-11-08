@@ -1,9 +1,10 @@
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
 import { ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '@store';
 import {
   addCartItem,
   decrementQuantity,
@@ -11,6 +12,7 @@ import {
   setQuantity,
 } from '@store/slices';
 import formatPrice from '@utils/formatPrice';
+import { getItemSelectionPrice } from '../tree';
 import * as S from './QuantityControl.styled';
 
 interface QuantityControlProps {
@@ -22,6 +24,7 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
   const { key, itemId, name, photoUrl, price, quantity, isValid } = current;
 
   const dispatch = useDispatch();
+  const map = useSelector((state: RootState) => state.treeState.map);
 
   const limitDigits = (value: string) => value.replace(/\D/g, '').slice(0, 3);
 
@@ -90,8 +93,8 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
         className='dialog-footer-button add-to-cart'
         onClick={handleClick}
       >
-        Add to cart - {formatPrice(price * quantity)}
-        {/* change to selectionPrice*/}
+        Add to cart -
+        {formatPrice(getItemSelectionPrice(map, current) * quantity)}
       </Button>
     </div>
   );
