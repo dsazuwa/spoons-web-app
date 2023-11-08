@@ -7,7 +7,7 @@ import { ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@store';
-import { selectOption, setCurrentNode, unselectOption } from '@store/slices';
+import { multiSelectOption, singleSelectOption } from '@store/slices';
 import { getModifier, getOption } from '../tree';
 import ModifierHeader from './ModifierHeader';
 import Option from './Option';
@@ -19,37 +19,19 @@ interface ModifierGroupProps {
 
 function ModifierGroup({ modifier, className }: ModifierGroupProps) {
   const dispatch = useDispatch();
-  const { map } = useSelector((state: RootState) => state.treeState);
+  const map = useSelector((state: RootState) => state.treeState.map);
 
-  const { name, maxSelection, children, isRequired, isValid } = getModifier(
-    map,
-    modifier,
-  );
+  const { key, name, maxSelection, children, isRequired, isValid } =
+    getModifier(map, modifier);
 
   const handleSingleSelect = (index: number) => {
-    const key = children[index];
-    const option = getOption(map, key);
-
-    dispatch(selectOption(key));
-    if (option.isNested) dispatch(setCurrentNode(key));
+    dispatch(singleSelectOption({ key, index }));
   };
 
   const handleMultiSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const key = children[Number.parseInt(e.target.value, 10)];
-    const option = getOption(map, key);
-
-    if (option.isSelected) {
-      dispatch(unselectOption(option.key));
-      return;
-    }
-
-    const parent = getModifier(map, option.parent);
-
-    const selectedCount = parent.children.filter(
-      (key) => getOption(map, key).isSelected,
-    ).length;
-
-    if (selectedCount < parent.maxSelection) dispatch(selectOption(option.key));
+    dispatch(
+      multiSelectOption({ key, index: Number.parseInt(e.target.value, 10) }),
+    );
   };
 
   return (

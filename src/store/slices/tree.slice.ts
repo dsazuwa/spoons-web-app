@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import {
+  buildModifiersAndOptions,
   createItemNode,
-  createModifierNode,
-  createOptionNode,
   getItem,
   getModifier,
   getModifierParent,
   getOption,
-  isItemNode,
   isOptionNode,
+  selectOption,
+  unselectOption,
+  updateQuantity,
   validateItem,
-  validateModifier,
   validateOption,
 } from '@features/order/tree';
 
@@ -30,79 +30,15 @@ export const treeSlice = createSlice({
       const { item, modifiers } = action.payload;
       const newState = state;
 
-      const map: TreeMap = {};
+      newState.map = {};
       const root = createItemNode(item);
+      newState.map[root.key] = root;
 
+      buildModifiersAndOptions(newState, modifiers, root);
+
+      validateItem(newState.map, root);
       newState.root = root;
       newState.current = root;
-      map[root.key] = root;
-
-      modifiers?.forEach((modifier) => {
-        const modifierNode = createModifierNode(modifier, root);
-        map[modifierNode.key] = modifierNode;
-
-        modifier.options.forEach((option) => {
-          const optionNode = createOptionNode(option, modifierNode);
-
-          map[optionNode.key] = optionNode;
-          validateOption(map, optionNode);
-        });
-
-        validateModifier(map, modifierNode);
-      });
-
-      validateItem(map, root);
-      newState.map = map;
-    },
-
-    selectOption: (state, action: PayloadAction<string>) => {
-      const key = action.payload;
-      const newState = state;
-
-      const option = getOption(newState.map, key);
-      const parent = getModifier(newState.map, option.parent);
-
-      if (parent.maxSelection === 1)
-        parent.children.forEach((key) => {
-          const child = getOption(newState.map, key);
-          child.isSelected = false;
-          validateOption(newState.map, child);
-        });
-
-      option.isSelected = true;
-      validateOption(newState.map, option);
-
-      if (option.isNested) newState.current = option;
-      else if (newState.current)
-        newState.current = getModifierParent(
-          newState.map,
-          newState.current.key,
-        );
-    },
-
-    unselectOption: (state, action: PayloadAction<string>) => {
-      const key = action.payload;
-      const newState = state;
-
-      const option = getOption(newState.map, key);
-
-      option.isSelected = false;
-      validateOption(newState.map, option);
-
-      if (newState.current)
-        newState.current = getModifierParent(
-          newState.map,
-          newState.current.key,
-        );
-    },
-
-    setCurrentNode: (state, action: PayloadAction<string>) => {
-      const key = action.payload;
-      const newState = state;
-
-      const option = getModifierParent(newState.map, key); // we arent looking for modifier parent here actually
-
-      newState.current = option;
     },
 
     addTreeNodes: (state, action: PayloadAction<TAddTreeNodes>) => {
@@ -113,25 +49,63 @@ export const treeSlice = createSlice({
       if (!isOptionNode(node) || node.isFulfilled) return;
 
       const parent = node;
-      const map = newState.map;
 
-      modifiers?.forEach((modifier) => {
-        const modifierNode = createModifierNode(modifier, parent);
-
-        modifier.options.forEach((option) => {
-          const optionNode = createOptionNode(option, modifierNode);
-
-          map[optionNode.key] = optionNode;
-        });
-
-        map[modifierNode.key] = modifierNode;
-      });
+      buildModifiersAndOptions(newState, modifiers, parent);
 
       parent.isFulfilled = true;
-      validateOption(map, parent);
+      validateOption(newState.map, parent);
 
-      newState.map = { ...newState.map, ...map };
       newState.current = parent;
+    },
+
+    singleSelectOption: (
+      state,
+      action: PayloadAction<{ key: string; index: number }>,
+    ) => {
+      const { key, index } = action.payload;
+      const newState = state;
+
+      const modifier = getModifier(newState.map, key);
+      const option = getOption(newState.map, modifier.children[index]);
+
+      selectOption(newState, option.key);
+      if (option.isNested) newState.current = option;
+    },
+
+    multiSelectOption: (
+      state,
+      action: PayloadAction<{ key: string; index: number }>,
+    ) => {
+      const { key, index } = action.payload;
+      const newState = state;
+
+      const modifier = getModifier(newState.map, key);
+      const option = getOption(newState.map, modifier.children[index]);
+
+      if (option.isSelected) {
+        unselectOption(newState, option);
+        return;
+      }
+
+      const { children, maxSelection } = getModifier(
+        newState.map,
+        option.parent,
+      );
+
+      const selectedCount = children.filter(
+        (key) => getOption(newState.map, key).isSelected,
+      ).length;
+
+      if (selectedCount < maxSelection) selectOption(newState, option.key);
+    },
+
+    setCurrentNode: (state, action: PayloadAction<string>) => {
+      const key = action.payload;
+      const newState = state;
+
+      const option = getModifierParent(newState.map, key);
+
+      newState.current = option;
     },
 
     returnToParent: (state, action: PayloadAction<string>) => {
@@ -148,42 +122,19 @@ export const treeSlice = createSlice({
 
     setQuantity: (state, action: PayloadAction<TSetQuantity>) => {
       const { key, quantity } = action.payload;
-      const newState = state;
-
-      if (quantity < 0 || quantity > 999) return;
-
-      const node = { ...getItem(newState.map, key) };
-
-      node.quantity = quantity;
-      newState.map[key] = node;
+      updateQuantity(state, key, quantity);
     },
 
     incrementQuantity: (state, action: PayloadAction<string>) => {
       const key = action.payload;
-      const newState = state;
-
-      const node = { ...newState.map[key] };
-
-      if (!isItemNode(node)) throw Error('This is not a valid ItemNode');
-
-      if (node.quantity === 999) return;
-
-      node.quantity += 1;
-      newState.map[key] = node;
+      const node = getItem(state.map, key);
+      updateQuantity(state, key, node.quantity + 1);
     },
 
     decrementQuantity: (state, action: PayloadAction<string>) => {
       const key = action.payload;
-      const newState = state;
-
-      const node = { ...newState.map[key] };
-
-      if (!isItemNode(node)) throw Error('This is not a valid ItemNode');
-
-      if (node.quantity === 1) return;
-
-      node.quantity -= 1;
-      newState.map[key] = node;
+      const node = getItem(state.map, key);
+      updateQuantity(state, key, node.quantity - 1);
     },
   },
 });
@@ -192,8 +143,8 @@ export const treeReducer = treeSlice.reducer;
 
 export const {
   buildTree,
-  selectOption,
-  unselectOption,
+  singleSelectOption,
+  multiSelectOption,
   setCurrentNode,
   addTreeNodes,
   returnToParent,

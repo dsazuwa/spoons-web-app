@@ -34,7 +34,7 @@ function Dialog({
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
   const dispatch = useDispatch();
-  const current = useSelector((store: RootState) => store.treeState.current);
+  const current = useSelector((state: RootState) => state.treeState.current);
 
   const {
     isLoading: isModifierLoading,
