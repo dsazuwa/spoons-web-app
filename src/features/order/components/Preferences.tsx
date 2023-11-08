@@ -33,7 +33,7 @@ const Div = styled('div')(({ theme }) => ({
 function Preferences({ open }: { open: () => void }) {
   return (
     <Div>
-      <S.Header selected={true}>
+      <S.Header>
         <div className='box name'>Preferences</div>
 
         <div className='status-text optional'>(Optional)</div>
