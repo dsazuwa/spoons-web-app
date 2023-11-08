@@ -72,10 +72,7 @@ export const treeSlice = createSlice({
       if (option.isNested) newState.current = option;
     },
 
-    multiSelectOption: (
-      state,
-      action: PayloadAction<{ key: string; index: number }>,
-    ) => {
+    multiSelectOption: (state, action: PayloadAction<TMultiSelectOption>) => {
       const { key, index } = action.payload;
       const newState = state;
 

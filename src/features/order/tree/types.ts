@@ -25,6 +25,11 @@ type TSetQuantity = {
   quantity: number;
 };
 
+type TMultiSelectOption = {
+  key: string;
+  index: number;
+};
+
 type ItemNode = {
   itemId: number;
   key: string;
