@@ -64,7 +64,7 @@ function Dialog({
 
       getChildModifiers(current.id);
     }
-  }, [current?.key]);
+  }, [current?.key, getChildModifiers]);
 
   useEffect(() => {
     if (isOptionNode(current) && !current.isFulfilled) {
@@ -80,12 +80,15 @@ function Dialog({
     }
   }, [childData, dispatch]);
 
-  return isModifierLoading ||
+  const isLoading =
+    isModifierLoading ||
     isChildLoading ||
     isModifierFetching ||
     isChildFetching ||
-    isBuilding ? (
-    <BackdropLoader open={type !== null} handleClose={handleClose} />
+    isBuilding;
+
+  return isLoading ? (
+    <BackdropLoader open={true} handleClose={handleClose} />
   ) : (
     <S.Dialog
       id='item-dialog'
@@ -102,9 +105,11 @@ function Dialog({
         />
       )}
 
-      {type === 'item' && isOptionNode(current) && (
-        <OptionDialog itemName={item.name} current={current} />
-      )}
+      {type === 'item' &&
+        isOptionNode(current) &&
+        current.children.length > 0 && (
+          <OptionDialog itemName={item.name} current={current} />
+        )}
 
       {type === 'preferences' && (
         <PreferencesDialog handleBack={handleClosePreferences} />
