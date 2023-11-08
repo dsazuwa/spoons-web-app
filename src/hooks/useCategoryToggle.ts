@@ -58,7 +58,7 @@ const useCategoryToggle = (categories: string[]) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [categories]);
+  }, [categories, value]);
 
   return { value, isScrolledPast, handleClick };
 };
