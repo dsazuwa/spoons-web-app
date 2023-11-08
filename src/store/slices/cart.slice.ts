@@ -56,7 +56,7 @@ export const cartSlice = createSlice({
       );
 
       if (retrievedItem) {
-        retrievedItem.quantity += 1;
+        retrievedItem.quantity += quantity;
         return;
       }
 
