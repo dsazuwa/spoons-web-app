@@ -12,7 +12,7 @@ import {
   setQuantity,
 } from '@store/slices';
 import formatPrice from '@utils/formatPrice';
-import { getItemSelectionPrice } from '../tree';
+import { getItemSelectionPrice, getSelections } from '../tree';
 import * as S from './QuantityControl.styled';
 
 interface QuantityControlProps {
@@ -49,13 +49,15 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
   };
 
   const handleAddToCart = () => {
-    dispatch(
-      addCartItem({
-        item: { id: itemId, name, photoUrl, price, selections: [] },
-        quantity,
-      }),
-    );
+    const item = {
+      id: itemId,
+      name,
+      photoUrl,
+      price,
+      selections: getSelections(map, current),
+    };
 
+    dispatch(addCartItem({ item, quantity }));
     handleClose();
   };
 
