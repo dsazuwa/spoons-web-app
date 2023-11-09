@@ -38,6 +38,7 @@ function Option({ index, option, InputComponent, handleChange }: Props) {
   return (
     <S.Option>
       <FormControlLabel
+        name={option.name}
         control={InputComponent}
         value={index}
         checked={option.isSelected}
