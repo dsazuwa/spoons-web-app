@@ -43,10 +43,8 @@ export const orderSlice = createSlice({
     addTreeNodes: (state, action: PayloadAction<TAddTreeNodes>) => {
       const { parentKey, modifiers } = action.payload;
 
-      const node = state.map[parentKey];
-      if (!isOptionNode(node) || node.isFulfilled) return;
-
-      const parent = node;
+      const parent = state.map[parentKey];
+      if (!isOptionNode(parent) || parent.isFulfilled) return;
 
       buildModifiersAndOptions(state, modifiers, parent);
 
@@ -69,15 +67,13 @@ export const orderSlice = createSlice({
     multiSelectOption: (state, action: PayloadAction<TSelectOption>) => {
       const { key, index } = action.payload;
 
-      const modifier = getModifier(state.map, key);
-      const option = getOption(state.map, modifier.children[index]);
+      const { children, maxSelection } = getModifier(state.map, key);
+      const option = getOption(state.map, children[index]);
 
       if (option.isSelected) {
         unselectOption(state, option);
         return;
       }
-
-      const { children, maxSelection } = getModifier(state.map, option.parent);
 
       const selectedCount = children.filter(
         (key) => getOption(state.map, key).isSelected,
@@ -86,23 +82,14 @@ export const orderSlice = createSlice({
       if (selectedCount < maxSelection) selectOption(state, option.key);
     },
 
-    setCurrentNode: (state, action: PayloadAction<string>) => {
-      const key = action.payload;
-
-      const option = getModifierParent(state.map, key);
-
-      state.current = option;
-    },
-
     returnToParent: (state, action: PayloadAction<string>) => {
       const key = action.payload;
 
       const option = getOption(state.map, key);
-
       const parent = getModifier(state.map, option.parent);
       const grandparent = getModifierParent(state.map, parent.parent);
 
-      if (grandparent) state.current = grandparent;
+      state.current = grandparent;
     },
 
     setQuantity: (state, action: PayloadAction<TSetQuantity>) => {
@@ -130,7 +117,6 @@ export const {
   buildTree,
   singleSelectOption,
   multiSelectOption,
-  setCurrentNode,
   addTreeNodes,
   returnToParent,
   setQuantity,

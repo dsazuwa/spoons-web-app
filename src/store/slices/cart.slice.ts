@@ -47,26 +47,23 @@ export const cartSlice = createSlice({
   reducers: {
     addCartItem: (state, action: PayloadAction<AddItem>) => {
       const { item: data, quantity } = action.payload;
-      const newState = state;
-
       const selections = data.selections;
 
-      const retrievedItem = newState.cart.find(
+      const retrievedItem = state.cart.find(
         (x) => JSON.stringify(x.item.selections) === JSON.stringify(selections),
       );
 
-      if (retrievedItem) {
-        retrievedItem.quantity += quantity;
-        return;
+      if (retrievedItem) retrievedItem.quantity += quantity;
+      else {
+        const item = {
+          ...data,
+          options: selections.map((x) => Object.values(x)).join(', '),
+        };
+
+        state.cart.push({ item, quantity });
       }
 
-      const item = {
-        ...data,
-        options: selections.map((x) => Object.values(x)).join(', '),
-      };
-
-      newState.cart = [...state.cart, { item, quantity }];
-      newState.total = state.total + item.price * quantity;
+      state.total = state.total + data.price * quantity;
     },
 
     updateCartItem: (state, action: PayloadAction<UpdateItem>) => {
