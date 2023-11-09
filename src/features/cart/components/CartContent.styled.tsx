@@ -35,6 +35,7 @@ const CheckoutButton = styled(Button)(({ theme }) => ({
   height: '40px',
   fontSize: '14px',
   justifyContent: 'space-between',
+  marginBottom: '16px',
 
   [theme.breakpoints.up('md')]: {
     fontSize: '16px',

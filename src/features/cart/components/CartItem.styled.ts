@@ -4,14 +4,13 @@ import MuiGrid from '@mui/material/Grid';
 
 import palette from '@utils/palette';
 
-const Grid = styled(MuiGrid)(() => ({
+const Grid = styled(MuiGrid)<{ isFirst: boolean }>(({ isFirst }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginTop: '16px',
   padding: '16px 8px',
-  borderTop: `1px solid ${palette.grey[200]}`,
+  borderTop: isFirst ? `1px solid ${palette.grey[200]}` : undefined,
   borderBottom: `1px solid ${palette.grey[200]}`,
   transition: 'background-color 0.1s ease-in-out',
 

@@ -29,7 +29,7 @@ function CartItem({ index, item, quantity }: CartItemProps) {
   };
 
   return (
-    <S.Grid container>
+    <S.Grid container isFirst={index === 0}>
       <Grid item className='item-image-box'>
         <Image
           className='item-image'
@@ -40,7 +40,7 @@ function CartItem({ index, item, quantity }: CartItemProps) {
         />
       </Grid>
 
-      <Grid item xs={6} sm={6} md={7} lg={4}>
+      <Grid item xs={5} sm={6} md={7} lg={4}>
         <div className='item-name'>{name}</div>
         <div className='item-options'>{options}</div>
         <div className='item-price'>{formatPrice(price * quantity)}</div>

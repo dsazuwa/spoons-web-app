@@ -20,7 +20,6 @@ const CloseButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const DrawerContent = styled('div')(({ theme }) => ({
-  width: '100vw',
   padding: '16px',
 
   [theme.breakpoints.up('sm')]: { width: '480px' },
