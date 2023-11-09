@@ -53,7 +53,7 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
       id: itemId,
       name,
       photoUrl,
-      price,
+      price: getItemSelectionPrice(map, current),
       selections: getSelections(map, current),
     };
 
