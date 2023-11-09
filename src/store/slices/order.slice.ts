@@ -28,93 +28,81 @@ export const orderSlice = createSlice({
   reducers: {
     buildTree: (state, action: PayloadAction<TBuildTree>) => {
       const { item, modifiers } = action.payload;
-      const newState = state;
 
-      newState.map = {};
+      state.map = {};
       const root = createItemNode(item);
-      newState.map[root.key] = root;
+      state.map[root.key] = root;
 
-      buildModifiersAndOptions(newState, modifiers, root);
+      buildModifiersAndOptions(state, modifiers, root);
 
-      validateItem(newState.map, root);
-      newState.root = root;
-      newState.current = root;
+      validateItem(state.map, root);
+      state.root = root;
+      state.current = root;
     },
 
     addTreeNodes: (state, action: PayloadAction<TAddTreeNodes>) => {
       const { parentKey, modifiers } = action.payload;
-      const newState = state;
 
-      const node = newState.map[parentKey];
+      const node = state.map[parentKey];
       if (!isOptionNode(node) || node.isFulfilled) return;
 
       const parent = node;
 
-      buildModifiersAndOptions(newState, modifiers, parent);
+      buildModifiersAndOptions(state, modifiers, parent);
 
       parent.isFulfilled = true;
-      validateOption(newState.map, parent);
+      validateOption(state.map, parent);
 
-      newState.current = parent;
+      state.current = parent;
     },
 
-    singleSelectOption: (
-      state,
-      action: PayloadAction<{ key: string; index: number }>,
-    ) => {
+    singleSelectOption: (state, action: PayloadAction<TSelectOption>) => {
       const { key, index } = action.payload;
-      const newState = state;
 
-      const modifier = getModifier(newState.map, key);
-      const option = getOption(newState.map, modifier.children[index]);
+      const modifier = getModifier(state.map, key);
+      const option = getOption(state.map, modifier.children[index]);
 
-      selectOption(newState, option.key);
-      if (option.isNested) newState.current = option;
+      selectOption(state, option.key);
+      if (option.isNested) state.current = option;
     },
 
-    multiSelectOption: (state, action: PayloadAction<TMultiSelectOption>) => {
+    multiSelectOption: (state, action: PayloadAction<TSelectOption>) => {
       const { key, index } = action.payload;
-      const newState = state;
 
-      const modifier = getModifier(newState.map, key);
-      const option = getOption(newState.map, modifier.children[index]);
+      const modifier = getModifier(state.map, key);
+      const option = getOption(state.map, modifier.children[index]);
 
       if (option.isSelected) {
-        unselectOption(newState, option);
+        unselectOption(state, option);
         return;
       }
 
-      const { children, maxSelection } = getModifier(
-        newState.map,
-        option.parent,
-      );
+      const { children, maxSelection } = getModifier(state.map, option.parent);
 
       const selectedCount = children.filter(
-        (key) => getOption(newState.map, key).isSelected,
+        (key) => getOption(state.map, key).isSelected,
       ).length;
 
-      if (selectedCount < maxSelection) selectOption(newState, option.key);
+      if (selectedCount < maxSelection) selectOption(state, option.key);
     },
 
     setCurrentNode: (state, action: PayloadAction<string>) => {
       const key = action.payload;
-      const newState = state;
 
-      const option = getModifierParent(newState.map, key);
+      const option = getModifierParent(state.map, key);
 
-      newState.current = option;
+      state.current = option;
     },
 
     returnToParent: (state, action: PayloadAction<string>) => {
       const key = action.payload;
-      const newState = state;
 
-      const option = getOption(newState.map, key);
+      const option = getOption(state.map, key);
 
-      const parent = getModifier(newState.map, option.parent);
-      const grandparent = getModifierParent(newState.map, parent.parent);
+      const parent = getModifier(state.map, option.parent);
+      const grandparent = getModifierParent(state.map, parent.parent);
 
-      if (grandparent) newState.current = grandparent;
+      if (grandparent) state.current = grandparent;
     },
 
     setQuantity: (state, action: PayloadAction<TSetQuantity>) => {

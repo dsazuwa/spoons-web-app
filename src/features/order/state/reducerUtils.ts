@@ -59,13 +59,11 @@ export const updateQuantity = (
   key: string,
   newQuantity: number,
 ) => {
-  const newState = state;
-
   if (newQuantity < 0 || newQuantity > 999) return;
 
-  const node = getItem(newState.map, key);
+  const node = getItem(state.map, key);
   node.quantity = newQuantity;
-  newState.map[key] = node;
+  state.map[key] = node;
 
-  if (newState.current && newState.current.key === key) newState.current = node;
+  if (state.current && state.current.key === key) state.current = node;
 };
