@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import { NextRouter } from 'next/router';
 
 import ClientAppBar from '@components/ClientAppBar';
-import Footer from '@components/Footer';
 import FullScreenLoader from '@components/FullScreenLoader';
 import { PageAcceessType } from '@types';
 
@@ -32,9 +31,10 @@ function getCustomerLayout(
   return (
     <Box display='flex' flexDirection='column' minHeight='100vh'>
       <ClientAppBar />
+
       <Box marginTop='56px' />
+
       {page}
-      <Footer />
     </Box>
   );
 }

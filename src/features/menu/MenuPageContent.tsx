@@ -1,6 +1,7 @@
 import Container from '@mui/material/Container';
 
 import CategoryToggle from '@components/CategoryToggle';
+import Footer from '@components/Footer';
 import PageHeader from '@components/PageHeader';
 import theme from '@utils/theme';
 import Menu from './components/Menu';
@@ -11,22 +12,30 @@ function MenuPageContent() {
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
-    <Container id='menu-container' maxWidth='md'>
-      <PageHeader text='Menu' />
+    <>
+      <Container
+        id='menu-container'
+        maxWidth='md'
+        sx={{ paddingBottom: '16px' }}
+      >
+        <PageHeader text='Menu' />
 
-      {isLoading || isFetching || data === undefined ? (
-        <MenuSkeleton />
-      ) : (
-        <>
-          <CategoryToggle
-            categories={data.categories}
-            maxWidth={theme.breakpoints.values.md}
-          />
+        {isLoading || isFetching || data === undefined ? (
+          <MenuSkeleton />
+        ) : (
+          <>
+            <CategoryToggle
+              categories={data.categories}
+              maxWidth={theme.breakpoints.values.md}
+            />
 
-          <Menu menu={data.menu} />
-        </>
-      )}
-    </Container>
+            <Menu menu={data.menu} />
+          </>
+        )}
+      </Container>
+
+      <Footer />
+    </>
   );
 }
 
