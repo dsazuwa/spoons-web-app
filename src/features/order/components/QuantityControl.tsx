@@ -95,8 +95,9 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
         className='dialog-footer-button add-to-cart'
         onClick={handleClick}
       >
-        Add to cart -
-        {formatPrice(getItemSelectionPrice(map, current) * quantity)}
+        {`Add to cart - ${formatPrice(
+          getItemSelectionPrice(map, current) * quantity,
+        )}`}
       </Button>
     </div>
   );
