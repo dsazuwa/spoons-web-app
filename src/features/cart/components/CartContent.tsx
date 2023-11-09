@@ -6,8 +6,7 @@ import * as S from './CartContent.styled';
 import CartItem from './CartItem';
 
 function CartContent() {
-  const cart = useSelector((state: RootState) => state.cartState.cart);
-  const total = useSelector((state: RootState) => state.cartState.total);
+  const { cart, total } = useSelector((state: RootState) => state.cartState);
 
   return (
     <S.Div>
