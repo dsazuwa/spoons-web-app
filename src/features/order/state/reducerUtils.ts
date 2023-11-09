@@ -8,7 +8,7 @@ import {
 import { validateModifier, validateOption } from './nodeValidators';
 
 export const buildModifiersAndOptions = (
-  state: TreeState,
+  state: OrderState,
   modifiers: Modifier[],
   parent: ItemNode | OptionNode,
 ) => {
@@ -27,7 +27,7 @@ export const buildModifiersAndOptions = (
   });
 };
 
-export const unselectOption = (state: TreeState, option: OptionNode) => {
+export const unselectOption = (state: OrderState, option: OptionNode) => {
   option.isSelected = false;
   validateOption(state.map, option);
 
@@ -35,7 +35,7 @@ export const unselectOption = (state: TreeState, option: OptionNode) => {
     state.current = getModifierParent(state.map, state.current.key);
 };
 
-export const selectOption = (state: TreeState, key: string) => {
+export const selectOption = (state: OrderState, key: string) => {
   const option = getOption(state.map, key);
   const parent = getModifier(state.map, option.parent);
 
@@ -55,7 +55,7 @@ export const selectOption = (state: TreeState, key: string) => {
 };
 
 export const updateQuantity = (
-  state: TreeState,
+  state: OrderState,
   key: string,
   newQuantity: number,
 ) => {

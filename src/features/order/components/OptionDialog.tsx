@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store';
 import { returnToParent } from '@store/slices';
 import formatPrice from '@utils/formatPrice';
-import { getOptionSelectionPrice } from '../tree';
+import { getOptionSelectionPrice } from '../state';
 import ModifierGroup from './ModifierGroup';
 import OptionDialogAppBar from './OptionDialogAppBar';
 
@@ -15,7 +15,7 @@ interface OptionDialogProps {
 
 function OptionDialog({ itemName, current }: OptionDialogProps) {
   const dispatch = useDispatch();
-  const map = useSelector((state: RootState) => state.treeState.map);
+  const map = useSelector((state: RootState) => state.orderState.map);
 
   const selectionPrice = getOptionSelectionPrice(map, current);
 

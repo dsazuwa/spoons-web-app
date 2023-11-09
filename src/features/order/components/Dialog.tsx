@@ -7,7 +7,7 @@ import { RootState } from '@store';
 import { useGetItemModifiersQuery } from '@store/api';
 import { addTreeNodes, buildTree } from '@store/slices';
 import useGetChildModifiers from '../hooks/useGetChildModifiers';
-import { isItemNode, isOptionNode } from '../tree';
+import { isItemNode, isOptionNode } from '../state';
 import BackdropLoader from './BackdropLoader';
 import * as S from './Dialog.styled';
 import { DialogType } from './Item';
@@ -34,7 +34,7 @@ function Dialog({
   const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
   const dispatch = useDispatch();
-  const current = useSelector((state: RootState) => state.treeState.current);
+  const current = useSelector((state: RootState) => state.orderState.current);
 
   const {
     isLoading: isModifierLoading,

@@ -13,16 +13,16 @@ import {
   updateQuantity,
   validateItem,
   validateOption,
-} from '@features/order/tree';
+} from '@features/order/state';
 
-const initialState: TreeState = {
+const initialState: OrderState = {
   map: {},
   root: undefined,
   current: undefined,
 };
 
-export const treeSlice = createSlice({
-  name: 'treeSlice',
+export const orderSlice = createSlice({
+  name: 'orderSlice',
   initialState,
 
   reducers: {
@@ -136,7 +136,7 @@ export const treeSlice = createSlice({
   },
 });
 
-export const treeReducer = treeSlice.reducer;
+export const orderReducer = orderSlice.reducer;
 
 export const {
   buildTree,
@@ -148,4 +148,4 @@ export const {
   setQuantity,
   incrementQuantity,
   decrementQuantity,
-} = treeSlice.actions;
+} = orderSlice.actions;

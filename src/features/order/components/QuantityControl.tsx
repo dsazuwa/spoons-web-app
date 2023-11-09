@@ -12,7 +12,7 @@ import {
   setQuantity,
 } from '@store/slices';
 import formatPrice from '@utils/formatPrice';
-import { getItemSelectionPrice, getSelections } from '../tree';
+import { getItemSelectionPrice, getSelections } from '../state';
 import * as S from './QuantityControl.styled';
 
 interface QuantityControlProps {
@@ -24,7 +24,7 @@ function QuantityControl({ current, handleClose }: QuantityControlProps) {
   const { key, itemId, name, photoUrl, price, quantity, isValid } = current;
 
   const dispatch = useDispatch();
-  const map = useSelector((state: RootState) => state.treeState.map);
+  const map = useSelector((state: RootState) => state.orderState.map);
 
   const limitDigits = (value: string) => value.replace(/\D/g, '').slice(0, 3);
 

@@ -3,7 +3,7 @@ import {
   getModifierParent,
   getOption,
   isItemNode,
-} from '@features/order/tree';
+} from '@features/order/state';
 
 export const validateItem = (map: TreeMap, item: ItemNode) => {
   item.isValid = item.children.every((key) => getModifier(map, key).isValid);

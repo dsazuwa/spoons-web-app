@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@store';
 import { multiSelectOption, singleSelectOption } from '@store/slices';
-import { getModifier, getOption } from '../tree';
+import { getModifier, getOption } from '../state';
 import ModifierHeader from './ModifierHeader';
 import Option from './Option';
 
@@ -19,7 +19,7 @@ interface ModifierGroupProps {
 
 function ModifierGroup({ modifier, className }: ModifierGroupProps) {
   const dispatch = useDispatch();
-  const map = useSelector((state: RootState) => state.treeState.map);
+  const map = useSelector((state: RootState) => state.orderState.map);
 
   const { key, name, maxSelection, children, isRequired, isValid } =
     getModifier(map, modifier);

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-type TreeState = {
+type OrderState = {
   map: TreeMap;
   root: ItemNode | OptionNode | undefined;
   current: ItemNode | OptionNode | undefined;

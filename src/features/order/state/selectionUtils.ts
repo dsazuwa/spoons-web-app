@@ -1,11 +1,11 @@
 import { getModifier, getOption } from './nodeSelectors';
 
 export const getItemSelectionPrice = (map: TreeMap, item: ItemNode) =>
-  item.children.reduce((price, child) => {
-    const modifier = getModifier(map, child);
-
-    return price + getModfierSelectionPrice(map, modifier);
-  }, item.price);
+  item.children.reduce(
+    (price, child) =>
+      price + getModfierSelectionPrice(map, getModifier(map, child)),
+    item.price,
+  );
 
 export const getModfierSelectionPrice = (
   map: TreeMap,
@@ -15,7 +15,10 @@ export const getModfierSelectionPrice = (
     const option = getOption(map, child);
 
     return (
-      price + (option.isSelected ? getOptionSelectionPrice(map, option) : 0)
+      price +
+      (option.isSelected
+        ? option.price + getOptionSelectionPrice(map, option)
+        : 0)
     );
   }, 0);
 
@@ -23,11 +26,11 @@ export const getOptionSelectionPrice = (
   map: TreeMap,
   option: OptionNode,
 ): number =>
-  option.children.reduce((price, child) => {
-    const modifier = getModifier(map, child);
-
-    return price + getModfierSelectionPrice(map, modifier);
-  }, option.price);
+  option.children.reduce(
+    (price, child) =>
+      price + getModfierSelectionPrice(map, getModifier(map, child)),
+    0,
+  );
 
 export const getSelections = (map: TreeMap, item: ItemNode) =>
   item.children.flatMap((mKey) =>
@@ -47,7 +50,7 @@ export const getOptionSelection = (map: TreeMap, option: OptionNode) => {
   if (option.isNested)
     selection.push(
       ...option.children.flatMap((key) =>
-        getOptionSelection(map, getOption(map, key)),
+        getModfierSelection(map, getModifier(map, key)),
       ),
     );
 
