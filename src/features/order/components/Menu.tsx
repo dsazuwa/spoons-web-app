@@ -2,21 +2,30 @@ import { styled } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
 import CategoryToggle from '@components/CategoryToggle';
-import FullScreenLoader from '@components/FullScreenLoader';
+import Footer from '@components/Footer';
+import Loader from '@components/Loader';
 import PageHeader from '@components/PageHeader';
 import theme from '@utils/theme';
 import useGetMenu from '../hooks/useGetMenu';
 import Category from './Category';
 
-const Container = styled('div')(({ theme }) => ({
-  display: 'inline-flex',
+const Div = styled('div')(({ theme }) => ({
+  display: 'flex',
   flexDirection: 'column',
-  boxSizing: 'border-box',
-  maxWidth: '1200px',
-  width: '100%',
-  paddingBottom: '10px',
-  marginRight: 'auto',
-  marginLeft: 'auto',
+  width: '100vw',
+  height: 'calc(100vh - 56px)',
+
+  '& .menu-box': {
+    alignItems: 'center',
+    maxWidth: '1200px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+  },
+
+  '& .menu-sections': {
+    padding: '0 8px 16px 8px',
+    marginTop: '20px',
+  },
 
   [theme.breakpoints.up('lg')]: {
     width: 'calc(100% - 340px)',
@@ -27,30 +36,34 @@ function Menu() {
   const { isFetching, isLoading, data } = useGetMenu();
 
   return (
-    <Container id='menu-container' sx={{ px: '8px' }}>
-      <PageHeader text='Order' />
+    <Div>
+      <div id='menu-container'>
+        <PageHeader text='Order' />
 
-      {isLoading || isFetching || data === undefined ? (
-        <FullScreenLoader />
-      ) : (
-        <>
-          <CategoryToggle
-            categories={data.categories}
-            maxWidth={theme.breakpoints.values.lg}
-          />
+        {isLoading || isFetching || data === undefined ? (
+          <Loader height='250px' />
+        ) : (
+          <div className='menu-box'>
+            <CategoryToggle
+              categories={data.categories}
+              maxWidth={theme.breakpoints.values.lg}
+            />
 
-          <Stack spacing={3} marginTop='20px'>
-            {data.menu.map(({ category }, index) => (
-              <Category
-                key={`${category}-section`}
-                index={index}
-                menu={data.menu}
-              />
-            ))}
-          </Stack>
-        </>
-      )}
-    </Container>
+            <Stack className='menu-sections' spacing={3}>
+              {data.menu.map(({ category, items }, index) => (
+                <Category
+                  key={`menu-section-${index}`}
+                  category={category}
+                  items={items}
+                />
+              ))}
+            </Stack>
+          </div>
+        )}
+      </div>
+
+      <Footer />
+    </Div>
   );
 }
 

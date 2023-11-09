@@ -27,13 +27,11 @@ const CategoryHeader = styled(Typography)(({ theme }) => ({
 }));
 
 interface CategoryProps {
-  index: number;
-  menu: CategoryItemType[];
+  category: string;
+  items: MenuItemType[];
 }
 
-function Category({ index, menu }: CategoryProps) {
-  const { category, items } = menu[index];
-
+function Category({ category, items }: CategoryProps) {
   return (
     <Stack
       id={category}

@@ -2,19 +2,23 @@ import Facebook from '@mui/icons-material/Facebook';
 import Instagram from '@mui/icons-material/Instagram';
 import LinkedIn from '@mui/icons-material/LinkedIn';
 import Twitter from '@mui/icons-material/Twitter';
-import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import Logo from '@components/Logo';
 import palette from '@utils/palette';
-
 import FooterButton from './FooterButton';
 import SocialIconButton from './SocialIconButton';
 
 function Footer() {
   return (
-    <Paper sx={{ py: 0.5, mt: 'auto' }} elevation={2}>
+    <div
+      style={{
+        padding: '8px 0',
+        marginTop: 'auto',
+        borderTop: `1px solid ${palette.grey[200]}`,
+      }}
+    >
       <Stack
         spacing={{ xs: 0.5, sm: 1 }}
         justifyItems='center'
@@ -45,7 +49,7 @@ function Footer() {
           {`© SPOONS ${new Date().getFullYear()}. All rights reserved.`}
         </Typography>
       </Stack>
-    </Paper>
+    </div>
   );
 }
 
