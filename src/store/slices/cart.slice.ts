@@ -53,8 +53,10 @@ export const cartSlice = createSlice({
         (x) => JSON.stringify(x.item.selections) === JSON.stringify(selections),
       );
 
-      if (retrievedItem) retrievedItem.quantity += quantity;
-      else {
+      if (retrievedItem) {
+        const newQuantity = retrievedItem.quantity + quantity;
+        retrievedItem.quantity = newQuantity > 999 ? 999 : newQuantity;
+      } else {
         const item = {
           ...data,
           options: selections.map((x) => Object.values(x)).join(', '),
