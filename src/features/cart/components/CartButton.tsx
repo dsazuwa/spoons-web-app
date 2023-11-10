@@ -4,10 +4,11 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Button from '@mui/material/Button';
 
 import CartContent from '@features/cart/components/CartContent';
 import { RootState } from '@store';
-import * as S from './CardButton.styled';
+import * as S from './CartButton.styled';
 
 function CartButton() {
   const theme = useTheme();
@@ -30,23 +31,19 @@ function CartButton() {
 
   return (
     <>
-      {isLg && (
-        <div style={{ marginRight: '40px' }}>
-          <S.Button variant='contained' onClick={onClick}>
-            <ShoppingCartIcon />
+      <S.ButtonDiv>
+        <Button variant='contained' onClick={onClick}>
+          <ShoppingCartIcon />
 
-            <div>{numItems}</div>
-          </S.Button>
-        </div>
-      )}
+          <div>{numItems}</div>
+        </Button>
+      </S.ButtonDiv>
 
-      {!isLg && (
-        <S.IconButton aria-label='cart' onClick={onClick}>
-          <S.Badge badgeContent={numItems} max={100} color='primary'>
-            <ShoppingCartIcon />
-          </S.Badge>
-        </S.IconButton>
-      )}
+      <S.IconButton aria-label='cart' onClick={onClick}>
+        <S.Badge badgeContent={numItems} max={100} color='primary'>
+          <ShoppingCartIcon />
+        </S.Badge>
+      </S.IconButton>
 
       <S.Drawer open={open} anchor='right' onClose={closeDrawer}>
         <S.DrawerContent>

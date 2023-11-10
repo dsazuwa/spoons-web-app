@@ -1,12 +1,11 @@
+import MuiBadge from '@mui/material/Badge';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiIconButton from '@mui/material/IconButton';
-import MuiButton from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import MuiBadge, { BadgeProps } from '@mui/material/Badge';
 
 import palette from '@utils/palette';
 
-const Badge = styled(MuiBadge)<BadgeProps>(() => ({
+const Badge = styled(MuiBadge)(() => ({
   '& .MuiBadge-badge': {
     right: -4,
     bottom: 16,
@@ -44,10 +43,9 @@ const DrawerContent = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: { width: '560px' },
 }));
 
-const Button = styled(MuiButton)(({ theme }) => ({
-  justifyContent: 'space-between',
-  borderRadius: '24px',
-  minWidth: '80px',
+const ButtonDiv = styled('div')(({ theme }) => ({
+  display: 'none',
+  marginRight: '40px',
 
   '& svg': {
     marginRight: '8px',
@@ -58,17 +56,30 @@ const Button = styled(MuiButton)(({ theme }) => ({
     fontWeight: 600,
   },
 
-  [theme.breakpoints.up('md')]: { margin: '8px' },
+  '& .MuiButton-root': {
+    justifyContent: 'space-between',
+    borderRadius: '24px',
+    minWidth: '80px',
+  },
+
+  [theme.breakpoints.up('md')]: {
+    display: 'block',
+    margin: '8px',
+  },
 }));
 
 const IconButton = styled(MuiIconButton)(({ theme }) => ({
   margin: 0,
 
   '& svg': {
-    color: palette.grey[500],
+    color: 'rgb(73, 73, 73)',
+    fontSize: '20px',
   },
 
-  [theme.breakpoints.up('md')]: { margin: '8px' },
+  [theme.breakpoints.up('md')]: {
+    margin: '8px',
+    display: 'none',
+  },
 }));
 
-export { Badge, Button, IconButton, CloseButton, Drawer, DrawerContent };
+export { Badge, ButtonDiv, CloseButton, Drawer, DrawerContent, IconButton };
