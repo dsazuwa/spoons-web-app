@@ -19,7 +19,7 @@ function AppBarButton({ page, handleClick, sx }: AppBarButtonProp) {
       : { onClick: handleClick };
 
   return (
-    <Button {...prop} sx={{ color: 'white', ...sx }}>
+    <Button {...prop} sx={{ ...sx, fontWeight: 700 }}>
       {name}
     </Button>
   );
