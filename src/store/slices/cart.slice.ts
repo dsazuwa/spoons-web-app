@@ -22,6 +22,7 @@ export type Cart = {
 export type CartState = {
   cart: Cart;
   total: number;
+  numItems: number;
 };
 
 type AddItem = {
@@ -38,6 +39,7 @@ type UpdateItem = {
 const initialState: CartState = {
   cart: [],
   total: 0,
+  numItems: 0,
 };
 
 export const cartSlice = createSlice({
@@ -54,8 +56,12 @@ export const cartSlice = createSlice({
       );
 
       if (retrievedItem) {
-        const newQuantity = retrievedItem.quantity + quantity;
-        retrievedItem.quantity = newQuantity > 999 ? 999 : newQuantity;
+        retrievedItem.quantity = Math.min(
+          retrievedItem.quantity + quantity,
+          999,
+        );
+
+        state.numItems += retrievedItem.quantity;
       } else {
         const item = {
           ...data,
@@ -63,6 +69,7 @@ export const cartSlice = createSlice({
         };
 
         state.cart.push({ item, quantity });
+        state.numItems += quantity;
       }
 
       state.total = state.total + data.price * quantity;
@@ -70,43 +77,42 @@ export const cartSlice = createSlice({
 
     updateCartItem: (state, action: PayloadAction<UpdateItem>) => {
       const { index, item: data, quantity } = action.payload;
-      const newState = state;
 
       const item = {
         ...data,
         options: data.selections.map((x) => Object.values(x)).join(', '),
       };
 
-      const oldCartItem = newState.cart[index];
+      const oldCartItem = state.cart[index];
 
-      newState.cart[index] = { item, quantity };
-      newState.total =
-        state.total -
-        oldCartItem.item.price * oldCartItem.quantity +
-        item.price * quantity;
+      state.numItems += quantity - oldCartItem.quantity;
+      state.total +=
+        item.price * quantity - oldCartItem.item.price * oldCartItem.quantity;
+      state.cart[index] = { item, quantity };
     },
 
     incrementCartItem: (state, action: PayloadAction<number>) => {
       const index = action.payload;
-      const newState = state;
 
-      const cartItem = newState.cart[index];
+      const cartItem = state.cart[index];
 
-      if (cartItem.quantity === 999) return;
-
-      cartItem.quantity += 1;
-      newState.total = state.total + cartItem.item.price;
+      if (cartItem.quantity < 999) {
+        cartItem.quantity += 1;
+        state.numItems += 1;
+        state.total = state.total + cartItem.item.price;
+      }
     },
 
     decrementCartItem: (state, action: PayloadAction<number>) => {
       const index = action.payload;
-      const newState = state;
 
-      const cartItem = newState.cart[index];
+      const cartItem = state.cart[index];
 
-      if (cartItem.quantity === 1) newState.cart.splice(index, 1);
+      if (cartItem.quantity === 1) state.cart.splice(index, 1);
       else cartItem.quantity -= 1;
-      newState.total = state.total - cartItem.item.price;
+
+      state.total = state.total - cartItem.item.price;
+      state.numItems -= 1;
     },
   },
 });

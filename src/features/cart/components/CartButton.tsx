@@ -12,7 +12,7 @@ import * as S from './CardButton.styled';
 function CartButton() {
   const theme = useTheme();
   const isLg = useMediaQuery(theme.breakpoints.up('lg'));
-  const cart = useSelector((state: RootState) => state.cartState.cart);
+  const numItems = useSelector((state: RootState) => state.cartState.numItems);
 
   const [open, setOpen] = useState(false);
 
@@ -35,21 +35,14 @@ function CartButton() {
           <S.Button variant='contained' onClick={onClick}>
             <ShoppingCartIcon />
 
-            <div>{cart.reduce((quantity, x) => quantity + x.quantity, 0)}</div>
+            <div>{numItems}</div>
           </S.Button>
         </div>
       )}
 
       {!isLg && (
         <S.IconButton aria-label='cart' onClick={onClick}>
-          <S.Badge
-            badgeContent={cart.reduce(
-              (quantity, x) => quantity + x.quantity,
-              0,
-            )}
-            max={100}
-            color='primary'
-          >
+          <S.Badge badgeContent={numItems} max={100} color='primary'>
             <ShoppingCartIcon />
           </S.Badge>
         </S.IconButton>
