@@ -1,37 +1,35 @@
 import LunchDining from '@mui/icons-material/LunchDining';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import ButtonBase from '@mui/material/ButtonBase';
+import { styled } from '@mui/material';
 
-interface ILogoProps {
-  color: string;
-  size: 'sm' | 'm';
-}
+import { NextLinkComposed } from '@components/Link';
 
-function Logo({ color, size }: ILogoProps) {
-  const width = size === 'sm' ? 12 : 14;
-  const fontSize = size === 'sm' ? 13 : 15;
-  const letterSpacing = size === 'sm' ? '.23rem' : '.3rem';
+const LogoButton = styled(ButtonBase)({
+  '& svg': {
+    fontSize: '20px',
+    marginRight: '8px',
+  },
 
+  '& .logo-text': {
+    fontFamily: 'monospace',
+    fontSize: '16px',
+    fontWeight: 900,
+    lineHeight: 1.6,
+    letterSpacing: '.3rem',
+    textDecoration: 'none',
+  },
+});
+
+function Logo({ className }: { className: string }) {
   return (
-    <Stack direction='row' alignItems={'center'} spacing={1}>
-      <LunchDining sx={{ color, width }} />
-      <Typography
-        variant='body1'
-        color='primary'
-        noWrap
-        sx={{
-          flexGrow: 1,
-          fontFamily: 'monospace',
-          fontWeight: 700,
-          fontSize,
-          letterSpacing,
-          textDecoration: 'none',
-          color,
-        }}
-      >
-        spoons
-      </Typography>
-    </Stack>
+    <LogoButton
+      className={className}
+      component={NextLinkComposed}
+      to={{ pathname: '/' }}
+    >
+      <LunchDining />
+      <div className='logo-text'>spoons</div>
+    </LogoButton>
   );
 }
 

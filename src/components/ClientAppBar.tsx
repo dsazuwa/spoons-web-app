@@ -3,14 +3,12 @@ import Home from '@mui/icons-material/Home';
 import Info from '@mui/icons-material/Info';
 import Login from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
-import LunchDining from '@mui/icons-material/LunchDining';
 import MenuBook from '@mui/icons-material/MenuBook';
 import PersonAddAlt from '@mui/icons-material/PersonAddAlt';
 import ReceiptLong from '@mui/icons-material/ReceiptLong';
 import { SvgIconTypeMap } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ButtonBase from '@mui/material/ButtonBase';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 import { NextLinkComposed } from '@components/Link';
@@ -19,6 +17,7 @@ import useAuthentication from '@hooks/useAuthentication';
 import useLogout from '@hooks/useLogout';
 import * as S from './ClientAppBar.styled';
 import Drawer from './ClientDrawer';
+import Logo from './Logo';
 
 /* eslint-disable @typescript-eslint/ban-types */
 export type PageType = {
@@ -34,20 +33,6 @@ export type AuthPageType = {
   page: PageType;
   handleLogout?: () => void;
 };
-
-function Logo({ className }: { className: string }) {
-  return (
-    <ButtonBase
-      className={className}
-      component={NextLinkComposed}
-      to={{ pathname: '/' }}
-    >
-      <LunchDining />
-
-      <div className='logo-text'>spoons</div>
-    </ButtonBase>
-  );
-}
 
 function ClientAppBar() {
   const { authReady, isAuthenticated } = useAuthentication();

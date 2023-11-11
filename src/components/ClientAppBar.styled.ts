@@ -16,6 +16,7 @@ const Div = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     maxWidth: '1536px',
     padding: '0px 16px',
@@ -25,25 +26,9 @@ const Div = styled('div')(({ theme }) => ({
 
   '& .appbar-logo': {
     color: palette.primary[700],
-
-    '& svg': {
-      fontSize: '20px',
-      marginRight: '8px',
-    },
-
-    '& .logo-text': {
-      fontFamily: 'monospace',
-      fontSize: '16px',
-      fontWeight: 900,
-      lineHeight: 1.6,
-      letterSpacing: '.3rem',
-      textDecoration: 'none',
-    },
   },
 
   '& .xs-logo': {
-    display: 'flex',
-    flexGrow: 1,
     marginBottom: '2px',
   },
 
