@@ -1,15 +1,42 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { SxProps } from '@mui/material';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import MuiDrawer from '@mui/material/Drawer';
+import { useMediaQuery } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import Toolbar from '@mui/material/Toolbar';
-import { useState } from 'react';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { useTheme } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 
+import { NextLinkComposed } from '@components/Link';
 import { AuthPageType, PageType } from '@hooks/useClientAppBar';
-import DrawerListItem from './DrawerListItem';
+import * as S from './ClientDrawer.styled';
+
+interface DrawerListItemProps {
+  page: PageType;
+  handleClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+}
+
+function DrawerListItem({ page, handleClick }: DrawerListItemProps) {
+  const { name, href, icon: IconElement } = page;
+
+  const prop =
+    handleClick === undefined
+      ? { component: NextLinkComposed, to: { pathname: href } }
+      : { onClick: handleClick };
+
+  return (
+    <ListItem disablePadding>
+      <ListItemButton {...prop}>
+        <ListItemIcon>
+          <IconElement />
+        </ListItemIcon>
+        <ListItemText primary={name} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
 
 interface DrawerProps {
   authReady: boolean;
@@ -17,7 +44,6 @@ interface DrawerProps {
   pages: PageType[];
   authPages: AuthPageType[];
   unauthPages: PageType[];
-  sx?: SxProps;
 }
 
 function Drawer({
@@ -26,9 +52,15 @@ function Drawer({
   pages,
   authPages,
   unauthPages,
-  sx,
 }: DrawerProps) {
-  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    if (isMd) setOpen(false);
+  }, [isMd]);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -38,31 +70,25 @@ function Drawer({
           (event as React.KeyboardEvent).key === 'Shift')
       )
         return;
+
       setOpen(open);
     };
 
   return (
-    <Box sx={sx}>
+    <S.Div>
       <IconButton
-        size='large'
-        edge='start'
-        color='inherit'
+        className='menu-icon-btn'
         aria-label='menu'
-        sx={{ mr: 2 }}
         onClick={toggleDrawer(true)}
       >
         <MenuIcon />
       </IconButton>
 
-      <MuiDrawer anchor='left' open={open} onClose={toggleDrawer(false)}>
-        <Toolbar
-          variant='dense'
-          disableGutters
-          sx={{ minHeight: '56px', height: '56px' }}
-        />
-        <Divider />
-        <Box
-          sx={{ width: 250 }}
+      <S.Drawer anchor='left' open={open} onClose={toggleDrawer(false)}>
+        <div className='drawer-toolbar' />
+
+        <div
+          className='drawer-content'
           role='presentation'
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
@@ -77,10 +103,8 @@ function Drawer({
             ))}
           </List>
 
-          <Divider />
-
           {authReady && (
-            <List>
+            <List className='auth-links'>
               {isAuthenticated &&
                 authPages.map(({ page, handleLogout }) => (
                   <DrawerListItem
@@ -100,10 +124,15 @@ function Drawer({
                 ))}
             </List>
           )}
-        </Box>
-      </MuiDrawer>
-    </Box>
+        </div>
+      </S.Drawer>
+    </S.Div>
   );
 }
 
 export default Drawer;
+
+// <NextLinkComposed to='/order' className='drawer-button'>
+//   <MenuIcon />
+//   <div>Order</div>
+// </NextLinkComposed>
