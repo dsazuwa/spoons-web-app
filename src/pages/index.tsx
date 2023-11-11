@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import Footer from '@components/Footer';
 import { NextLinkComposed } from '@components/Link';
+import Newsletter from '@components/Newsletter';
 import getCustomerLayout from '@layout/CustomerLayout';
 
 function HomePageContent() {
@@ -58,7 +59,11 @@ function HomePageContent() {
         </Stack>
       </Container>
 
-      <Footer />
+      <div style={{ marginTop: 'auto' }}>
+        <Newsletter />
+
+        <Footer />
+      </div>
     </>
   );
 }
