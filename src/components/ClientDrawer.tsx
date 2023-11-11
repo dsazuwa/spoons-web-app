@@ -1,11 +1,8 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { useMediaQuery } from '@mui/material';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 
@@ -13,28 +10,24 @@ import { NextLinkComposed } from '@components/Link';
 import { AuthPageType, PageType } from '@hooks/useClientAppBar';
 import * as S from './ClientDrawer.styled';
 
-interface DrawerListItemProps {
+interface DrawerButtonProps {
   page: PageType;
-  handleClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+  handleClick: (() => void) | undefined;
 }
 
-function DrawerListItem({ page, handleClick }: DrawerListItemProps) {
-  const { name, href, icon: IconElement } = page;
+function DrawerButton({ page, handleClick }: DrawerButtonProps) {
+  const { name, href, icon: Icon } = page;
 
-  const prop =
+  const props =
     handleClick === undefined
       ? { component: NextLinkComposed, to: { pathname: href } }
       : { onClick: handleClick };
 
   return (
-    <ListItem disablePadding>
-      <ListItemButton {...prop}>
-        <ListItemIcon>
-          <IconElement />
-        </ListItemIcon>
-        <ListItemText primary={name} />
-      </ListItemButton>
-    </ListItem>
+    <Button key={name} className='drawer-button' {...props}>
+      <Icon />
+      <div>{name}</div>
+    </Button>
   );
 }
 
@@ -53,10 +46,10 @@ function Drawer({
   authPages,
   unauthPages,
 }: DrawerProps) {
+  const [open, setOpen] = useState(false);
+
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
-
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (isMd) setOpen(false);
@@ -95,7 +88,7 @@ function Drawer({
         >
           <List>
             {pages.map((page) => (
-              <DrawerListItem
+              <DrawerButton
                 key={page.name}
                 page={page}
                 handleClick={undefined}
@@ -107,7 +100,7 @@ function Drawer({
             <List className='auth-links'>
               {isAuthenticated &&
                 authPages.map(({ page, handleLogout }) => (
-                  <DrawerListItem
+                  <DrawerButton
                     key={page.name}
                     page={page}
                     handleClick={handleLogout}
@@ -116,7 +109,7 @@ function Drawer({
 
               {!isAuthenticated &&
                 unauthPages.map((page) => (
-                  <DrawerListItem
+                  <DrawerButton
                     key={page.name}
                     page={page}
                     handleClick={undefined}
@@ -131,8 +124,3 @@ function Drawer({
 }
 
 export default Drawer;
-
-// <NextLinkComposed to='/order' className='drawer-button'>
-//   <MenuIcon />
-//   <div>Order</div>
-// </NextLinkComposed>

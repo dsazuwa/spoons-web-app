@@ -26,7 +26,7 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
   },
 
   '& .drawer-content': {
-    width: 320,
+    width: 240,
     height: 'calc(100vh - 56px)',
     display: 'flex',
     flexDirection: 'column',
@@ -35,25 +35,37 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
 
   '& .drawer-button': {
     display: 'flex',
-    alignItems: 'center',
     flexDirection: 'row',
-    transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    textDecoration: 'none',
-    color: palette.grey[800],
+    alignItems: 'center',
+    justifyContent: 'start',
+    textTransform: 'capitalize',
+    fontSize: '12px',
+    color: palette.grey[700],
     padding: '8px 16px',
     height: '48px',
 
     svg: {
-      marginRight: '16px',
-    },
-
-    ':hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      marginRight: '24px',
+      fontSize: '20px',
     },
   },
 
   '& .auth-links': {
     borderTop: `1px solid ${palette.grey[200]}`,
+  },
+
+  [theme.breakpoints.up('sm')]: {
+    '& .drawer-content': {
+      width: 280,
+    },
+
+    '& .drawer-button': {
+      fontSize: '14px',
+
+      svg: {
+        fontSize: '22px',
+      },
+    },
   },
 }));
 
