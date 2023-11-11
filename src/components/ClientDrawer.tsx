@@ -56,7 +56,7 @@ function Drawer({
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (isMd) setOpen(false);
