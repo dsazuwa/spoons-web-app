@@ -4,7 +4,9 @@ import MuiGrid from '@mui/material/Grid';
 
 import palette from '@utils/palette';
 
-const Grid = styled(MuiGrid)<{ isFirst: boolean }>(({ isFirst }) => ({
+const Grid = styled(MuiGrid, {
+  shouldForwardProp: (prop) => prop !== 'isFirst',
+})<{ isFirst: boolean }>(({ isFirst }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
