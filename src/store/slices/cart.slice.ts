@@ -52,7 +52,9 @@ export const cartSlice = createSlice({
       const selections = data.selections;
 
       const retrievedItem = state.cart.find(
-        (x) => JSON.stringify(x.item.selections) === JSON.stringify(selections),
+        (x) =>
+          JSON.stringify(x.item.selections) === JSON.stringify(selections) &&
+          x.item.id === data.id,
       );
 
       if (retrievedItem) {
