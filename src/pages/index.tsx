@@ -8,6 +8,7 @@ import Footer from '@components/Footer';
 import { NextLinkComposed } from '@components/Link';
 import Newsletter from '@components/Newsletter';
 import getCustomerLayout from '@layout/CustomerLayout';
+import MenuHightlight from '@components/MenuHightlight';
 
 function HomePageContent() {
   return (
@@ -59,9 +60,10 @@ function HomePageContent() {
         </Stack>
       </Container>
 
+      <MenuHightlight />
+
       <div style={{ marginTop: 'auto' }}>
         <Newsletter />
-
         <Footer />
       </div>
     </>
