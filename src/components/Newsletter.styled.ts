@@ -86,6 +86,7 @@ const Div = styled('div')(({ theme }) => ({
       width: 'auto',
       marginTop: '6px',
       marginRight: '16px',
+      borderRadius: '24px',
     },
   },
 
