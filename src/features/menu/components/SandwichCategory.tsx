@@ -1,7 +1,4 @@
-import Stack from '@mui/material/Stack';
-
-import CategoryHeader from './CategoryHeader';
-import CategoryNotes from './CategoryNotes';
+import * as S from './Category.styled';
 import CategorySection from './CategorySection';
 import TagBar from './TagBar';
 
@@ -14,21 +11,21 @@ function SandwichCategory({ index, menu }: SandwichCategoryProps) {
   const { category, items, notes } = menu[index];
 
   const foodies = items.filter((x) => x.subCategory === 'foodie favorites');
-  const classic = items.filter((x) => x.subCategory === 'craveable classics');
+  const classics = items.filter((x) => x.subCategory === 'craveable classics');
 
   return (
     <div id={category}>
-      <Stack alignItems='center' spacing={1.5}>
-        <CategoryHeader title={category} />
+      <S.Category alignItems='center' spacing={1.5}>
+        <div className='category-name'>{category}</div>
 
-        <CategoryNotes notes={notes} />
+        <div className='category-notes'>{notes}</div>
 
         <TagBar />
 
-        <CategorySection category='craveable classics' items={classic} />
+        <CategorySection category='craveable classics' items={classics} />
 
         <CategorySection category='foodie favorites' items={foodies} />
-      </Stack>
+      </S.Category>
     </div>
   );
 }
