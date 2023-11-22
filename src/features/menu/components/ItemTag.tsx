@@ -1,27 +1,46 @@
+import { styled } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 
 import palette from '@utils/palette';
 
-function ItemTag({ tags }: { tags: string[] }) {
+const Div = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+
+  '& .tag-mx': { margin: '0 4px' },
+
+  '& .tag': {
+    color: palette.grey[500],
+    fontSize: '10px',
+    fontWeight: 600,
+  },
+
+  '& .tag-divider': { backgroundColor: palette.grey[300] },
+
+  [theme.breakpoints.up('sm')]: { '& .tag': { fontSize: '12px' } },
+  [theme.breakpoints.up('md')]: { '& .tag': { fontSize: '13px' } },
+}));
+
+function ItemTag({ tags, className }: { tags: string[]; className: string }) {
   return (
-    <Stack direction='row' spacing={1}>
+    <Div className={className}>
       {tags.map((tag, index) => (
         <React.Fragment key={index}>
-          <Typography
-            sx={{ color: palette.grey[500], fontSize: '10px', fontWeight: 500 }}
-          >
-            {tag}
-          </Typography>
+          <div className='tag tag-mx'>{tag}</div>
 
           {index < tags.length - 1 && (
-            <Divider orientation='vertical' variant='middle' flexItem />
+            <Divider
+              className='tag-mx tag-divider'
+              orientation='vertical'
+              variant='middle'
+              flexItem
+            />
           )}
         </React.Fragment>
       ))}
-    </Stack>
+    </Div>
   );
 }
 

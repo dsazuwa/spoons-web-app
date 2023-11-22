@@ -1,9 +1,7 @@
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 
-import palette from '@utils/palette';
+import * as S from './Item.styled';
 import ItemTag from './ItemTag';
 import ImageSkeleton from './skeletons/ImageSkeleton';
 
@@ -12,7 +10,7 @@ function Item({ item }: { item: MenuItemType }) {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <Stack alignItems='center' spacing={0.5} padding='10px' width='100%'>
+    <S.Item>
       <div>
         {loaded ? null : <ImageSkeleton />}
         <Box
@@ -20,40 +18,20 @@ function Item({ item }: { item: MenuItemType }) {
           src={`/menu-items/${photoUrl}`}
           alt={name}
           width='100%'
+          borderRadius='4px'
           sx={loaded ? {} : { display: 'none' }}
           onLoad={() => setLoaded(true)}
         />
       </div>
 
-      <Typography
-        variant='h6'
-        sx={{
-          color: palette.primary[900],
-          textAlign: 'center',
-          fontSize: { xs: '10px', sm: '12.5px', md: '15px' },
-        }}
-      >
-        {name}
-      </Typography>
+      <div className='name'>{name}</div>
 
-      {tags && <ItemTag tags={tags} />}
+      {tags && <ItemTag className='item-mt' tags={tags} />}
 
-      <Typography
-        variant='caption'
-        sx={{ fontSize: '10px', textAlign: 'center' }}
-      >
-        {description}
-      </Typography>
+      <div className='description item-mt'>{description}</div>
 
-      {notes && (
-        <Typography
-          variant='caption'
-          sx={{ fontSize: '10px', padding: '10px', textAlign: 'center' }}
-        >
-          {notes}
-        </Typography>
-      )}
-    </Stack>
+      {notes && <div className='description item-mt'>{notes}</div>}
+    </S.Item>
   );
 }
 
