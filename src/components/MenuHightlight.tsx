@@ -1,7 +1,49 @@
+import { styled } from '@mui/material';
 import Button from '@mui/material/Button';
 
 import ItemGrid from '@features/menu/components/ItemGrid';
-import * as S from './MenuHighlight.syled';
+import palette from '@utils/palette';
+import { NextLinkComposed } from './Link';
+
+const Div = styled('div')(({ theme }) => ({
+  '& .box': {
+    maxWidth: '1200px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '64px 16px',
+  },
+
+  '& .content': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  '& .header': {
+    fontSize: '24px',
+    fontWeight: 700,
+    textAlign: 'center',
+    width: '100%',
+    color: palette.primary[900],
+    marginBottom: '16px',
+  },
+
+  '& .menu-btn': {
+    fontSize: '10px',
+    marginTop: '16px',
+    borderRadius: '24px',
+    textTransform: 'capitalize',
+  },
+
+  [theme.breakpoints.up('md')]: {
+    '& .box': { padding: '64px 32px' },
+    '& .header': { marginBottom: '24px', fontSize: '32px' },
+    '& .menu-btn': { fontSize: '14px' },
+  },
+}));
 
 function MenuHightlight() {
   const items = [
@@ -25,25 +67,30 @@ function MenuHightlight() {
       name: '1/2 “Not So Fried” Chicken',
       description:
         "Shaved, roasted chicken breast topped with Mendo's krispies, herb aioli, mustard pickle slaw, tomatoes, pickled red onions on toasted ciabatta (450 cal) with a side of tangy mustard barbecue sauce (80 cal) or mustard pickle remoulade (120 cal)",
-      tags: [],
+      tags: null,
       photoUrl: 'NotSoFriedChicken.jpg',
     },
   ] as MenuItemType[];
 
   return (
-    <S.Div>
+    <Div>
       <div className='box'>
-        <div className='header'>Most Popular Items</div>
+        <div className='header'>Crowd Favorites!</div>
 
         <div className='content'>
           <ItemGrid items={items} />
 
-          <Button className='menu-btn' variant='contained'>
+          <Button
+            className='menu-btn'
+            variant='contained'
+            component={NextLinkComposed}
+            to={{ pathname: '/menu' }}
+          >
             View Menu
           </Button>
         </div>
       </div>
-    </S.Div>
+    </Div>
   );
 }
 
